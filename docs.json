@@ -39,7 +39,7 @@
         "groups": [
           {
             "group": "API reference",
-            "openapi": "api-reference/openapi.json"
+            "openapi": "api-reference/cog-api.json"
           }
         ]
       }
