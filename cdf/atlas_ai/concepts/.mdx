@@ -1,0 +1,72 @@
+---
+title: "What is an Atlas AI agent?"
+---
+
+<Warning>
+  The features described in this section are currently available to **early adopters** only and are subject to change.
+</Warning>
+
+Atlas AI agents use generative AI (genAI) [**language models**](#language-models) to solve **specific** industrial business problems, like providing insights into historical and planned maintenance and analysis of time series data for root cause analysis.
+
+They include [**prompts**](#prompts-and-prompt-engineering) with **goals** and **instructions**, industry-relevant [**tools**](#tools), and access to industrial data stored in the Cognite Data Fusion (CDF) [**knowledge graph**](#knowledge-graphs).
+
+![Atlas AI agent](\images\cdf\atlas_ai\concepts\assets\images\concepts-a5ff7c15b9f352a2a4be544ce2a060d0.svg)
+
+Agents interact with humans to meet the predetermined goals. Humans set the goals, and the AI agent suggests the best actions to take to achieve those goals.
+
+### Language models[​](#language-models "Direct link to heading")
+
+Language models are one of the main ingredients of industrial AI agents. They're probabilistic models designed to **understand** and **generate** human language. They have different characteristics, advantages, and disadvantages and are often categorized into:
+
+* **Large language models** (LLMs) — trained on vast amounts of data, making them versatile and useful for **general purposes**.
+* **Small language models** (SLMs) — lightweight models useful for **specific tasks**.
+* **Custom models** — trained on **domain-specific** data sets.
+
+The [Language model library](/cdf/atlas_ai/references/atlas_ai_agent_language_models) has detailed reference information about the available language models to help you choose.
+
+### Knowledge graphs[​](#knowledge-graphs "Direct link to heading")
+
+Cognite Data Fusion (CDF) has [data modeling features](/cdf/dm/dm_concepts) and [out-of-the-box data models](/cdf/dm/dm_reference/dm_core_data_model) to get you started building a structured, flexible, and contextualized **knowledge graph** of your industrial data.
+
+Leveraging the knowledge graph, AI agents have the **context** they need to deliver more **deterministic** and accurate insights and recommendations, improving their effectiveness in tasks such as data analysis and problem-solving. The decisons are **traceable** and **transparent** so that you can always see how the AI agent arrived at its answers.
+
+Industrial data is not static, and the knowledge graph ensure that the language models always work with the **most recent** data. **Access control** is another advantage of using knowledge graphs, controlling what data is provided to the language model.
+
+Language models and knowledge graphs **complement** each other, and the strengths of one technology compensate for the limitations of the other.
+
+### Prompts and prompt engineering[​](#prompts-and-prompt-engineering "Direct link to heading")
+
+Prompts — prompt engineering — is how you optimize the output from the agents by helping the language models understand what output you want them to produce. The distinction between **goals** and **instructions** is crucial for effectively guiding AI models:
+
+* **Goals** refer to the desired outcomes or objectives of the interactions with the agent. The goals define what you want to achieve with the AI's response. For example, if the goal is to generate a summary, the prompt should be framed to elicit that specific result.
+
+* **Instructions** are the specific directives or guidelines provided to the agent to achieve the goals. They detail how the language model should process the input to meet the goal. For instance, an instruction might specify the format of the summary or the key points to include.
+
+In summary, **goals** outline **what** you want to accomplish, while **instructions** clarify **how** to get there.
+
+<Note>
+  * Amazon Bedrock: [Prompt engineering concepts](https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-engineering-guidelines.html)
+  * Open AI/ChatGPT: [Prompt engineering](https://platform.openai.com/docs/guides/prompt-engineering)
+  * Anthropic/Claude: [How to prompt engineer](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview#how-to-prompt-engineer)
+  * Google/Gemini: [Introduction to prompt design](https://ai.google.dev/gemini-api/docs/prompting-intro)
+  * Microsoft/ChatGPT: [Prompt engineering techniques](https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/prompt-engineering)
+  * DAIR.AI: [Prompt Engineering Guide](https://www.promptingguide.ai/)
+</Note>
+
+### Tools[​](#tools "Direct link to heading")
+
+Atlas AI agents can interact with tools and functions, allowing the agent to perform complex tasks or interact with your application. We provide built-in tools for Atlas AI agents, but you can also define your own tools to extend their capabilities.
+
+Typically, tools fall into these broad categories:
+
+* **Querying and exploring data** from the industrial knowledge graph ensuring that the information is relevant and task-specific.
+
+* **Running code** and **algorithms**, or perform **computations** in real time based on input or operational requirements.
+
+* **Integration with external systems** (ERP, SCADA, CMMS) via APIs to pull data, trigger workflows, or update records, ensuring seamless interaction with third-party platforms.
+
+* **Integration with collaboration and communication tools**, for example, Slack and Microsoft Teams, ensuring seamless human-machine interaction.
+
+To view the currently available tools, see the [Agent tools library](/cdf/atlas_ai/references/atlas_ai_agent_tools).
+
+Last updated: February 11, 2025
