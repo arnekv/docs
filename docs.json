@@ -55,7 +55,7 @@
       {
         "tab": "API references",
         "pages": [
-          "openapi": "api-reference/cog-api.json"
+          "api-reference/cog-api.json"
         ]
       }
     ]
