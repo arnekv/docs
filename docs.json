@@ -13,7 +13,7 @@
       {
         "group": "API reference",
         "openapi": "api-reference/cog-api.json"
-      }
+      },
       {
         "group": "About Cognite Data Fusion (CDF)",
         "pages": [
