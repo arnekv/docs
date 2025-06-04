@@ -1,0 +1,143 @@
+---
+title: "Charts"
+description: "In the  workspace, use  to analyze ."
+---
+
+## Create a chart[​](<#create chart> "Direct link to heading")
+
+To create a chart:
+
+1. Navigate to ***Industrial tools*** > ***Charts***.
+
+2. Select ***+ New chart*** to start a new chart. To build on an existing chart, select ... > ***Duplicate***.
+
+   ![Charts toolbars ](\images\cdf\charts\\-cognite\docs-portal-images\1.0.0\images\cdf\industrial_tools\charts_toolbars.svg)
+
+➀ **Toolbar** — hover over each tool to see a description. Use the **Slider** to view or compare time series values.
+
+➁ **Open in...** — download, duplicate, delete, or **open** the chart in ***Canvas***.
+
+➂ ***Add data*** — add a **time series**, or import or create a **calculation**.
+
+➃ **Agents** — open an **AI agent** to work with the chart.
+
+➄ **Sidebar** — set up **alerting**, **monitoring**, **thresholds**, or data **profiling**. Add **events**.
+
+### Add a time series[​](#add-time-series "Direct link to heading")
+
+To add a time series to your chart:
+
+1. Select ***Add data*** > ***Add time series***.
+
+2. Find and select the time series > ***Add***.
+
+   For each time series and calculation, explore the different ways to set units and fine-tune the data display. For example, try to adjust the thickness and color of the diagram line. Use the 🛈 button to see more details.
+
+### Add a calculation[​](#add-calculation "Direct link to heading")
+
+To add a calculation:
+
+1. Select ***Add data*** > ***Create calculation***.
+
+2. Select ***Add node*** or right-click in the panel below the chart to add input sources.
+
+   ![Charts calculations](\images\cdf\charts\\-cognite\docs-portal-images\1.0.0\images\cdf\industrial_tools\calculation.png)
+
+3. Right-click the panel to add ***constants*** or ***functions*** to the calculation. Select 🛈 to view the function details or hover over the parameters for more information.
+
+4. Pipe the calculations in order and include the final ***output*** node to display the result on the chart plot.
+
+<Check>
+  Use one calculation as input to another to view the output from each step.
+</Check>
+
+### Schedule a calculation[​](#schedule-calculation "Direct link to heading")
+
+Schedule a calculation and save the result as a time series. You can also [monitor](#monitoring) the calculation.
+
+1. [Add a calculation](#add-calculation) and select **Save and Schedule**.
+
+2. Specify the sign-in credentials for the schedule, and click **Next**. If you don't know the credentials, contact your CDF admin.
+
+3. Give the schedule a name and specify the necessary settings.
+
+4. Select ***Start schedule***.
+
+### Trend data[​](#trending-data "Direct link to heading")
+
+To stack, overlay, and compare trends for time series, `click+drag` or `hover+scroll` to adjust and move each diagram axis.
+
+Use the **Slider** on the toolbar to view or compare time series values at a specific time.
+
+### View and assess data quality[​](#data-profiling "Direct link to heading")
+
+A chart line is **shaded** if the data quality of a time series is ***Uncertain*** and has a **gap** if the quality is ***Bad***.
+
+Use **data profiling** to assess the quality of a time series and whether it fits your purpose. Data profiling uses the [~~Industrial Data Science Library (InDSL)~~](https://indsl.docs.cognite.com/) to define gaps if the time deltas deviate by more than 1.5 times the interquartile range.
+
+1. In the chart, select ***Data profiling***. Select the time series you want to assess in the ***Source*** dropdown list.
+
+2. Switch between viewing a boxplot and a histogram of time deltas or density.
+
+### Set thresholds for historical data[​](#thresholds-on-historical-data "Direct link to heading")
+
+To set thresholds for historical data:
+
+1. In the chart, select ***Thresholds*** (![ ](\images\cdf\charts\\-cognite\docs-portal-images\1.0.0\images\cdf\charts\threshold.png)).
+
+2. In the panel, set the threshold values for time series and calculations.
+
+### Add events[​](#add-events "Direct link to heading")
+
+You can add events, such as a faulty shutdown, to help analyze time series.
+
+To add events to a chart:
+
+1. Select ***Events*** from the sidebar.
+
+2. Add or select a filter to specify the events to add.
+
+## Monitor time series[​](#monitoring "Direct link to heading")
+
+Time series monitoring jobs send [emails for any breaches to the thresholds](/cdf/configure/charts_monitoring) you set. If there are several breaches within the *minimum duration period*, you'll only receive one email for the period.
+
+We recommend that you set a minimum duration of 5 minutes to limit the number of email alerts you receive. The minimum expected data point frequency is 1 minute. If the data points have a lower frequency, alerts may not trigger as expected.
+
+### Create monitoring jobs[​](#create-monitoring-job "Direct link to heading")
+
+1. Select ***Monitoring*** > **Create** from the sidebar.
+
+2. Give the monitoring job a ***name***.
+
+3. Select the time series or calculation you want to monitor in the ***Source*** dropdown.
+
+4. Specify the ***threshold*** and ***minimum duration*** for the alert.
+
+5. Specify the folder to store the alerts in.
+
+6. Select the users who'll receive the email alerts.
+
+7. Optional. Open ***Advanced options*** and specify the sign-in credentials for the monitoring job.
+
+8. Select ***Start monitoring***.
+
+### Subscribe to alerts[​](#subscribe-to-alerts "Direct link to heading")
+
+To **subscribe** to an alert:
+
+1. Select ***Monitoring*** from the sidebar.
+2. Find the alert you want to subscribe to and select 🔔.
+
+### Resolve alerts[​](#manage-alerts "Direct link to heading")
+
+To **resolve** an alert you've investigated:
+
+1. Select the alert > ***History***.
+
+2. Select ***Active*** > ***Mark as resolved***.
+
+## Data aggregation[​](#data-aggregation "Direct link to heading")
+
+If a chart contains more than 100,000 data points, ~~Charts~~ summarizes the data points to make the data easier to view. The aggregated data is shaded and shows the minimum and maximum values of the aggregated data range. Zoom in to view individual data points.
+
+Last updated: May 20, 2025

@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Cognite Docs",
+  "name": "Cognite Documentation",
   "colors": {
     "primary": "#0D9373",
     "light": "#55D799",
@@ -11,11 +11,33 @@
   "navigation": {
     "groups": [
       {
-        "group": "Tutorials",
+        "group": "API reference",
+        "openapi": "api-reference/cog-api.json"
+      }
+      {
+        "group": "About Cognite Data Fusion (CDF)",
         "pages": [
-          "cdf/learn/",
-          "cdf/learn/cdf_setup/",
-        }
-      ]
-    }
+          "cdf",
+          "cdf/sign-in",
+          "cdf/sign-up",
+          "cdf/learn/cdf_basics/"
+        ]
+      },
+      {
+        "group": "Industrial tools",
+        "pages": [
+          "cdf/industrial_tools/",
+          "cdf/explore/search",
+          "cdf/explore/canvas",
+          "cdf/charts/",
+          "cdf/explore/custom_apps",
+          "cdf/explore/agents"
+        ]
+      },
+      {
+        "group": "Https://indsl.docs.cognite.com/",
+        "pages": []
+      }
+    ]
   }
+}

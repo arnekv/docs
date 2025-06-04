@@ -1,0 +1,58 @@
+---
+title: "Product tour"
+description: "This product tour provides a high-level overview of the Cognite Data Fusion (CDF) architecture and the main steps to fast-track your ."
+---
+
+Cognite Data Fusion (CDF) is a platform for [**contextualization**](/cdf/integration/concepts/contextualization/) and **DataOps**:
+
+* **Contextualization** combines machine learning, artificial intelligence, and domain knowledge to map resources from different source systems to each other in your [**industrial knowledge graph**](/cdf/dm/).
+
+* **DataOps** is a set of tools and practices to manage your data lifecycle through **collaboration** and **automation**.
+
+## Architecture[​](#architecture "Direct link to heading")
+
+Cognite Data Fusion (CDF) runs in the [**cloud**](/cdf/admin/clusters_regions) and has a modular design.
+
+![The CDF architecture](\images\cdf\learn\cdf_basics\\-cognite\docs-portal-images\1.0.0\images\cdf\learn\cdf_architecture2.svg)
+
+You can interact with your data through dedicated workspaces in the ~~CDF~~ [**web application**](/cdf/industrial_tools/), or with our [**APIs**](https://developer.cognite.com/api/) and [**SDKs**](https://developer.cognite.com/sdks/).
+
+The following sections introduce the main steps to implementing CDF and how they relate to the different CDF modules.
+
+## Step 1: Set up data management[​](#step-1 "Direct link to heading")
+
+When making decisions, it's important to know that data is reliable and that you can trust the data.
+
+Before integrating and contextualizing data in ~~CDF~~, you must define and implement your **data governance** policies. We recommend appointing a **~~CDF~~ admin** to work with the IT department to ensure that ~~CDF~~ follows your organization's [**security**](/cdf/trust/security/security_intro) **practices**. Connect ~~CDF~~ to your identity provider (~~IdP~~), and use the existing user identities to [**manage access**](/cdf/access) to the ~~CDF~~ tools and data.
+
+To build applications on top of the data in ~~CDF~~, you depend on a well-defined data model to make assumptions about the data structure. ~~CDF~~ has out-of-the-box [data models](/cdf/dm/) to build a structured, flexible, contextualized **knowledge graph**.
+
+## Step 2: Integrate data[​](#step-2 "Direct link to heading")
+
+Established data governance policies allow you to [add data](/cdf/integration/) from your **IT**, **OT**, and **ET** sources into CDF. These data sources include industrial control systems supplying sensor data, ERP systems, and massive 3D CAD models in engineering systems.
+
+### Extract data[​](#extract-data "Direct link to heading")
+
+With read access to the data sources, you can set up the system integration to stream data into the ~~CDF~~ [**staging area**](/cdf/integration/guides/extraction/raw_explorer), where it can be normalized and enriched. We support standard protocols and interfaces like ~~PostgreSQL~~ and ~~OPC-UA~~ to facilitate data integration with your existing ETL tools and data warehouse solutions.
+
+We have extractors made for specific systems and standard ETL tools that work with most databases. This approach lets us minimize logic in the extractors and run and re-run transformations on data in the cloud.
+
+### Transform data[​](#transform-data "Direct link to heading")
+
+The data is stored in its original format in the ~~CDF~~ **staging** area. You can run and re-run [**transformations**](/cdf/integration/concepts/transformation/) on your data in the cloud and reshape it to fit the ~~CDF~~ data model.
+
+Decoupling the extraction and transformation steps makes it easier to maintain the data pipelines and reduces the load on the source systems. We recommend transforming the data using your existing ETL tools. We also offer the **~~CDF~~ Transformation** tool as an alternative for lightweight transformation jobs.
+
+### Enhance data[​](#enhance-data "Direct link to heading")
+
+The automatic and interactive [**contextualization**](/cdf/integration/concepts/contextualization/) tools in ~~CDF~~ let you combine artificial intelligence, machine learning, a powerful rules engine, and domain expertise to map resources from different source systems to each other in the ~~CDF~~ data model. Start by contextualizing your data with artificial intelligence, machine learning, and rules engines, then let domain experts validate and fine-tune the results.
+
+## Step 3: Consume data and build solutions[​](#step-3 "Direct link to heading")
+
+With complete and contextualized data in your industrial knowledge graph, you can use the built-in industrial tools, and build powerful apps and [AI agents](/cdf/atlas_ai/) to meet your business needs.
+
+All the information stored in ~~CDF~~ is available through our [**REST-based API**](https://developer.cognite.com/api/). ~~Cognite~~ also provides **connectors** and [**SDKs**](https://developer.cognite.com/sdks/) for common programming languages and [analytics tools](/cdf/data_science/guides/ds_tools), like ~~Python~~, ~~JavaScript~~, ~~Spark~~, ~~OData~~ (~~Excel~~, ~~Power BI~~), and ~~Grafana~~. We also offer community SDKs for ~~Java~~, ~~Scala~~, ~~Rust~~, and ~~.Net~~.
+
+The [**~~Functions~~**](/cdf/functions/admin) service provides a scalable, secure, and automated way to host and run ~~Python~~ code.
+
+Last updated: March 17, 2025
