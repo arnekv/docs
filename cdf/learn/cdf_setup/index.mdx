@@ -1,0 +1,77 @@
+# Set up a Cognite Data Fusion (CDF) project
+
+This tutorial is aimed at people who want to set up a CDF project and manage it in a CI/CD environment with the Cognite Toolkit. To follow the tutorial, familiarity with cloud concepts and basic knowledge of data management will be helpful.
+
+<!-- If there are no prerequsites, use this boilerplate text:
+
+There are no prerequisites for this tutorial. However, readers with some IT knowledge or experience will find the concepts easier to understand. -->
+
+By the end of this tutorial, you will have a fully functional CDF project that can be used to manage and analyze your data. You will create a project similar to the [Cognite Data Fusion Sample Project](https://example.com).
+
+## Step 1: Get a CDF project
+
+To get started, you need a Cognite Data Fusion (CDF) project. If you don't have a CDF project yet, you can sign up for a free trial or contact your Cognite representative to get access.
+
+### Register for a CDF project
+
+If you already have a CDF project, you can skip this step. To register for a CDF project:
+
+1. Navigate to the [Cognite Data Fusion registration page](https://example.com).
+2. Fill in the required information, including your name, email address, and organization.
+3. Select [the region and cluster](/cdf/admin/clusters_regions) for your project.
+4. Click "Register" to submit your request.
+
+### Get access to publicdata
+
+When you sign up for the Cognite Hub, you get access to public data sets that can be used in your CDF project. The data originates from a single compressor on Aker BP’s Valhall oil platform:
+
+1. Go to the [Cognite Hub](https://hub.cognite.com) and [sign up](https://hub.cognite.com/welcome-to-cognite-hub-73/how-to-sign-up-for-cognite-hub-and-cognite-academy-617).
+
+You can learn more about the public data sets in the [Open Industrial Data](https://hub.cognite.com/open-industrial-data-211) section of the Cognite Hub.
+
+### Configure your identity provider (IdP)
+
+To allow apps and users to sign in to Cognite Data Fusion with their organizational ID, configure your identity provider (IdP):
+
+- <https://docs.cognite.com/cdf/deploy/cdf_deploy/cdf_deploy_access_management>
+
+### Allowlist URLs on your firewall
+
+To load user interfaces correctly:
+
+1. Add these URLs to your allowlist: [Allowlist URLs](https://docs.cognite.com/cdf/admin/allowlist)
+
+## Step 2: Deploy with the Cognite Toolkit
+
+Prerequisites for this step include: A recent version of Python, at minimum v3.10.
+Recommended: a virtual environment manager like Poetry or pyenv for Python versions and dependencies.
+Recommended: Basic knowledge of Git.
+
+### Set up the Cognite Toolkit
+
+1. <https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/setup>
+
+### Configure, build, and deploy modules
+
+1. <https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/usage>
+1. <https://docs.cognite.com/cdf/deploy/cdf_toolkit/references/packages/quickstart>
+
+### Set up authentication and authorization
+
+1. <https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/auth>
+
+## Troubleshooting
+
+Acknowledge what may go wrong in the task and list a few common problems readers might run into with solutions.
+
+## Conclusion
+
+Review what was accomplished or built. Refer back to the project provided in the introduction as an example of a successful project.
+
+## Next steps
+
+Include 2-3 actionable next steps that someone can take after completing the tutorial. Link off to other related information like:
+
+- Projects that illustrate the introduced concepts
+- Relevant information on docs.cognite.com
+- Relevant Academy content or Hub posts.
