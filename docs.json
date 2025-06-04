@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "maple",
   "name": "Cognite Documentation",
   "colors": {
     "primary": "#0D9373",
@@ -9,35 +9,54 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "groups": [
+    "tabs": [
       {
-        "group": "API reference",
-        "openapi": "api-reference/cog-api.json"
-      },
-      {
-        "group": "About Cognite Data Fusion (CDF)",
+        "tab": "Get started",
         "pages": [
-          "cdf",
-          "cdf/sign-in",
-          "cdf/sign-up",
-          "cdf/learn/cdf_basics/"
+          "development"
         ]
       },
       {
-        "group": "Industrial tools",
+        "tab": "Industrial tools",
         "pages": [
-          "cdf/industrial_tools/",
-          "cdf/explore/search",
-          "cdf/explore/canvas",
-          "cdf/charts/",
-          "cdf/explore/custom_apps",
-          "cdf/explore/agents"
+          "development"
         ]
       },
       {
-        "group": "Https://indsl.docs.cognite.com/",
-        "pages": []
+        "tab": "Data management",
+        "pages": [
+          "development"
+        ]
+      },
+      {
+        "tab": "Admin",
+        "pages": [
+          "development"
+        ]
+      },
+      {
+        "tab": "Deploy",
+        "pages": [
+          "development"
+        ]
+      },
+      {
+        "tab": "Build",
+        "pages": [
+          "development"
+        ]
+      },
+      {
+        "tab": "Develop",
+        "pages": [
+          "development"
+        ]
+      },
+      {
+        "tab": "API references",
+        "pages": [
+          "openapi": "api-reference/cog-api.json"
+        ]
       }
     ]
   }
-}
