@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Cognite Documentation",
+  "name": "Cognite Docs",
   "colors": {
     "primary": "#0D9373",
     "light": "#55D799",
@@ -11,27 +11,11 @@
   "navigation": {
     "groups": [
       {
-        "group": "Atlas AI",
+        "group": "Tutorials",
         "pages": [
-          "cdf/atlas_ai",
-          "cdf/atlas_ai/concepts/",
-          {
-            "group": "Implementing Atlas AI agents",
-            "pages": [
-              "cdf/atlas_ai/guides/atlas_ai_agent_building"
-            ]
-          },
-          {
-            "group": "Reference information",
-            "pages": [
-              "cdf/atlas_ai/references",
-              "cdf/atlas_ai/references/atlas_ai_agent_language_models",
-              "cdf/atlas_ai/references/atlas_ai_agent_tools",
-              "cdf/atlas_ai/references/atlas_ai_agent_limits_restrictions"
-            ]
-          }
-        ]
-      }
-    ]
+          "cdf/learn/",
+          "cdf/learn/cdf_setup/",
+        }
+      ]
+    }
   }
-}
