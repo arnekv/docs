@@ -1,0 +1,138 @@
+---
+title: "Preparing docs.cognite.com for Localization (L10N)"
+description: "Steps to prepare the docs.cognite.com site and its content for localization into ten additional languages."
+---
+
+This document outlines the necessary steps to prepare the docs.cognite.com site and its content to be localized into ten additional languages.
+
+<Steps>
+  <Step title="Configure the site">
+    Follow the steps in [Docusaurus i18n tutorial](https://docusaurus.io/docs/i18n/tutorial) to configure Docusaurus to handle localization and add languages.
+  </Step>
+  <Step title="Generate explicit heading IDs">
+    By default, Docusaurus generates heading IDs based on the heading text. For example, the Markdown heading `### Hello World` will generate the ID `hello-world`. After translation, the heading becomes `### Bonjour le Monde`, with ID `bonjour-le-monde`.
+    <ul>
+      <li>To avoid broken links after translation, add explicit heading IDs to the Markdown documents:</li>
+    </ul>
+    <pre>
+{`### Hello World {#my-explicit-id}`}
+    </pre>
+    <ul>
+      <li>Link to it with <code>[link](#my-explicit-id)</code>.</li>
+    </ul>
+  </Step>
+  <Step title="Update links to other articles">
+    When using explicit heading IDs, change the way you add links to headings in other articles:
+    <ul>
+      <li>Enclose the link text in square brackets, for example, <code>[link text]</code>.</li>
+      <li>Add the parentheses that contain the file path followed by the explicit heading, for example, <code>(path/filename.md#my-explicit-heading)</code>.</li>
+      <li>Example: Learn more about <a href="cdf/dashboards/guides/grafana/timeseries.md#aggregation-granularity-alignment">aggregation, granularity, and alignment</a>.</li>
+    </ul>
+  </Step>
+  <Step title="Add semantic markup">
+    Use Markdown syntax consistently to provide translators with more context and to identify text strings that should not be translated or are part of the software UI. Update the default Docusaurus CSS stylesheet as needed for proper rendering.
+    <br/>
+    <strong>Element Markup Table:</strong>
+
+    | Element                | Markup                        | Example                                    | Translate |
+    |------------------------|-------------------------------|--------------------------------------------|-----------|
+    | Bold                   | Double asterisks              | This is a **bold** word.                   | Yes       |
+    | Italics*               | Single underscores            | This renders in _italics_.                 | Yes       |
+    | Strikethrough*         | `<mark>` tag                  | This renders as <mark>strikethrough</mark>.| Yes       |
+    | Code (inline)*         | Single backticks              | This is `code`.                            | No        |
+    | Code (block)*          | Triple backticks              | ``` before and after the code block.       | No        |
+    | UI element             | Double asterisks + underscore | Select **_File_** > **_Open_**.            | Yes       |
+    | Do not translate       | WIP                           | Don't translate _this text_.               | No        |
+    | Feature/product name   | Double tildes                 | Open ~~Charts~~.                           | No        |
+
+    _IMPORTANT: In Docusaurus, HTML tags, like `<mark>`, break the rendering if the tag is the first element on a line. Also, it breaks the rendering of other Markdown inline elements on the same line. To fix these issues, always wrap the line in a `<p>` tag if you're using `<mark>` tags._
+  </Step>
+  <Step title="Prepare media assets (screenshots, illustrations, diagrams, videos)">
+    <ul>
+      <li><strong>Screenshots:</strong>
+        <ul>
+          <li>Publish screenshots to a CDN from a repository different from the Docusaurus content files.</li>
+          <li>Reference screenshots by the CDN URL, for example:</li>
+        </ul>
+        <pre>
+{`<img className="screenshot" src="https://apps-cdn.cogniteapp.com/@cognite/docs-portal-images/1.0.0/images/cdf/3d/3d_rename_delete.png" alt="Rename or delete 3D models" width="60%"/>`}
+        </pre>
+        <ul>
+          <li>Consider how to update URLs per language, minimize screenshot use, and assign responsibility for localized screenshots.</li>
+        </ul>
+      </li>
+      <li><strong>Illustrations:</strong>
+        <ul>
+          <li>Save all illustrations to SVG format to allow translation of text in illustrations.</li>
+          <li>Recreate illustrations with text strings in Diagrams.Net.</li>
+          <li>Export to SVG and store in <a href="https://github.com/cognitedata/docs-portal-images/">docs-portal-images</a>.</li>
+          <li>Store source drawings (<code>.drawio</code>) in the <code>images/src/drawio</code> folder in <a href="https://github.com/cognitedata/doc.cognitedata.com">doc.cognitedata.com</a>.</li>
+        </ul>
+      </li>
+      <li><strong>Diagrams:</strong>
+        <ul>
+          <li>Use Mermaid diagrams where possible. Check for localization issues with Mermaid diagrams.</li>
+        </ul>
+      </li>
+      <li><strong>Videos:</strong>
+        <ul>
+          <li>Decide how to handle embedded videos (subtitles, alternatives, or discontinuation).</li>
+        </ul>
+      </li>
+    </ul>
+  </Step>
+  <Step title="Optimize doc site build-time">
+    <ul>
+      <li>Assess how adding ten languages impacts build time.</li>
+      <li>Current builds are killed after 1 hour (can build 9 locales in that time; 3 locales ≈ 15 mins).</li>
+      <li>Removing the kill switch allows building 12 locales, but may impact infrastructure and review processes.</li>
+    </ul>
+  </Step>
+  <Step title="Apply mitigations">
+    <ul>
+      <li><strong>Change how we build and publish:</strong>
+        <ul>
+          <li>Set up a staging environment to build only the source locale (en-US) for internal development and review.</li>
+          <li>Use a separate production build to publish all locales to the live site.</li>
+        </ul>
+      </li>
+      <li><strong>Change how we work:</strong>
+        <ul>
+          <li>Publish to the production/live site at fixed intervals (not continuously).</li>
+        </ul>
+      </li>
+      <li><strong>Reduce the number of articles:</strong>
+        <ul>
+          <li>Remove or move content for sunset/deprecated applications and features (e.g., ADI and BestDay).</li>
+          <li>Develop leaner content.</li>
+        </ul>
+      </li>
+      <li><strong>Split the content in multiple repositories:</strong>
+        <ul>
+          <li>Split content into locale-specific repositories and update the build process.</li>
+          <li>Publish developer and API documentation to a separate site (e.g., with Redoc.ly).</li>
+        </ul>
+      </li>
+      <li><strong>Partial translations:</strong>
+        <ul>
+          <li>Decide how to translate only parts of the documentation and whether to label non-localized articles.</li>
+        </ul>
+      </li>
+      <li><strong>Switch between languages:</strong>
+        <ul>
+          <li>Enable language switching and assess scalability.</li>
+          <li>Consider setting default locale from browser language (not supported by Docusaurus, but maybe by Firebase).</li>
+          <li>Track traffic per language if possible.</li>
+        </ul>
+      </li>
+      <li><strong>Search:</strong>
+        <ul>
+          <li>Ensure search scales to 12 languages and works with mixed languages.</li>
+          <li>Consider improvements to the search page and results.</li>
+        </ul>
+      </li>
+    </ul>
+  </Step>
+</Steps>
+
+Last updated: November 19, 2024
