@@ -16,7 +16,8 @@
           {
             "group": "Getting Started",
             "pages": [
-              "/cdf/explore/agents"
+              "/cdf/explore/agents",
+              "/cdf/explore/custom_apps"
             ]
           }
         ]
