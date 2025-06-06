@@ -27,9 +27,7 @@
           {
             "group": "Hola",
             "pages": [
-              "pages": [
-                "es/cdf/explore/agents"
-              ]
+              "es/cdf/explore/agents"
             ]
           }
         ]
