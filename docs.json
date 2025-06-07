@@ -32,7 +32,8 @@
                 "group": "Atlas AI",
                 "pages": [
                   "/cdf/atlas_ai/intro",
-                  "/cdf/atlas_ai/concepts/overview"
+                  "/cdf/atlas_ai/concepts/overview",
+                  "/cdf/atlas_ai/guides/atlas_ai_agent_building"
                 ]
               }
             ]
