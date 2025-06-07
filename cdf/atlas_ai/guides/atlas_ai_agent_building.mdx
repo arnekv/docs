@@ -1,49 +1,42 @@
 ---
 title: "Build and publish Atlas AI agents"
+description: "Use the **_Agent builder_** to build agents from scratch or from templates."
 ---
 
-<Warning>
-  The features described in this section are currently available to **early adopters** only and are subject to change.
-</Warning>
+Iterate rapidly with the **_Agent builder_** chat preview. When you're satisfied with the agent's performance, publish it and make it available in the **_Agent library_** to all users in the CDF project.
 
-Build and publish Atlas AI agents to solve business problems or automate workflows using the low-code ***Agent builder***. You can build your agent from scratch, or select an out-of-the-box template as a starting point.
-
-Iterate rapidly with the ***Agent builder*** chat preview. When you're satisfied with the agent's performance, publish it and make it available in the ***Agent library*** to all users in the CDF project.
-
-## Before you start[​](#before-you-start "Direct link to heading")
+## Before you start[​](#before-you-start)
 
 Before you start building the agent, scope your use case, identify an evaluation data set, and choose the [language model](/cdf/atlas_ai/references/atlas_ai_agent_language_models) to start with.
 
-## Build an publish an agent[​](#build-an-publish-an-agent "Direct link to heading")
+## Build and publish an agent[​](#build-an-publish-an-agent)
 
 To build and publish an Atlas AI agent:
 
-1. Navigate to ***Atlas AI*** > ***Agent builder***.
+<Steps>
+  <Step title="Create the agent.">
+    1. Navigate to **_Atlas AI_** \> **_Agent builder_**.
+    2. Select **_\+ Create agent_** or select a template to use as a starting point.
+    3. Enter a **_Name_** for the agent.
+    4. Enter a **_Description_** to help users understand what they can use the agent for, for example, which problems the agent can help solve or which tasks it can automate.
+  </Step>
+  <Step title="Set up the prompts.">
+    1. Enter one or more **_Sample prompts_** to display as examples to users when they interact with the agent.
+    2. In the **_Prompting_** section:
+       1. Select the [**_Language model_**](/cdf/atlas_ai/references/atlas_ai_agent_language_models) you have identified as the best fit for your agent.
+       2. Provide **_Instructions_** with specific directives or guidelines for **how** the agent should achieve the goals.
 
-2. Select ***+ Create agent*** or select a template to use as a starting point.
-
-3. Enter a ***Name*** for the agent.
-
-4. Enter a ***Description*** to help users understand what they can use the agent for, for example, which problems the agent can help solve or which tasks it can automate.
-
-5. Enter one or more ***Sample prompts*** to display as examples to users when they interact with the agent.
-
-6. In the ***Prompting*** section:
-
-   1. Select the [***Language model***](/cdf/atlas_ai/references/atlas_ai_agent_language_models) you have identified as the best fit for your agent.
-
-   2. Specify ***Goals*** to define the desired outcomes or objectives of the interactions with the agent. Goals outline **what** you want to accomplish.
-
-   3. Provide ***Instructions*** with specific directives or guidelines for **how** the agent should achieve the goals.
-
-      See [Prompts and prompt engineering](/cdf/atlas_ai/concepts/#prompts-and-prompt-engineering) for more details.
-
-7. Add [***Tools***](/cdf/atlas_ai/references/atlas_ai_agent_tools) to allow the agent to access data in the CDF knowledge graph, perform more complex tasks, or interact with other applications.
-
-8. Use the chat interface to **test** the agent. To **refine** the agent, adjust the language model, goals, instructions, and tools as necessary.
-
-9. Select ***Publish*** to make the agent available in the ***Agent library*** to all users in the CDF project.
-
-10. **Monitor** the performance and effectiveness of the agent and make ongoing improvements.
-
-Last updated: November 19, 2024
+          See [Prompts and prompt engineering](/cdf/atlas_ai/concepts/#prompts-and-prompt-engineering) for more details.
+  </Step>
+  <Step title="Add tools.">
+    1. Add [**_Tools_**](/cdf/atlas_ai/references/atlas_ai_agent_tools) to allow the agent to access data in the CDF knowledge graph, perform more complex tasks, or interact with other applications.
+  </Step>
+  <Step title="Test and refine.">
+    1. Use the chat interface to **test** the agent.
+    2. To **refine** the agent, adjust the language model, instructions, and tools as necessary.
+  </Step>
+  <Step title="Publish and monitor.">
+    1. Select **_Publish_** to make the agent available in the **_Agent library_** to all users in the CDF project.
+    2. **Monitor** the performance and effectiveness of the agent and make ongoing improvements.
+  </Step>
+</Steps>
