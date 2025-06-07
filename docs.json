@@ -31,7 +31,8 @@
               {
                 "group": "Atlas AI",
                 "pages": [
-                  "/cdf/atlas_ai/index"
+                  "/cdf/atlas_ai/index",
+                  "/cdf/atlas_ai/concepts/index"
                 ]
               }
             ]
