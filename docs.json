@@ -12,12 +12,23 @@
     "languages": [
       {
         "language": "en",
-        "groups": [
+        "tabs": [
           {
-            "group": "Getting Started",
+            "tab": "Get started",
+            "groups": [
+              {
+                "group": "Get started",
+                "pages": [
+                  "/cdf/explore/agents",
+                  "/cdf/explore/custom_apps"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "Atlas AI",
             "pages": [
-              "/cdf/explore/agents",
-              "/cdf/explore/custom_apps"
+              "/cdf/atlas_ai/index"
             ]
           }
         ]
