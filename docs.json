@@ -27,8 +27,13 @@
           },
           {
             "tab": "Atlas AI",
-            "pages": [
-              "/cdf/atlas_ai/"
+            "groups": [
+              {
+                "group": "Atlas AI",
+                "pages": [
+                  "/cdf/atlas_ai/index"
+                ]
+              }
             ]
           }
         ]
