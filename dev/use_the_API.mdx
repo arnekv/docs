@@ -11,17 +11,17 @@ https://api.cognitedata.com/api/{version}/projects/{project}/{resource}?query-pa
 
 Where:
 
-- [`HTTP method`](#http-methods) &mdash; The HTTP method used on the request to Cognite Data Fusion.
-- [`\{version\}`](#version) &mdash; The version of the API your application is using.
-- [`\{project\}`](#project) &mdash; The project identifier for the resources in Cognite Data Fusion that you're referencing.
-- [`\{resource\}`](#resources) &mdash; The resource in Cognite Data Fusion that you're referencing.
-- `query-parameters` &mdash; An optional set of parameters to change the request or response.
+- `HTTP method` — the HTTP method used on the request to Cognite Data Fusion.
+- `\{version\}` — the version of the API your application is using.
+- `\{project\}` — the project identifier for the resources in Cognite Data Fusion that you're referencing.
+- `\{resource\}` — the resource in Cognite Data Fusion that you're referencing.
+- `query-parameters` — an optional set of parameters to change the request or response.
 
 When you make a request, Cognite Data Fusion returns a response that includes:
 
-- Status code &mdash; an HTTP status code that indicates success or failure.
-- Response message &mdash; the data that you requested or the result of the operation. The response message can be empty for some operations.
-- Pagination &mdash; if your request returns a lot of data, you need to page through it by passing the value of `nextCursor` as the cursor to get the next page of limit results. For details, see [Paging](./concepts/pagination/).
+- Status code — an HTTP status code that indicates success or failure.
+- Response message — the data that you requested or the result of the operation. The response message can be empty for some operations.
+- Pagination — if your request returns a lot of data, you need to page through it by passing the value of `nextCursor` as the cursor to get the next page of limit results. For details, see [Paging](./concepts/pagination/).
 
 ## HTTP methods
 
@@ -34,8 +34,8 @@ The API supports these HTTP methods.
 | DELETE | Remove a resource.                       |
 | PUT    | Replace a resource with a new one.       |
 
-| Standard method | HTTP mapping                  | Required | HTTP request body        | HTTP response body |
-|:--------------- | :----------------------------- | :-------- | ------------------------ | :------------------ |
+| Standard method | HTTP mapping                   | Required | HTTP request body        | HTTP response body |
+| :-------------- | :----------------------------- | :------- | ------------------------ | :----------------- |
 | Create          | POST \<collection URL\>        | Yes      | Resource list            | Resource list      |
 | List            | GET \<collection URL\>         | Yes      | N/A                      | Resource list      |
 | Filter          | POST \<collection URL\>/list   | No       | Filter object            | Resource list      |
@@ -51,7 +51,7 @@ See [API versioning](API_versioning.md) to learn  about supported API versions, 
 
 ## Project
 
-Projects separate customer environments, and all resources in Cognite Data Fusion are linked to a project. A customer can have one or more projects. The project object contains configuration for how to authenticate users.
+Projects separate customer environments, and all resources in Cognite Data Fusion are linked to a project. A customer can have one or more projects. The project object contains configuration for authenticating users.
 
 Automatically assigned object IDs are **unique only within a project**.
 
@@ -63,9 +63,9 @@ See [About resource types](./concepts/resource_types/index.md) and the resource 
 
 ## IP addresses for the API
 
-The IP addresses for the APIs aren't static and will change as the architecture evolves and the service offerings extend. We will do our best to keep the changes to a minimum.
+The IP addresses for the APIs aren't static and will change as the architecture evolves and the service offerings extend.
 
-If you want to limit outbound traffic to Cognite Data Fusion only, the IP addresses for the current multi-tenant Cognite Data Fusion clusters are:
+If you want to limit outbound traffic to CDF only, the IP addresses for the current multi-tenant CDF clusters are:
 
 | Cluster              | URL                          | IP addresses                  |
 |----------------------|------------------------------|-------------------------------|
@@ -73,5 +73,11 @@ If you want to limit outbound traffic to Cognite Data Fusion only, the IP addres
 | Westeurope-1 (Azure) | `westeurope-1.cognitedata.com` | `20.73.203.191`                 |
 | Eastus-1 (Azure)     | `az-eastus-1.cognitedata.com`  | `52.151.200.252`                |
 | Asia-Northeast1-1 (GCP) | `asia-northeast1-1.cognitedata.com`  | `35.200.31.145`        |
+| Cluster                 | URL                                 | IP addresses                    |
+| ----------------------- | ----------------------------------- | ------------------------------- |
+| Europe-west1-1 (GCP)    | `api.cognitedata.com`               | `35.187.184.117, 34.76.254.249` |
+| Westeurope-1 (Azure)    | `westeurope-1.cognitedata.com`      | `20.73.203.191`                 |
+| Eastus-1 (Azure)        | `az-eastus-1.cognitedata.com`       | `52.151.200.252`                |
+| Asia-Northeast1-1 (GCP) | `asia-northeast1-1.cognitedata.com` | `35.200.31.145`                 |
 
 For the IP addresses of dedicated Cognite Data Fusion clusters, contact [Cognite Support](https://cognite.zendesk.com/hc/en-us/requests/new).
