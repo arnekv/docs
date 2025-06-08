@@ -1,6 +1,6 @@
 ---
-title: "API versions"
-description: "Learn about Cognite API versioning. "
+title: 'API versions'
+description: 'Learn about Cognite API versioning and breaking and non-breaking changes.'
 ---
 
 Cognite's stable REST APIs are prefixed with `v1`. This version prefix is a long-term solution, and there are no plans to increase it in the near future.
