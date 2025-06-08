@@ -20,7 +20,8 @@
                 "group": "Get started",
                 "pages": [
                   "/cdf/explore/agents",
-                  "/cdf/explore/custom_apps"
+                  "/cdf/explore/custom_apps",
+                  "/cdf/industrial_tools/industrial_tools"
                 ]
               }
             ]
