@@ -41,12 +41,14 @@
           },
           {
             "tab": "Developer",
+            "pages": [
+              "/dev/index"
+            ],
             "groups": [
               {
                 "group": "Get started",
                 "pages": [
-                  "/dev/overview",
-                  "/dev/quickstart/quickstart",
+                  "/dev/quickstart",
                   "/dev/use_the_API",
                   "/dev/API_versioning",
                   "/dev/guides/postman/postman"
