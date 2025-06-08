@@ -1,11 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: "Use the API"
+description: "Learn how to interact with the CDF REST API."
 ---
-
-# Use the API
-
-## RESTful web API
 
 Cognite's RESTful web API enables you to access resources in Cognite Data Fusion. To read or write to a resource, you construct requests that look like this:
 
@@ -15,21 +11,21 @@ https://api.cognitedata.com/api/{version}/projects/{project}/{resource}?query-pa
 
 Where:
 
-- [HTTP method](#http-methods) - The HTTP method used on the request to Cognite Data Fusion.
-- [\{version\}](#version) - The version of the API your application is using.
-- [\{project\}](#project) - The project identifier for the resources in Cognite Data Fusion that you're referencing.
-- [\{resource\}](#resources) - The resource in Cognite Data Fusion that you're referencing.
-- query-parameters - An optional set of parameters to change the request or response.
+- [`HTTP method`](#http-methods) &mdash; The HTTP method used on the request to Cognite Data Fusion.
+- [`\{version\}`](#version) &mdash; The version of the API your application is using.
+- [`\{project\}`](#project) &mdash; The project identifier for the resources in Cognite Data Fusion that you're referencing.
+- [`\{resource\}`](#resources) &mdash; The resource in Cognite Data Fusion that you're referencing.
+- `query-parameters` &mdash; An optional set of parameters to change the request or response.
 
 When you make a request, Cognite Data Fusion returns a response that includes:
 
-- Status code - An HTTP status code that indicates success or failure.
-- Response message - The data that you requested or the result of the operation. The response message can be empty for some operations.
-- Pagination - If your request returns a lot of data, you need to page through it by passing the value of `nextCursor` as the cursor to get the next page of limit results. For details, see [Paging](./concepts/pagination/).
+- Status code &mdash; an HTTP status code that indicates success or failure.
+- Response message &mdash; the data that you requested or the result of the operation. The response message can be empty for some operations.
+- Pagination &mdash; if your request returns a lot of data, you need to page through it by passing the value of `nextCursor` as the cursor to get the next page of limit results. For details, see [Paging](./concepts/pagination/).
 
 ## HTTP methods
 
-Cognite Data Fusion uses the HTTP method on your request to learn what your request is doing. The API supports the following methods.
+The API supports these HTTP methods.
 
 | Method | Description                              |
 | ------ | ---------------------------------------- |
@@ -38,7 +34,7 @@ Cognite Data Fusion uses the HTTP method on your request to learn what your requ
 | DELETE | Remove a resource.                       |
 | PUT    | Replace a resource with a new one.       |
 
-| Standard Method | HTTP Mapping                  | Required | HTTP Request Body        | HTTP Response Body |
+| Standard method | HTTP mapping                  | Required | HTTP request Body        | HTTP Response Body |
 | --------------- | ----------------------------- | -------- | ------------------------ | ------------------ |
 | Create          | POST \<collection URL\>        | Yes      | Resource list            | Resource list      |
 | List            | GET \<collection URL\>         | Yes      | N/A                      | Resource list      |
@@ -51,17 +47,17 @@ Cognite Data Fusion uses the HTTP method on your request to learn what your requ
 
 ## Version
 
-See [API versioning](API_versioning.md) to learn more about supported API versions, policy for backwards compatibility, and the end-of-life schedule for the APIs.
+See [API versioning](API_versioning.md) to learn  about supported API versions, policy for backwards compatibility, and the end-of-life schedule for the APIs.
 
 ## Project
 
-Projects are used to separate customer environments from one another, and all resources in Cognite Data Fusion are linked to a project. A customer can have one or more projects. The project object contains configuration for how to authenticate users.
+Projects separate customer environments, and all resources in Cognite Data Fusion are linked to a project. A customer can have one or more projects. The project object contains configuration for how to authenticate users.
 
-Automatically assigned object ids are **unique only within each project**.
+Automatically assigned object IDs are **unique only within a project**.
 
 ## Resources
 
-Your URL will include the resource or resources you are interacting with in the request, such as `assets`, `files`, `events`, and `timeseries`.
+Your URL includes the resource or resources you are interacting with in the request, such as `assets`, `files`, `events`, and `timeseries`.
 
 See [About resource types](./concepts/resource_types/index.md) and the resource reference topics for more information about resource types.
 
