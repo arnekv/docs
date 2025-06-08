@@ -1,9 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+Title: Development Quickstart
+Description: Get started with Cognite Data Fusion (CDF) API using Postman and learn how to authenticate your requests with OpenID Connect (OIDC).
 ---
-
-# Development Quickstart
 
 Cognite Data Fusion (CDF) authenticates your API requests to a **[project](/api#tag/Projects)** using OpenID Connect (OIDC). Get up and running with the API libraries and start working with CDF in a few simple steps.
 
