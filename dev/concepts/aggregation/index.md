@@ -1,0 +1,273 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Aggregation
+
+Learn how Cognite Data Fusion **aggregates** and **interpolates** time series data, and see the details about the available [aggregation functions](#aggregation-functions).
+
+## Aggregation in Cognite Data Fusion
+
+To improve **performance** and to reduce the amount of data transferred in query responses, Cognite Data Fusion **pre-calculates** the most common **aggregates** for numerical data points in time series. These aggregates are available with **millisecond response time** even when you are querying across large data sets.
+
+In your queries, you can specify one or more aggregates (for example `average`, `min` and `max`) and also the **time granularity** for the aggregates (for example `1h` for one hour).
+
+Aggregates are aligned to the start time modulo of the granularity unit. If you ask for daily average temperatures since Monday afternoon last week, the first aggregated data point will contain averages for the whole of Monday, the second for Tuesday, etc.
+
+:::info NOTE
+Cognite Data Fusion determines aggregate alignment based only on the granularity unit. If you specify hour aggregates, and the start time of the request is in the middle of the hour, the start time will be rounded down to the start time of the hour.
+
+As a result, you can get different results if you aggregate over 60 minutes than if you aggregate over 1 hour because the two queries are aligned differently. For example, if the start time is `3:43:25`:
+
+![1h vs 60 min granularity](/images/cdf/dev/concepts/aggregation/granularity_hour_vs_60min.png)
+
+:::
+
+### Aggregating data points
+
+Aggregation is to group together the values of many data points to form a single summary value. For example, the `count` aggregate gives the number of data points for a time range. The timestamp of the aggregate marks the beginning of the time range.
+
+### Interpolating data points
+
+Interpolation is to construct new data points within the range of a discrete set of known data points. The returned data points have a timestamp and a value, where the value represents the interpolated value at the time of the timestamp. The interpolation method depends on whether the time series is **stepwise** or **continuous**. Interpolated data points aren't stored and are only visible as the aggregation/interpolation results.
+
+### Stepwise vs continuous
+
+Interpolation and aggregation depend on how the time series is interpreted between the stored data points. A stepwise time series is assumed to keep its last reported value until a new value comes in, and then immediately jump to that new value. A continuous time series is assumed to gradually change between the stored data points and is modeled with linear interpolation.
+
+<table>
+ <thead></thead>
+  <tr>
+    <th>Data points <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/datapoints.png" alt="Data points" width="100%"/></th>
+    <th>Stepwise interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/stepwise.png" alt="Stepwise interpretation" width="100%"/></th>
+    <th>Continuous interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/continuous.png" alt="Data points" width="100%"/></th>
+  </tr>
+</table>
+
+How the times series is interpreted affects the value of aggregates. For example, the `average` aggregate, which is based on the average distance to zero, will be calculated as the area below the curve, divided by the size of the time range.
+
+<table>
+<thead></thead>
+  <tr>
+    <th>Stepwise interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/stepwise_aggregates.png" alt="Stepwise interpretation"/></th>
+    <th>Continuous interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/continuous_aggregates.png" alt="Continuous interpretation"/></th>
+  </tr>
+</table>
+
+### Granularity
+
+Granularity defines the time range that each aggregate is calculated from. It consists of a time unit and a size. Valid time units are `day` or `d`, `hour`or `h`, `minute` or `m` and `second` or `s`, for example, `2h` means that each time range should be 2 hours wide, `3m` means 3 minutes.
+
+The value of an aggregate for a time range may also depend on data outside of the time range because lines have to be drawn to the edge of the time range to compute the aggregates.
+
+<table>
+<thead></thead>
+  <tr>
+    <th>Data points <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/datapoints_range.png" alt="Data points"/></th>
+    <th>Stepwise interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/stepwise_range.png" alt="Stepwise interpretation"/></th>
+    <th>Continuous interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/continuous_range.png" alt="Continuous interpretation"/></th>
+  </tr>
+</table>
+
+<!-- TODO:
+
+#### Time window
+
+Do we need to define this? Maybe mention inclusive begin, exclusive end?-->
+
+### Missing data
+
+CDF doesn't return aggregates or interpolations for time ranges that have no data points, even if there are previous and next data points present for that period. As a result, the returned aggregates may skip large periods of time if the underlying data is sparse.
+
+<!-- TODO: what do we do if there are data points within the range, but no outside points? -->
+
+### Previous and next data point
+
+To interpolate a time series to the edges of the time range, many aggregates and interpolations depend on knowing the last data point before the time range, and the first data point after.
+
+For **continuous** time series, CDF doesn't use the previous and next data points if they're more than one hour away from the time range. This is to avoid interpolating data when the underlying sensor has been down for an extended period of time.
+
+For **stepwise** series, CDF uses the previous and next data points regardless of how distant they are.
+
+We do not _extrapolate_ backward from the first point in a time series or forward from the last point.
+This is also the case in stepwise time series, even though they are assumed to continuously maintain the value of the previous data point until the next point appears.
+The rationale behind this is that we can not know the reason that the sensor isn't sending new data: it could be because the value is unchanged, or because the sensor is down.
+We want to avoid implying that the sensor is always up.
+
+## Aggregation functions
+
+To use the aggregation functions, you construct requests that look like this:
+
+```json
+POST /api/v1/projects/{project}/timeseries/data/list
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "limit": 10000,
+      "externalId": "your external id",
+      "aggregates": ["aggregate function 1","aggregate function 2"],
+      "granularity": "1h",
+      "start": 1541424400000,
+      "end":"now"
+    }
+  ]
+}
+```
+
+Cognite Data Fusion (CDF) supports the aggregation functions described below.
+
+<!--vale on -->
+
+| Function                                  | How it’s calculated                                                                                | When to use                                                               |
+|-------------------------------------------|----------------------------------------------------------------------------------------------------| ------------------------------------------------------------------------- |
+| [average](#average)                       | Integral of time series divided by the size of time range                                          | Downsampling many noisy RAW data points.                     |
+| [max](#max)                               | The highest value of all stored data points.                                                       |                                                                           |
+| [maxDatapoint](#maxDatapoint)             | The highest value, along with its timestamp, of all stored data points.                            |                                                                           |
+| [min](#min)                               | The lowest value of all stored data points.                                                        |                                                                           |
+| [minDatapoint](#minDatapoint)             | The lowest value, along with its timestamp, of all stored data points.                             |                                                                           |
+| [count](#count)                           | The count of stored data points.                                                                   |                                                                           |
+| [sum](#sum)                               | The sum of values of all stored data points.                                                       |                                                                           |
+| [interpolation](#interpolation)           | The interpolated value at the start of each time range.                                            | Interpolating sparse irregular data to regularly spaced time series.      |
+| [stepInterpolation](#stepinterpolation)   | The interpolated value at the start of each time range, treating time series as stepwise.          |                                                                           |
+| [continuousVariance](#continuousvariance) | The variance of the underlying function when assuming linear or step behavior between data points. | Uneven spacing between data points, if interpolation is a good assumption. |
+| [discreteVariance](#discretevariance)     | The variance of the discrete set of data points, no weighting for density of points in time.       | Evenly spaced data points.                                                |
+| [totalVariation](#totalvariation)         | The sum of absolute differences between neighboring data points in a period.                       | Data quality checks or outlier detection.                                 |
+
+<!-- vale off -->
+
+### average
+
+<table>
+<thead></thead>
+  <tr>
+    <th>Data points <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/datapoints_range.png" alt="Data points"/></th>
+    <th>Stepwise interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/stepwise_range.png" alt="Stepwise interpretation"/></th>
+    <th>Continuous interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/continuous_range.png" alt="Continuous interpretation"/></th>
+  </tr>
+</table>
+
+The `average` function computes the time-weighted average value of the time series, for each time range.
+The value is defined as the integral of the time series divided by the length of the time range.
+In the figures, this is represented as the average height of the grey area.
+
+:::info NOTE
+To retrieve the average value of the _individual_ data points (arithmetic mean), use the `sum` function, divided by the `count` function.
+The `average` function interpolates between data points, also if these are outside the time range,
+and can thus differ significantly from the average of the individual data points. It can even be greater/smaller than `max`/`min`.
+:::
+
+When calculating the average, there is a difference between the stepwise and continuous data.
+
+The stepwise data always extends to the previous/next data point, no matter the distance. It also extends to end of the period after the last data point.
+
+For a continuous time series, if there is no data previous/next to the time range, or that data is more than 1 hour away,
+CDF doesn't interpolate backwards/forwards, and the integral is only done on parts of the time range.
+Continuous data ends at the last data point.
+
+<table>
+<thead></thead>
+  <tr>
+    <th>Continuous time series with no previous data points <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/continuous_range_no_prev_next.png" alt="No next/previous data points"/></th>
+  </tr>
+</table>
+
+### max
+
+For each time range, the `max` function returns the highest value of the stored data points in the time range.
+
+<table>
+<thead></thead>
+  <tr>
+    <th>max function <br /><img className="screenshot" src="/images/cdf/dev/concepts/aggregation/datapoints_max_interpolate.png" alt="Interpolated values at the edge not included"/></th>
+  </tr>
+</table>
+
+The function doesn't include interpolated values at the edges of the time range. This means that the average can be greater than max.
+
+### maxDatapoint
+`maxDatapoint` is the same as `max`, but it returns an object with the highest value and its timestamp. If there are multiple data points with the same maximum value, the one with the earliest timestamp is returned. If `includeStatus` is true, we also return the status code where it is not `Good`.
+
+
+### min
+
+For each time range, the `min` function returns the lowest value of all stored data points.
+
+<table>
+<thead></thead>
+  <tr>
+    <th>min function <br /><img className="screenshot" src="/images/cdf/dev/concepts/aggregation/datapoints_min_interpolate.png" alt="Interpolated values at the edge not included"/></th>
+  </tr>
+</table>
+
+The function doesn't include interpolated values at the edges of the time range.
+
+### minDatapoint
+`minDatapoint` is the same as `min`, but it returns an object with the lowest value and its timestamp. If there are multiple data points with the same minimum value, the one with the earliest timestamp is returned. If `includeStatus` is true, we also return the status code where it is not `Good`.
+
+### count
+
+The `count` function returns the number of data points for each time range. If there are no data points in a time range, this function returns no data.
+
+<table>
+<thead></thead>
+  <tr>
+    <th>count function <br /><img className="screenshot" src="/images/cdf/dev/concepts/aggregation/count.png" alt="the count function"/></th>
+  </tr>
+</table>
+
+### sum
+
+The `sum` function returns the sum of the values of all data points in the time range, or nothing if there are no data points.
+
+<table>
+<thead></thead>
+  <tr>
+    <th>sum function <br /><img className="screenshot" src="/images/cdf/dev/concepts/aggregation/sum.png" alt="the sum function"/></th>
+  </tr>
+</table>
+
+### interpolation
+
+The `interpolation` function interpolates the value of the time series at the start of each time range. The method of interpolation is based on whether the time series is continuous or stepwise.
+
+**Note:** For stepwise time series this is the same as the `stepInterpolation` function.
+
+<table>
+<thead></thead>
+  <tr>
+    <th>Data points <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/datapoints_interpolation.png" alt="Data points"/></th>
+    <th>Stepwise interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/stepwise_interpolation.png" alt="Stepwise interpretation"/></th>
+    <th>Continuous interpretation <img className="screenshot" src="/images/cdf/dev/concepts/aggregation/continuous_interpolation.png" alt="Continuous interpretation"/></th>
+  </tr>
+</table>
+
+### stepInterpolation
+
+Same as `interpolation`, but always treats the time series as stepwise.
+
+### continuousVariance
+
+The variance of a function _f_ is the expectation value of _f_ squared, minus the square of the expectation value of _f_.
+
+If CDF only has the value of _f_ in a finite number of points, there are different approaches to approximate the variance. The continuous variance aggregate is intended for situations where the piecewise linear function that interpolates between the data points is a good approximation. If this function is _f_, CDF defines the continuous variance in a time period from _t_=_a_ to _t_=_b_ as:
+
+![Vc=1b-aabf(t)²dt -(1b-aabf(t)dt)²](/images/cdf/dev/concepts/aggregation/continuous_variance.png)
+
+The time intervals between data points can vary due to a sampling setting that tries to capture the behavior of _f_ with a piecewise linear function (or a step function) using relatively few data points. These are cases when the continuous variance is a meaningful variance for the function. On the other hand, if the data points are sampled at even time intervals, independently of the value of _f_, the piecewise linear function will cut away extremal points, and CDF will get a variance lower than the actual variance.
+
+### discreteVariance
+
+The `discreteVariance`function is for cases where the data points are measured at regular time intervals, independently of the values they measure. In these cases, CDF can regard the data points as a random sampling of the values in the time period. CDF defines the variance as:
+
+![Vd=1ni=1nf(ti)² -(1ni=1nf(ti))²](/images/cdf/dev/concepts/aggregation/discrete_variance.png)
+
+### totalVariation
+
+The `totalVariation` function returns the total absolute change in the function values within a time interval. If the time interval goes from _t_=_a_ to _t_=_b_ with _n_ data points, the total variation is defined as:
+
+![V=|f(t1)-f(a)|+i=1n-1|f(ti+1)-f(ti)|+|f(b)-f(tn)|](/images/cdf/dev/concepts/aggregation/total_variation.png)
+
+CDF uses the interpolated values for _f_ at _a_ and _b_.

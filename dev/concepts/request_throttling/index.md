@@ -1,0 +1,65 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Request throttling
+
+Cognite Data Fusion (CDF) returns an HTTP `429 Too many requests` response status code in the following cases:
+
+- A user sends too many requests in a given amount of time ([rate limiting](#rate-limiting)).
+- A user sends too many concurrent requests ([concurrency limiting](#concurrency-limiting)).
+- A user issues conflicting requests concurrently ([conflicting requests](#conflicting-requests)).
+  Each of these cases requires different solving measures. The response body explains the cause of a particular 429 response.
+
+All requests contribute to throttling equally regardless of their source
+(extractors, functions, transformation, UI, SDK, etc).
+
+:::caution
+When you [register applications](https://docs.cognite.com/cdf/access/guides/configure_apps_oidc/), do **NOT** share client IDs and secrets across multiple applications, even if the applications have common authentication requirements in CDF. It may cause the applications to be subject to [rate-limiting](#rate-limiting) and may also cause issues with audit logs, with events from multiple entities being identified under a common client ID.
+:::
+
+The best practice is to avoid throttling, because throttled requests still consume some resources and therefore may be counted. For example, a request that was throttled due to concurrency may still consume rate capacity. However, if throttling happens, Cognite recommends using a retry strategy based on the [truncated exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) to handle sessions with the HTTP response codes 429 (or 503). The strategy lets clients slow down the request frequency to maximize productivity without having to re-submit failing requests.
+
+**Learn more** about exponential backoff:
+
+- [Microsoft](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/implement-retries-exponential-backoff)
+- [Google](https://cloud.google.com/storage/docs/retry-strategy)
+
+## Rate limiting
+
+Rate limiting happens when a user sends requests too fast. Refer to a particular resource's documentation for more details as different endpoints can have different rate limits. The limit scopes are the following:
+
+- By user (identity)
+- By project
+
+Some endpoints consider request "weight" (for example, how many objects/items a particular request modifies or retrieves.
+
+To avoid throttling due to rate limiting:
+
+- Reduce the number of parallel workers sending these requests.
+- Reduce "weight" of individual requests (for endpoints that have a "weighted" rate limit).
+- Introduce delays between requests.
+
+## Concurrency limiting
+
+Number of concurrent requests that a particular endpoint can process is limited. Refer to a particular resource's documentation for more details as different endpoints can have
+different concurrency limits. The limit scopes are the following:
+
+- By user (identity)
+- By project
+
+To avoid throttling due to concurrency limiting:
+
+- Reduce the number of parallel workers sending these requests.
+
+## Conflicting requests
+
+Requests are considered conflicting when they're concurrently trying to modify the same resource. For example,
+if 2 concurrent requests update the same asset, they're considered conflicting, and one of them may get throttled.
+
+To avoid conflicting requests:
+
+- Instead of "change log"-style updates, where each modification made in the source system is replicated to CDF,
+  replicate only the latest state.
+- Reduce the number of parallel workers sending these requests.

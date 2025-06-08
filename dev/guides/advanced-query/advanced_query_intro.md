@@ -1,0 +1,24 @@
+---
+pagination_prev: null
+title: Introduction
+---
+
+## Get started with Advanced Querying
+
+Advanced query language (AQL) consists of a set of features that provides additional functionality to `Search`, `Filter`, `Sort`, and `Aggregations` for the following core CDF resource types:
+
+- [Assets](/docs/dev/concepts/resource_types/assets.md)
+- [Events](/docs/dev/concepts/resource_types/events.md)
+- [Time Series](/docs/dev/concepts/resource_types/timeseries.md)
+- [Sequences](/docs/dev/concepts/resource_types/sequences.md)
+- [Documents](https://developer.cognite.com/api/#tag/Documents/)
+
+:::info
+This article covers the improvements made to query functionality for Assets, Events, Time Series, Sequences, and Documents.
+:::
+
+With the introduction of AQL, you can perform advanced query operations against the JSON-based metadata associated with these resource types.
+
+Use advanced queries for human interaction operations such as Data Exploration, Review, and Analysis. Advanced queries leverage a search engine, which is eventually consistent. It takes some time for the uploaded data to be available for search and filter operations and is relatively slow compared with CRUD endpoints. We do not recommend using them for large-scale batch read jobs (for example, to synchronize data from CDF to another database).
+
+The CRUD operations like `/create`, `/retrieve : /getbyid`, `/update`, and `/delete` do not involve a search engine and are conducted against the database backends of the services and are fast and immediately consistent. You can retrieve the uploaded data instantly via these endpoints.

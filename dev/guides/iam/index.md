@@ -1,0 +1,46 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# About identity and access management
+
+Identity and access management is a framework that lets you control which users and applications have access to data in Cognite Data Fusion.
+
+See also [authentication](authentication.md) and [authorization](authorization.md) for more details.
+
+## Terms
+
+1. Principal:
+
+   A principal is a user or service recognizable by the system as an individual entity. Each entity has a unique identity that makes the system able to distinguish between individual principals.
+
+2. Request:
+   A request is carrying an operation a particular principal wants to run against Cognite Data Fusion. Each request has information about what operation, such as read or update, which principal is requesting to have the operation carried out, and on which resource. A resource could, for example, be a particular file.
+
+3. Authentication:
+   When a principal sends a request to Cognite Data Fusion, the claimed principal must be checked so that Cognite Data Fusion knows which principal the request is from. Users are authenticated directly or indirectly through an identity provider (such as Azure AD). Services are authenticated by presenting a token. Requests from principals that can't be authenticated are denied. See [authentication](authentication.md) for more details.
+
+4. Authorization:
+   After the principal of the request is authenticated, Cognite Data Fusion will assess whether the principal has access to perform the requested operation and allow or deny the request accordingly. Based on the identity of the principal, the relevant capabilities will be resolved and evaluated against the operation in the request and the applicable resources. See [authorization](authorization.md) for more details.
+
+5. Identity provider:
+   An identity provider is a service to authenticate users. This is also the service where organizations typically manage the users of their organization. The most common identity provider is Azure Active Directory (Azure AD).
+
+## Projects
+
+Identity management lets you manage which users and services are able to connect to your project in Cognite Data Fusion. In other words, which principals Cognite Data Fusion will be able to authenticate. Only authenticated principals will be able to interact with Cognite Data Fusion to retrieve or store data there.
+
+## Identity Provider
+
+Cognite Data Fusion authenticates users against the organization's Identity Provider, and the organization controls which users are authenticated. Any user they, for example, disable in Azure AD, won't be able to sign in to applications and see data from Cognite Data Fusion. They can also create guest users in the identity provider to let users from other organizations be authenticated.
+
+## Users
+
+Users are managed by the existing identity provider of the organization. Typically, this will be Microsoft’s Azure Active Directory (Azure AD). To start using Cognite Data Fusion, you need to configure the connection to the identity provider so that Cognite Data Fusion can authenticate all the users from that identity provider. The identity provider configuration consists of which service instance to talk to.
+
+Cognite Data Fusion must successfully authenticate the user against the identity provider before the user is allowed to access Cognite Data Fusion. This requires that the application the user is leveraging has implemented the required authentication flow. The Asset Data Insight application is an application that implements the required authentication flow. This makes users of the Asset Data Insight application interact with Cognite Data Fusion, with their own principal, and therefore able to see all the data they have access to from Cognite Data Fusion in the application.
+
+## Groups
+
+Groups are defined per project and provide additional information about the principals in a group. they're primarily used for authorization, as they include a set of capabilities that principals in the group are provided. Group membership is dynamically determined from Azure AD group memberships if the `sourceId` for a Cognite Data Fusion group matches the object ID of a group in Azure.

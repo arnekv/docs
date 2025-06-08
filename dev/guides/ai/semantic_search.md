@@ -1,0 +1,128 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Semantic search
+
+The Semantic search API helps you build AI systems that use data from documents. With the API, you can search for texts with similar semantic meaning, unlike the search where you search for keywords, and find relevant texts written in other languages.
+
+The Semantic search API calculates Vector Embeddings for all PDF documents uploaded to Cognite Data Fusion (CDF). You can read more about [embeddings](https://platform.openai.com/docs/guides/embeddings) and [AIs multitool vector embeddings](https://cloud.google.com/blog/topics/developers-practitioners/meet-ais-multitool-vector-embeddings).
+
+Vector embeddings are created as part of the built-in Retrieval Augmented Generation (RAG) pipeline. All PDF documents you upload to CDF are parsed and OCRed, and the extracted text is divided into suitably sized passages that are indexed into a vector store.
+
+This article explains how to upload a PDF and use the Semantic search API to find relevant passages for a user question.
+
+You can also run the instruction and Python code in this article as a [Jupyter Notebook](./semantic_search.ipynb) in your CDF project.
+
+:::info
+You can refer to the [Document question answering](./document_qa) API as it relates to the Semantic search API.
+:::
+
+## Step 1. Upload PDF
+
+You can upload a PDF file to CDF one of the following ways:
+
+* Go to **_CDF_** > **_Industrial tools_** > **_Canvas_** and drag your PDF file to the canvas or upload existing files by selecting **_+ Add data_**.  
+  If you don't have a good file to upload, try this [test file](./well_report.pdf).
+
+* Go to **_CDF_** > **_Industrial tools_** > **_Data explorer_** > **_Files_** and select **_Upload_**.
+
+* Use the Python code.
+
+```python
+response1 = client.files.upload(path="./well_report.pdf")
+document_id = response1.id
+print(document_id)
+```
+
+## Step 2. Processing
+
+Once you've uploaded the file, wait for it to pass through the RAG pipeline. You can use the Document status API to poll the status.
+
+```python
+import time
+
+status_path = f"/api/v1/projects/{client.config.project}/documents/status"
+
+body = {
+    "items": [
+        {
+            "id": document_id
+        }
+    ]
+}
+
+while True:
+    response2 = client.post(status_path, json=body, headers={"cdf-version": "beta"}).json()
+
+    status = response2["items"][0]["passages"]["status"]
+    print(f"status: {status}")
+
+    if status in {"waiting", "running"}:
+        time.sleep(5)
+        continue
+
+    break
+```
+
+## Step 3. Search
+
+Once the document is fully indexed, search for the the relevant pasages with the Python code.
+
+```python
+import json
+
+search_path = f"/api/v1/projects/{client.config.project}/documents/passages/search"
+
+body = {
+    "limit": 3,
+    "filter": {
+        "and": [
+            {
+                "equals": {
+                    "property": ["document", "id"],
+                    "value": document_id
+                }
+            },
+            {
+                "semanticSearch": {
+                    "property": ["content"],
+                    "value": "Where is the Volve field located?"
+                }
+            }
+        ]
+    }
+}
+
+response3 = client.post(search_path, json=body).json()
+
+print(json.dumps(response3, indent=2))
+```
+
+See the response for the test file.
+
+```json
+{
+  "items": [
+    {
+      "document": {
+        "id": 8482943812996165,
+      },
+      "text": " 1. Introduction\n Well: 15/9-F-14\n 1.1. Purpose of the project\n Volve is an oil field located in the southern part of the North Sea approximately eight kilometres north of Sleipner \u00d8st. The sea depth is approximately 90 metres. The development concept is a jack-up processing and drilling facility and a vessel for storing stabilized oil.\n The reservoir contains oil in a combined stratigraphic and structural trap with Jurassic and Triassic sandstones in the Hugin formation. The western part of the structure is heavily faulted and it is uncertain if there is communication across the faults.\n Volve will be recovered by water injection.\n The rich gas will be transported to Sleipner A and exported onwards from there.\n Well F-14 is designed as an oil producer in the Volve development drilling program. The F-14 well is the second oil producer on the Volve Field. The well is located in a structural high position on the crest of the structure 800m up flank of the NO 15/9-19A discovery well.\n Main objectives:\n To establish an oil production well draining the northern and northwest flank of the Volve structure, the reservoir being the Hugin Formation.\n The upper fault block will be pressure supported by water injection in the F-4 and the F-5 Injection wells, whereas the lower fault block will receive support only from F-5.\n Other objectives:\n Collect data for planning of future wells and optimalization of production and well design.\n \ufffd \ufffd Collect pressure data.\n \ufffd \ufffd Logs, inclusive velocity.\n \ufffd \ufffd Stratigraphy, lithology, reservoir data.\n 3",
+      "locations": [
+        {
+          "pageNumber": 3,
+          "left": 57.59,
+          "right": 60.66,
+          "top": 43.58,
+          "bottom": 53.54
+        }
+      ]
+    },
+    ...
+  ]
+}
+```
+
+The response is a list of matching passages from the given documents. In addition to the relevant text, they contain the page numbers and bounding boxes where you can find the text. The response returns the passages in the order of relevance, where the top passage is the most relevant.

@@ -1,0 +1,113 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Software Development Kits (SDKs) and toolkits
+
+Not all our SDKs have the same functionality, and they expose functionality differently. We have three types of SDKs:
+
+- [**General**](#general-sdks) SDKs for interacting with the Cognite Data Fusion (CDF) APIs.
+
+- [**Specialized**](#specialized-sdks) SDKs that offer a tailored experience for specific tasks or areas.
+
+- [**Industry**](#industry-sdks) SDKs that expose industry-specific functionality.
+
+The general Python and JavaScript SDKs for CDF are primarily for backend and frontend work, respectively. The Python SDK is also used from the Jupyter Notebook and Streamlit-powered web experiences, and the JavaScript SDK is used from Node.js.
+
+We also offer [**toolkits**](#toolkits) for setting up and handling CDF projects, as well as for creating extractors to import data into CDF.
+
+## Support and maintenance
+
+The general [**Python**](sdks/python/index.md) and [**JavaScript**](sdks/js/index.md) SDKs for CDF are **supported** by Cognite.
+
+Other SDKs and toolkits are actively developed and are **community-supported** with contributions from Cognite engineers. They are provided **as-is**, without any support or warranties from Cognite.
+
+## General SDKs
+
+### Python
+
+The [**Python SDK**](/sdks/python/) is targeted towards general usage of CDF for Python developers. It also supports high-throughput jobs (for data engineers) and many data scientist tasks.
+
+The Python SDK is **supported by Cognite**.
+
+### JavaScript
+
+The [**JavaScript SDK**](/sdks/js) is primarily for web developers who want to build frontend applications. Most usage is React-based, but you can also use Angular. The GraphQL API is available for use in any JavaScript application with a standard GraphQL client.
+
+The JavaScript SDK is **supported by Cognite**.
+
+### Java
+
+The [**Java SDK**](https://github.com/cognitedata/cdf-sdk-java#quickstart) targets backend developers and data engineers who want to build high-throughput applications. It's an alternative to the Python SDK.
+
+The Java SDK is **community-supported**.
+
+### Scala
+
+The [**Scala SDK**](https://github.com/cognitedata/cognite-sdk-scala) is used in CDF's transformation engine. It is primarily focused on moving large amounts of data.
+
+The Scala SDK is **community-supported**.
+
+### .NET
+
+The [**.NET SDK**](https://github.com/cognitedata/cognite-sdk-dotnet) is an asynchronous SDK for .NET developers. It's used in CDF's OData service and Power BI integration and is focused on queries and analytics. It can be used from C# and F#.
+
+The .NET SDK is **community-supported**.
+
+### Rust
+
+The [**Rust SDK**](https://github.com/cognitedata/cognite-sdk-rust) supports the core CDF resource types and data modeling.
+
+The Rust SDK is **community-supported**.
+
+## Specialized SDKs
+
+### Reveal 3D viewer
+
+The [**Reveal 3D viewer**](https://cognitedata.github.io/reveal-docs/docs/) is an embeddable JavaScript library for visualizing large 3D models on the web. It supports complex CAD
+models and large point clouds.
+
+The Reveal 3D viewer is **community-supported**.
+
+### Spark Data Source
+
+The [**Spark Data Source**](https://github.com/cognitedata/cdp-spark-datasource/blob/master/README.md) lets you read and write data from and to CDF in parallel
+using asynchronous calls with Apache Spark.
+
+The Spark Data Source is **community-supported**.
+
+### Geospatial SDK
+
+The [**Geospatial SDK**](https://cognite-sdk-python.readthedocs-hosted.com/en/latest/geospatial.html) allows you to operate on the geospatial APIs in CDF using
+Python.
+
+The Geospatial SDK is **community-supported**.
+
+## Industry SDKs
+
+### Seismic SDK
+
+The [**Seismic SDK**](/sdks/seismic/) for Python is currently only available to selected customers. It allows you to use the seismic APIs to ingest SEG-Y files into CDF and to structure and query the data.
+
+The Seismic SDK is **community-supported**.
+
+## Toolkits
+
+### Extractor utils
+
+The [**Extractor utils**](https://cognite-extractor-utils.readthedocs-hosted.com/en/latest/quickstart.html) toolkit for Python lets you build extractors for CDF. It handles caching of state, batchwise ingestion, monitoring heartbeat, logging, and more.
+
+The Extractor utils is **community-supported**.
+
+### Data Modeling SDK Generator
+
+The [**Python Data Modeling SDK Generator**](/sdks/pygen) (Pygen) generates a Python SDK for data model(s) in CDF. Use it to have a tailored SDK for your data model(s) that is easy to use and understand.
+
+The Data Modeling SDK Generator is **community-supported**.
+
+### Simulator utils
+
+The [**Simulator utils**](https://cognitedata.github.io/dotnet-simulator-utils/) toolkit for .NET helps developers build the simulator connectors for CDF. It reads the simulator models and routines from CDF, parses the simulation inputs, and pushes the results back to the cloud out of the box.
+
+The Simulator utils is **community-supported**.

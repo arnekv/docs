@@ -1,0 +1,869 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Geospatial
+
+In Cognite Data Fusion (CDF), the geospatial endpoint is the base entry point for many resource types that enable storing and querying item collections that have a geospatial nature. Those items, features in Geographic Information System (GIS) terminology, are grouped in feature types. Features of the same type share several properties (a name, a type, and a value) and have more than one spatial representation stored in configurable properties.
+
+In addition, and following the Open Geospatial Consortium recommendations, each spatial representation should have an associated Coordinate Reference System (CRS), but this isn't mandatory. The Geospatial API also enables feature search using filters of arbitrary complexity, with a boolean expression of conditions on the properties. Defining a feature type is up to the client, and CDF geospatial doesn't come with pre-configured schemas and provides excellent flexibility for modeling the client problem domain.
+
+:::tip
+See the [Geospatial API documentation](/api#tag/Geospatial) for more information.
+
+See [Geospatial Examples](https://github.com/cognitedata/geospatial-examples) for Python SDK examples.
+:::
+
+## Authentication and authorization
+
+All HTTP endpoints served by the Geospatial API require a valid ticket from the Auth service.
+
+Feature type and feature related endpoints require the GEOSPATIAL capability (READ or WRITE).
+
+CRS related endpoints require the GEOSPATIAL_CRS capability to be enabled (READ or WRITE). Note that reading the predefined CRSs is possible with the GEOSPATIAL capability.
+
+### Data sets
+
+[Feature types](#feature-types) and [Features](#features) support using data sets. Since feature types define the specification of features, you must set these access capabilities:
+
+- `READ` access for the feature type to do any operations (create, update, get by ids, search, and aggregate) on the corresponding features.
+- `WRITE` access for all features of a feature type to delete the feature type.
+
+However, there are no constraints on data set specified on a feature and its corresponding feature type. Features of a feature type can belong to different data sets.
+
+#### Example
+
+Assuming that
+
+- data set 1234 isn't write-protected
+- data set 5678 is write-protected
+- feature type FT1 has data set ID 1234
+- feature type FT2 has data set ID 5678
+- feature type FT3 doesn't have data set ID.
+
+`geospatial:read:1234` indicates READ capability of geospatial objects within data set ID 1234.
+
+`geospatial:read:all` indicates READ capability of geospatial objects within all scopes.
+
+`dataset:owner:5678` indicates OWNER capability of data set ID 5678.
+
+| Scenario                                                 | Required access                                                                                                                    |
+| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Read feature type FT1                                    | `geospatial:read:1234` or `geospatial:read:all`                                                                                    |
+| Read feature type FT3                                    | `geospatial:read:all`                                                                                                              |
+| Create feature type FT4 with data set id 1234            | `geospatial:write:1234` or `geospatial:write:all`                                                                                  |
+| Create feature type FT4 with data set id 5678            | `dataset:owner:5678` and (`geospatial:write:5678` or `geospatial:write:all`)                                                       |
+| Create feature type FT4 without data set id              | `geospatial:write:all`                                                                                                             |
+| Read feature X (data set id 5678) of feature type FT1    | (`geospatial:read:1234` and `geospatial:read:5678`) or `geospatial:read:all`                                                       |
+| Read feature X (data set id 1234) of feature type FT3    | `geospatial:read:all`                                                                                                              |
+| Create feature Y (data set id 1234) of feature type FT1  | (`geospatial:read:1234` or `geospatial:read:all`) and (`geospatial:write:1234` or `geospatial:write:all`)                          |
+| Create feature Y (data set id 5678) of feature type FT1  | (`geospatial:read:1234` or `geospatial:read:all`) and (`geospatial:write:5678` or `geospatial:write:all`) and `dataset:owner:5678` |
+| Create feature Y without data set id of feature type FT1 | (`geospatial:read:1234` or `geospatial:read:all`) and (`geospatial:write:all`)                                                     |
+
+:::info NOTE
+CRSs don't support data sets.
+:::
+
+## Feature types
+
+A CDF feature type defines a class of spatial features with a common specification. The specification defines the property names and their types and the indexes to support to fulfill performance requirements a client might have. Indexing properties come at a price when creating features, and it's crucial to consider whether an index is necessary or not. The choice depends on the size and number of entries for a given feature type and the frequency of access to that particular property.
+
+## Features
+
+A feature is an item following the specification given by its corresponding feature type. A parallel with a class and an object is valid.
+
+## Properties
+
+### Default properties
+
+#### Feature types predefined properties
+
+Feature types have predefined properties that enable close integration with the rest of the CDF. These properties are:
+
+<!-- vale off -->
+
+| Name            | Type        | Description                                     |
+| --------------- | ----------  | ----------------------------------------------- |
+| externalId      | String      | The standard CDF external id.                    |
+| createdTime     | Timestamp   | The standard CDF resource item created time.     |
+| lastUpdatedTime | Timestamp   | The standard CDF resource item last update time. |
+| dataSetId       | Long        | The standard CDF data set id.                    |
+
+#### Feature predefined properties
+
+Features have the same predefined properties and in addition the `assetIds` property which has a list of internal asset ids of linked assets:
+
+| Name            | Type        | Description                                     |
+| --------------- | ----------- | ----------------------------------------------- |
+| externalId      | String      | The standard CDF external id.                    |
+| createdTime     | Timestamp   | The standard CDF resource item created time.     |
+| lastUpdatedTime | Timestamp   | The standard CDF resource item last update time. |
+| dataSetId       | Long        | The standard CDF data set id.                    |
+| assetIds        | Array[Long] | The standard CDF internal asset ids (links).     |
+
+<!-- vale on -->
+
+#### Reserved property names
+
+The following property names are reserved for future use:
+
+- id
+- metadata
+- defaultGeometry
+- defaultRaster
+- labels
+
+### Property types
+
+You can find the GeoJSON specification at [GeoJSON](https://geojson.org/) and the Well-Known-Text specification at [Open Geospatial Consortium](https://www.ogc.org/standards/sfa).
+
+### 2D
+
+The Geospatial service supports the following vector types, located in a 2-dimensional space, each as an X and a Y coordinate:
+<!-- vale off -->
+| Type            | Description                                                                                                      | Example WKT                                                                            | Example Geojson                                                                                                                      |
+| --------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| POINT           | A simple `point`.                                                                                                | `POINT(1 -1)`                                                                          | `{"type": "Point", "coordinates": [1, -1]}`                                                                                          |
+| LINESTRING      | A simple linestring specified by two or more distinct POINTs.                                                    | `LINESTRING(0 0, 1 1, 1 -1, 3 4)`                                                      | `{"type": "LineString", "coordinates": [[0, 0], [1, 1], [1, -1], [3, 4]]}`                                                           |
+| POLYGON         | A set of closed LINESTRINGs. A polygon must have exactly one exterior ring and can have one or more inner rings. | `POLYGON(`<p>`((35 10, 45 45, 15 40, 10 20, 35 10), (20 30, 35 35, 30 20, 20 30))`</p> | `{"type": "Polygon", "coordinates": [[[35, 10], [45, 45], [15, 40], [10, 20], [35, 10]], [[20, 30], [35, 35], [30, 20], [20, 30]]]}` |
+| MULTIPOINT      | A set of POINTs.                                                                                                 | `MULTIPOINT(-1 1, 0 0, 2 3)`                                                           |                                                                                                                                      |
+| MULTILINESTRING | A set of LINESTRINGs.                                                                                            | `MULTILINESTRING((0 0,0 1,1 1), (-1 1,-1 -1))`                                         |                                                                                                                                      |
+| MULTIPOLYGON    | A set of POLYGONs.                                                                                               | `MULTIPOLYGON(((2.25 0,1.25 1,1.25 -1,2.25 0)),((1 -1,1 1,0 0,1 -1)))`                 |                                                                                                                                      |
+<!-- vale on -->
+### 3D
+
+The Geospatial service supports the following vector types, located in a 3-dimensional space, each as an X, Y, and Z coordinate. The GeoJSON notation don't support the following vector types:
+<!-- vale off -->
+| Type            | Description                                                                                                      | Example WKT                                                                                      |
+| --------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| POINTZ          | A simple point.                                                                                                  | `POINTZ(1 -1 1)`                                                                                 |
+| LINESTRINGZ     | A linestring in 2D specified by two or more distinct POINTZs                                                     | `LINESTRINGZ(0 0 2, 1 1 3, 1 -1 4, 3 4 5)`                                                       |
+| POLYGONZ        | A set of closed LINESTRINGZ. A polygon must have exactly one exterior ring and can have one or more inner rings. | `POLYGONZ(((35 10 3, 45 45 4, 15 40 4, 10 20 5, 35 10 3), (20 30 3, 35 35 4, 30 20 5, 20 30 3))` |
+| MULTIPOINTZ     | A set of POINTZs.                                                                                                | `MULTIPOINTZ(-1 1 1, 0 0 3, 2 3 2)`                                                              |
+| MULTILINESTRING | A set of LINESTRINGZs.                                                                                           | `MULTILINESTRINGZ((0 0 1, 0 1 2, 1 1 3), (-1 1 2, -1 -1 2))`                                     |
+| MULTIPOLYGON    | A set of POLYGONZs.                                                                                              | `MULTIPOLYGONZ(((2.25 0,1.25 1,1.25 -1,2.25 0)),((1 -1,1 1,0 0,1 -1)))`                          |
+<!-- vale on -->
+The fact that a geometry has a Z coordinate doesn't make it a volumetric geometry. It remains a planar 2D geometry described in a 3D space.
+
+### 2D + measurement / time
+
+The Geospatial service supports the following vector types, located in a 2-dimensional space plus an extra measure, each as an X, Y, and M coordinates. The GeoJSON notation doesn't support the below vector types:
+<!-- vale off -->
+| Type             | Description                                                                                                       | Example WKT                                                                                      |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| POINTM           | A simple point.                                                                                                   | `POINTM(1 -1 1122)`                                                                              |
+| LINESTRINGM      | A linestring in 2D specified by two or more distinct POINTMs.                                                     | `LINESTRINGM(0 0 2, 1 1 3, 1 -1 4, 3 4 5)`                                                       |
+| POLYGONM         | A set of closed LINESTRINGMs. A polygon must have exactly one exterior ring and can have one or more inner rings. | `POLYGONM(((35 10 3, 45 45 4, 15 40 4, 10 20 5, 35 10 3), (20 30 3, 35 35 4, 30 20 5, 20 30 3))` |
+| MULTIPOINTM      | A set of points.                                                                                                  | `MULTIPOINTM(-1 1 1, 0 0 3, 2 3 2)`                                                              |
+| MULTILINESTRINGM | A set of LINESTRINGMs.                                                                                            | `MULTILINESTRINGM((0 0 1, 0 1 2, 1 1 3), (-1 1 2, -1 -1 2))`                                     |
+| MULTIPOLYGONM    | A set of POLYGONMs.                                                                                               | `MULTIPOLYGONM(((2.25 0,1.25 1,1.25 -1,2.25 0)),((1 -1,1 1,0 0,1 -1)))`                          |
+<!-- vale on -->
+The M coordinate is convenient to associate a measure with a point in space. Without the M coordinate, you'd require an extra property (of array type, not supported by the service) to store the measurement. The M coordinate doesn't require a spatial interpretation, and its unit isn't related to the X, Y, and Z coordinates. The M coordinate remains unchanged when the geometry gets transformed.
+
+### 3D + measurement / time
+
+The Geospatial service supports the following vector types, located in a 3-dimensional space plus an extra measure, each as an X, Y, Z, and M coordinates. The GeoJSON notation doesn't support the following vector types:
+<!-- vale off -->
+| Type              | Description                                                                                                        | Example WKT                                                                                                                           |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
+| POINTZM           | A simple point.                                                                                                    | `POINTZM(1 -1 11 22)`                                                                                                                 |
+| LINESTRINGZM      | A linestring in 3D specified by two or more distinct POINTZMs.                                                     | `LINESTRINGZM(0 0 2 233, 1 1 3 566, 1 -1 4 788, 3 4 5 988)`                                                                           |
+| POLYGONZM         | A set of closed LINESTRINGZMs. A polygon must have exactly one exterior ring and can have one or more inner rings. | `POLYGONZM(((35 10 3 122, 45 45 4 211, 15 40 4 344, 10 20 5 566, 35 10 3 544), (20 30 3 233, 35 35 4 455, 30 20 5 677, 20 30 3 899))` |
+| MULTIPOINTZM      | A set of POINTZMs.                                                                                                 | `MULTIPOINTZM(-1 1 1 0, 0 0 3 0, 2 3 2 0)`                                                                                            |
+| MULTILINESTRINGZM | A set of LINESTRINGZMs.                                                                                            | `MULTILINESTRINGZM((0 0 1 1, 0 1 2 2, 1 1 3 3), (-1 1 2 1, -1 -1 2 2))`                                                               |
+| MULTIPOLYGONZM    | A set of POLYGONZMs.                                                                                               | `MULTIPOLYGONZM(((2.25 0 1 1,1.25 1 1 1,1.25 -1 1 1,2.25 0 1 1)),((1 -1 1 1,1 1 1 1,0 0 1 1,1 -1 1 1)))`                              |
+<!-- vale on -->
+### Geometry collections
+
+The Geospatial service finally supports collections of the earlier vector types. It's a collection of heterogeneous vector types. The GeoJSON notation doesn't support the below vector types:
+
+| Type                 | Description                                       | Example WKT                                                                                                                                                                                                                                                                                  |
+| -------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| GEOMETRYCOLLECTION   | A collection of 2D geometries.                    | `GEOMETRYCOLLECTION(MULTIPOINT(-1 1, 0 0, 2 3), MULTILINESTRING((0 0, 0 1, 1 1),(-1 1, -1 -1)),POLYGON((-0.25 -1.25, -0.25 1.25, 2.5 1.25, 2.5 -1.25, -0.25 -1.25)))`                                                                                                                        |
+| GEOMETRYCOLLECTIONZ  | A collection of 3D geometries.                    | `GEOMETRYCOLLECTION Z (MULTIPOINT Z(-1 1 4, 0 0 2, 2 3 2), MULTILINESTRING Z ((0 0 1, 0 1 2, 1 1 3), (-1 1 1, -1 -1 2)), POLYGON Z(`<p>`(-0.25 -1.25 1, -0.25 1.25 2, 2.5 1.25 3, 2.5 -1.25 1, -0.25 -1.25 1),(2.25 0 2, 1.25 1 1, 1.25 -1 1, 2.25 0 2),(1 -1 2, 1 1 2, 0 0 2,1 -1 2)))`</p> |
+| GEOMETRYCOLLECTIONM  | A collection of 2D geometries with a measurement. | `GEOMETRYCOLLECTION M (MULTIPOINT Z(-1 1 4, 0 0 2, 2 3 2), MULTILINESTRING M ((0 0 1, 0 1 2, 1 1 3), (-1 1 1, -1 -1 2)), POLYGON M(`<p>`(-0.25 -1.25 1, -0.25 1.25 2, 2.5 1.25 3, 2.5 -1.25 1, -0.25 -1.25 1),(2.25 0 2, 1.25 1 1, 1.25 -1 1, 2.25 0 2),(1 -1 2, 1 1 2, 0 0 2,1 -1 2)))`</p> |
+| GEOMETRYCOLLECTIONZM | A collection of 3D geometries with a measurement. | `GEOMETRYCOLLECTION ZM (MULTIPOINT ZM(-1 1 4 5, 0 0 2 5, 2 3 2 5))`                                                                                                                                                                                                                          |
+<!-- vale off -->
+### Simple types
+
+In addition to spatial property types, the following versatile types are supported:
+
+| Type        | Description                                         | Example                 |
+| ----------- | --------------------------------------------------- | ----------------------- |
+| String      | A character string.                                 | “Powered by geospatial” |
+| Long        | A 64-bit signed integer.                            | 1234567                 |
+| Double      | A 64-bit double precision floating point number.    | 12345.6789              |
+| Boolean     | True or False.                                      | true                    |
+| Timestamp   | Unix timestamp, number of milliseconds since epoch. | 1637764395456           |
+| TimestampTz | ISO-8601 timestamp                                  | 2022-08-30T07:28:24.91Z |
+
+<!-- vale on -->
+
+### More on properties
+
+By default, the feature type properties are non-null. it's possible to define optional properties simply by adding an _optional_ field with true value in the property definition. In addition to this, it's possible to add a note on a property using the _description_ field.
+
+```json
+...
+{
+    ...
+    "properties": {
+        "temperature": {
+            "type": "DOUBLE",
+            "optional": true,
+            "description": "air temperature in Celsius"
+        },
+    },
+    ...
+}
+...
+```
+
+It's legal to define several geometry properties, each one with its SRID constraint.
+
+You can use it to store different levels of details for a given feature type, or store geometries of varying nature:
+
+```json
+ ...
+{
+    "externalId": "multiple_geometries",
+    "properties": {
+        "centerOfGravity": {
+            "type": "POINT",
+            "srid": 4326
+        },
+        "centroid": {
+            "type": "POINT",
+            "srid": 4326
+        },
+        "shape": {
+            "type": "POLYGON",
+            "srid": 4326
+        },
+        "shapeOrig": {
+            "type": "POLYGON",
+            "srid": 2001
+        }
+    }
+}
+  ...
+```
+
+Defining a feature type with geometry properties without SRID constraints is also legal. In this case, the server lets mix geometries located in different CRSs. The drawback is that the property can't be indexed and used in search constraints; it can store and retrieve the geometry. When a modeling choice is made, the common practice is to project the geometries and keep these copies in another geometry property with a fixed CRS, making it possible to apply search constraints on that extra geometry property.
+
+```json
+...
+{
+    "externalId": "multiple_geometries",
+    "properties": {
+        ...
+        "trajectoryOrig": {
+            "type": "LINESTRING"
+        },
+        "trajectory": {
+            "type": "LINESTRING",
+            "srid": 4326
+        },
+        ...
+    }
+    ...
+}
+...
+```
+
+## Searching for features
+
+It's possible to retrieve a feature if you know its external id. But the typical use case with geospatial data is searching for data using a geospatial filter. The following operators are currently supported:
+
+- stWithin
+- stWithinProperly
+- stIntersects
+- stContains
+- stContainsProperly
+- stWithinDistance
+- stIntersects3d
+- stWithinDistance3d
+
+The meaning of those operators follows the [OpenGIS specification](https://www.ogc.org/standards/sfs).
+
+A filter expression example:
+
+```json
+...
+{
+    "stWithin": {
+        "property": "location",
+        "value": {
+            "wkt": "POLYGON((60.547602 -5.423433, 60.547602 -6.474416, 60.585858 -6.474416, 60.585858 -5.423433, 60.547602 -5.423433))"
+        }
+    }
+}
+...
+```
+
+A filter expression can combine several property constraints:
+
+```json
+...
+{
+    "and": [
+        {
+            "range": {
+                "property": "temperature",
+                "gt": 3.14
+            }
+        },
+        {
+            "not": {
+                "stWithin": {
+                    "property": "location",
+                    "value": {
+                        "wkt": "POLYGON((60.547602 -5.423433, 60.547602 -6.474416, 60.585858 -6.474416, 60.585858 -5.423433, 60.547602 -5.423433))"
+                    }
+                }
+            }
+        }
+    ]
+}
+...
+```
+
+The spatial filtering isn't required:
+
+```json
+...
+{
+    "and": [
+        {
+            "range": {
+                "property": "temperature",
+                "gt": 3.14
+            }
+        },
+        {
+            "range": {
+                "property": "pressure",
+                "lt": 129.4
+            }
+        }
+    ]
+}
+...
+```
+
+The filter specification for feature search offers arbitrary complexity and depth:
+
+```json
+...
+{
+    "or": [
+        {
+            "and": [
+                {
+                    "range": {
+                        "property": "attr1",
+                        "gt": 3.14
+                    }
+                },
+                {
+                    "range": {
+                        "property": "attr1",
+                         "lt": 5.03
+                    }
+                }
+            ]
+        },
+        {
+            "not": {
+                "range": {
+                    "property": "attr2",
+                    "lt": 6.28
+                }
+            }
+        }
+    ]
+}
+...
+```
+
+You can also filter features by linked asset IDs. The following filter lets you search for features linked to the asset IDs you specify.
+
+```json
+...
+{
+    "containsAny": {
+        "property": "assetIds",
+        "value": [1, 2, 3, 4]
+    }
+}
+...
+```
+
+The full filter language specification is available in [the API specification](/api#tag/Geospatial).
+
+## Paginate features
+
+The Geospatial service supports cursors to paginate through the features of a feature type. The `nextCursor` property of the response returns the cursor value.
+
+```json
+{
+    "items": {
+        ...
+    },
+    "nextCursor": "3zZmOn50qL9Kkhjwmrz602sHfQifGypzdqYEtQG3ajuU"
+}
+
+```
+
+To retrieve the next page of features, pass the same request with the `cursor` field changed to the value returned in `nextCursor` as in the example below.
+
+`https://...cognitedata.com/api/v1/projects/.../geospatial/featuretypes/.../features/list`
+
+```json
+{
+    "filter": {
+        ...
+    },
+    "cursor": "3zZmOn50qL9Kkhjwmrz602sHfQifGypzdqYEtQG3ajuU"
+}
+```
+
+## Spatial filter operators
+
+1. **stIntersects**
+
+   This is a 2D operator.
+   Geometry A intersects geometry B if and only if there are points belonging to both A and B. In particular, any geometry intersects itself.
+
+   The green geometry intersects the orange geometry in each of the examples below.
+
+    ![ " width="60%](/images/cdf/dev/concepts/resource_types/intersects.svg)
+
+2. **stWithin**
+
+   This is a 2D operator.
+   Geometry A is within geometry B if and only if all the points of A also belong to B. In particular, every geometry is within itself. In each of the examples below, the green geometry is within the orange geometry. In each of the examples below, the green geometry isn't within the orange geometry. <!-- How's this possible? Is it within or not within the geometry? -->
+
+    ![ " width="60%](/images/cdf/dev/concepts/resource_types/within.svg)
+
+3. **stWithinProperly**
+
+   This is a 2D operator.
+   Geometry A is completely within geometry B if and only if all the points of A lie in the interior of B. Geometry A is completely within geometry B if and only if A is within B and the intersection of A and the boundary of B is empty. Any geometry A isn't completely within itself.
+
+    ![ " width="60%](/images/cdf/dev/concepts/resource_types/completelyWithin.svg)
+
+4. **stContains**
+
+   This is a 2D operator.
+   The relation "contains" is an opposite relation to "within": geometry A contains geometry B if and only if B is within A.
+
+5. **stContainsProperly**
+
+   This is a 2D operator.
+   The relation "contains properly" is the opposite relation to "within properly": geometry A properly contains geometry B if and only if B is properly within A.
+
+6. **stWithinDistance**
+
+   This is a 2D operator.
+   Geometry A is within the distance of geometry B if and only if there is a pair of points _a_ in A and _b_ in B and the distance between _a_ and _b_ is less than or equal to the given distance. The distance is specified in units defined by the coordinate reference system (CRS).
+   In the example below, the geometries are within distance d from each other.
+
+    ![ " width="60%](/images/cdf/dev/concepts/resource_types/withinDistance.svg)
+
+7. **stIntersects3d**
+
+   This is a 3D operator.
+   Geometry A intersects geometry B if and only if there are points belonging to both A and B. In particular, any geometry intersects itself.
+
+8. **stWithinDistance3d**
+
+   This is a 3D operator.
+   Geometry A is within the distance of geometry B if and only if there is a pair of points _a_ in A and _b_ in B and the distance between _a_ and _b_ is less than or equal to the given distance. The distance is specified in units defined by the coordinate reference system (CRS).
+
+## Indexes
+
+By default, features index their `externalId`, `createdTime`, and `lastUpdatedTime`.
+
+Several features in a given feature type impact the filtering features. Associating an index with a property allows for more efficient filtering when the property is present in the filter expression. However, this isn't a guarantee since it will depend on the index's selectivity, which is data-dependent.
+
+Example of specifying an index on the point2d property:
+
+```json
+...
+{
+    ...
+    "properties": {
+        ...
+        "point2d": {
+            "type": "POINT",
+            "srid": 4326
+        },
+        ...
+    },
+    "searchSpec": {
+        ...
+        "point2d_idx": {
+              "properties": [ "point2d" ]
+        },
+        ...
+    }
+}
+...
+```
+
+indexes can span many properties, possibly of different types:
+
+```json
+...
+{
+    ...
+    "properties": {
+        ...
+        "point2d": {
+            "type": "POINT",
+            "srid": 4326
+        },
+        "temperature": {
+          "type": "DOUBLE"
+        },
+        ...
+    },
+    "searchSpec": {
+        "point2d_temperature_idx": {
+            "properties": [ "point2d", "temperature" ]
+        }
+    }
+}
+...
+```
+
+## Coordinate Reference Systems
+
+A Coordinate Reference System (CRS) defines a 2D or 3D reference somewhere on or above/below the Earth's surface. Coordinates are usually defined in East/North/Height order, but this can vary from one CRS to the next. Most CRSs are only valid over a limited part of the globe, so for global mapping purposes, it's common to use GPS latitude/longitude values  defined by WGS84 and encoded as the EPSG/SRID (Spatial Reference ID) number 4326.
+
+### Predefined CRSs
+
+CDF currently supports about 8500 well known CRSs, all defined by [European Petroleum Survey Group (EPSG)](https://epsg.io/).
+
+### Custom CRS
+
+If a user needs an EPSG entry that's currently missing, you can add it as a custom CRS.
+
+Any API user can create a custom CRS; there will be a limit on how many such definitions each customer can make. A custom CRS is defined by a reference number (a positive integer), by a [wkt (Well Known Text)](https://en.wikipedia.org/wiki/Well-known_text_representation_of_geometry) string, and by a projString. The projString defines the geometrical projection needed to convert coordinates in this CRS into one of the standard CRSs. The projString needs to be in the format defined by the industry-standard [PROJ](https://proj.org/) library ([https://proj.org/](https://proj.org/usage/quickstart.html)).
+
+For example, the string `+proj=ortho +lat_0=59.123456 +lon_0=4.7654321 +x_0=0 +y_0=0 +ellps=intl` defines an orthogonal 3D CRS located at a point in the North Sea, oriented so that geographic east is the x-direction, y is north, and z points up. The ellipsoid used (International 1924) means that the lat/long values are according to that older standard, resulting in an offset (in this particular region) of about 30 m east-west from the GPS coordinate with the same numeric latitude/longitude values.
+
+### Enable CRS transformations
+
+By default, when working with a feature type defining a geometry property with specified CRS, for example, the SRID field is set, you can't use a different CRS when you create or update features or search or aggregate with geometry filters on that property.
+
+Change this behavior by setting the **allowCrsTransformation** flag to true. The API will then transform the input geometry coordinates from the input geometry CRS into the feature type property CRS.
+
+Consider the feature type extract below.
+
+`https://...cognitedata.com/api/v1/projects/.../geospatial/featuretypes`
+
+```json
+...
+{
+    ...
+    "properties": {
+        ...
+        "geom": {
+            "type": "POINT",
+            "srid": 4326
+        },
+        ...
+    },
+    ...
+}
+...
+```
+
+In the following example, the input geometry given in EPSG:3857 will be converted into EPSG:4326.
+
+`https://...cognitedata.com/api/v1/projects/.../geospatial/featuretypes/.../features`
+
+```json
+{
+    "items": [
+        {
+            ...
+            "geom": {
+                "wkt": "POINT(261443.300621 6249935.722823)",
+                "srid": 3857
+            }
+            ...
+        }
+    ],
+    "allowCrsTransformation": "true"
+}
+```
+
+With **allowCrsTransformation** set to **false** or unspecified, the API returns an HTTP error code 400.
+
+Set the same **allowCrsTransformation** option to **true**, when defining a spatial filter for search/aggregation as in the example below.
+
+`https://...cognitedata.com/api/v1/projects/.../geospatial/featuretypes/.../features/search`
+
+```json
+{
+    "filter": {
+        "stWithin": {
+            "property": "geom",
+            "value": {
+                "wkt": "POLYGON((261443 6249935, 261444 6249935, 261444 6249936, 261443 6249936, 261443 6249935))',
+                "srid": 3857
+            }
+        }
+    },
+    "allowCrsTransformation": "true"
+}
+```
+
+Here again, with **allowCrsTransformation** set to **false** or unspecified, the API returns an HTTP error code 400.
+
+### Geometry properties without a CRS specified
+
+Consider a feature type with a geometry property `geomOriginal` without a specified CRS, for example, the SRID field isn't set. The different features in this feature type will have `geomOriginal` geometries in different CRS (EPSG:4326, EPSG:3857, EPSG:4230, etc.).
+
+The API doesn't allow spatial filtering on that `geomOriginal` property since it would require transforming all the geometries in a common CRS before the filtering can be applied. In addition to the performance implications, the choice of such a common CRS depends on the use case. Therefore, the API can't decide which one to use.
+
+In addition, any CRS conversion implies a potential loss of precision and possibly some distortion. You should retain geometries in their original CRS. Concretely, you will ingest the geometries twice, once in the original CRS, once in the specified common CRS of your choice.
+
+Back to the example above with `geomOriginal`, we create an additional geometry property with a specified CRS, here EPSG:4326, for example, `geom4326`. The property complements the initial `geomOriginal` one, and will allow spatial filtering.
+
+The feature type creation looks the following way.
+
+`https://...cognitedata.com/api/v1/projects/.../geospatial/featuretypes`
+
+```json
+...
+{
+    ...
+    "properties": {
+        ...
+        "geomOriginal": {
+          "type": "POINT"
+        },
+        "geom4326": {
+            "type": "POINT",
+            "srid": 4326
+        },
+        ...
+    },
+    ...
+}
+...
+```
+
+As mentioned earlier, to enable the transformation of the input geometry into a geometry in the EPSG:4326 CRS, set the **allowCrsTransformation** flag to **true** when creating or updating features.
+
+`https://...cognitedata.com/api/v1/projects/.../geospatial/featuretypes/.../features`
+
+```json
+{
+    "items": [
+        {
+            ...
+            "geomOriginal": {
+                "wkt": "POINT(261443.300621 6249935.722823)",
+                "srid": 3857
+            },
+            "geom4326": {
+                "wkt": "POINT(261443.300621 6249935.722823)",
+                "srid": 3857
+            }
+            ...
+        }
+    ],
+    "allowCrsTransformation": "true"
+}
+```
+
+Spatial filtering on the `geom4326` column can then be achieved for search/aggregation as shown here.
+
+`https://...cognitedata.com/api/v1/projects/.../geospatial/featuretypes/.../features/search`
+
+```json
+{
+    "filter": {
+        "stWithin": {
+            "property": "geom4326",
+            "value": {
+                "wkt": "POLYGON((38 27, 39 27, 39 28, 38 28, 38 27))',
+                "srid": 4326
+            }
+        }
+    },
+}
+```
+
+Again, with **allowCrsTransformation** set to **false** or unspecified, the API returns an HTTP error code 400.
+
+## Raster data
+
+<!-- vale off -->
+
+Rasters organize data into pixels or cells and can be split into rectangular tiles. The number of horizontal and vertical pixels defines the size of a raster tile. Each pixel is identified by a row and column in a tile and represents a position. A pixel is also a placeholder for data. The data elements rest in bands, also known as channels or dimensions. Rasters can be georeferenced, where each pixel corresponds to a defined area on earth, in a defined [Coordinate Reference System](/dev/concepts/resource_types/geospatial#coordinate-reference-systems).
+
+An example raster image from Global Wind Atlas
+<img className="screenshot" src="/images/cdf/dev/concepts/resource_types/raster.png" alt="Global Wind Atlas" width="100%"/>
+
+Typical metadata associated with a raster:
+
+- upperleftx: the upper left X coordinate of the raster.
+- upperlefty: the upper left Y coordinate of the raster.
+- width: the width of the raster in pixels.
+- height: the height of the raster in pixels.
+- scalex: the X component of the pixel width in the coordinate reference system units.
+- scaley: the Y component of the pixel height in the coordinate reference system units.
+- skewx: the georeference X skew.
+- skewy: the georeference Y skew.
+- srid: the spatial reference identifier of the raster.
+- numbands: the number of bands in the raster object.
+<!-- vale on -->
+You can store raster data in a database (embedded) or outside a database, for instance as a CDF File or using cloud storage. If the data is stored outside a database, the raster field has metadata defining the width, the height, the geometric bounding box, and a reference to the file and the file region that the raster tile references.
+
+The geospatial endpoint supports georeferenced rasters.
+
+The supported raster data format is defined by the GDAL ([documentation](https://gdal.org/)) library.
+
+### Raster properties
+
+A CDF Geospatial feature type can have zero, one, or many raster properties.
+
+:::info NOTE
+A feature type raster property must be optional and require a fixed SRID.
+:::
+
+You can set the storage type for the raster to:
+
+- embedded: the raster will be stored in the database
+- file: point to a cloud storage file for the raster (currently not supported)
+
+```json
+{
+    "externalId": "surveys",
+    "properties": {
+        ...
+        "bathymetry": {
+            "description": "the bathymetry rasters",
+            "type": "raster",
+            "storage": "embedded",
+            "formats": [ "XYZ" ],
+            "srid": "32631",
+            "optional": "true"
+        },
+        ...
+    }
+}
+```
+
+### Ingesting raster
+
+Due to the size (typically at least megabytes) and nature of the data (often binary), the raster data input and output are served from a different endpoint.
+
+#### Embeded storage
+
+To insert raster data:
+
+1. Insert the feature without raster information.
+
+    ```json
+    POST /geospatial/featuretypes/<id>/features
+    {
+    "items": [
+        {
+        "externalId": "some_survey",
+        ... <regular properties> ...,
+        }
+    ]
+    }
+    ```
+
+2. Push the raster RAW data.
+
+```bash
+PUT /geospatial/featuretypes/<id>/features/<id>/rasters/<id>?format=XYZ&srid=4326
+<raster data>
+```
+
+:::info NOTE
+Depending on the GDAL driver used to read GDAL input content, there is potential precision loss when ingesting the raster. For example, ASCII Gridded XYZ driver only supports a single precision floating point. When getting XYZ raster, SIGNIFICANT_DIGITS option can be used to specify the number of significant digits of the output raster.
+:::
+
+## Computation
+
+The geospatial API provides a `/compute` endpoint to run arbitrary complex geospatial computations. Currently, the endpoint only supports direct geometry coordinate transformations.
+
+The pseudo JSON structure of a `/compute` request looks like this:
+
+```json
+{
+  "output": {
+    "<output-property-name-1>": {
+      "<function-name>": {
+        "function-argument-1": ...,
+        "function-argument-2": ...
+      }
+    },
+    "<output-property-name-2>": {
+        ...
+    },
+    ...
+  }
+}
+```
+
+Where:
+
+- `<output-property-name-...>` represents the name of an output JSON property chosen by the client making the request.
+- `<function-name>` is the name of a registered function for the `/compute` endpoint. A function might have one or many arguments, represented as `<function-argument-...>`.
+
+The pseudo JSON structure of a `/compute` response looks like this:
+
+```json
+[
+    {
+        "<output-property-name-1>": ...,
+        "<output-property-name-2>": ...,
+        ...
+    }
+]
+```
+
+### Coordinate transformation
+
+An example of a direct geometry transformation:
+
+```json
+POST /geospatial/compute
+{
+  "output": {
+    "value": {
+      "stTransform": {
+        "geometry": {
+          "ewkt": "SRID=4326;POINT(2.353295 48.850908)"
+        },
+        "srid": 23031
+      }
+    }
+  }
+}
+```
+
+The response to the query will have this structure:
+
+```json
+[
+  {
+    "from4326to23031": {
+      "wkt": "POINT(452650.3970115797 5411291.746826155)",
+      "srid": 23031
+    }
+  }
+]
+```

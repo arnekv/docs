@@ -1,0 +1,25 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Authentication
+
+Authentication is the process of validating claims of identity, and is the first half of establishing whether a user is a user in Cognite Data Fusion (CDF) and what they should have access to.
+
+Requests to Cognite Data Fusion are authenticated as submitted by a user using OAuth2 tokens.
+
+Once a token is validated and the associated Cognite Data Fusion user is determined, [Authorization](authorization.md) takes place.
+
+## Tokens
+
+When a user logs in through a web browser, they're sent to the Identity Provider (IdP) configured for the project (an OAuth2 provider, almost always Azure AD or Google) using the authorization code grant flow. See [external application integration](external-application.md).
+
+Adding a `Authorization` header with the token as follows will authenthicate the request:
+
+```sh
+$ curl -X GET \
+  'https://api.cognitedata.com/api/v1/token/inspect' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer ewogICJhbGciOiAiUlMyNTYiLAogICJ0eXAiOiAiSldUIgp9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.TCYt5XsITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUcX16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtjPAYuNzVBAh4vGHSrQyHUdBBPM'
+```

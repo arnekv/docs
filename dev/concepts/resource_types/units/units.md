@@ -1,0 +1,768 @@
+---
+pagination_next: null
+pagination_prev: null
+title: Introduction
+---
+
+# Units in Cognite Data Fusion
+
+Cognite Data Fusion (CDF) uses Units to standardize measurement data across your industrial data resources. Whether you're working with time series or data models, Units help ensure consistent measurement representation and enable seamless unit conversion.
+
+## Core Concepts
+
+### Understanding Units
+The units service in CDF consists of three key components:
+1. __Quantity__: A specific, measurable property or characteristic of a physical system or substance. For example, temperature, pressure, mass, and length.
+2. __Unit__: A standard amount or value of a particular quantity by which other amounts of the same quantity can be measured or expressed. For example, `°C` and `°F` are used for temperature, and `bar` and `psi` are used for pressure.
+3. __Unit system__: A collection of default units for given quantities. Examples include the `SI` unit system ( The default value is `K` for temperature and `Pascal` for pressure) and the `Imperial` unit system ( The default value is `°F` for temperature and `psi` for pressure).
+
+### Unit Structure
+
+Every CDF project comes with a list of standard industry-relevant units. Each unit contains:
+- `externalId`: A unique identifier structured as `{quantity}:{unit}` (for example, `temperature:deg_c`).
+- `name`: The primary name of the unit, such as `DEG_C`.
+- `longName`: A descriptive name for the unit, like `degree Celsius`.
+- `symbol`: The symbol represents the unit, like `°C`.
+- `aliasNames`: An array of alternative names or aliases for the unit.
+- `quantity`: The physical quantity the unit measures like `Temperature`.
+- `conversion`: An object containing conversion factors (`multiplier` and `offset`) for unit conversion.
+- `source`: The primary source of the unit's definition, typically a standard organization like `qudt.org`.
+- `sourceReference`: A URL reference to the external source for the unit's definition.
+
+:::info tip
+For more information on how to work with units, visit the [Units API documentation](/api#tag/Units).
+:::
+
+## Working with Units
+
+### Accessing Units
+
+You can access units through two primary APIs:
+
+1. __Units API__: The Units API is the primary source of truth for all unit definitions in your CDF project. This API provides direct access to the unit catalog, where units are defined and managed.
+
+   ```python
+   from cognite.client import CogniteClient
+   client = CogniteClient()
+
+   units = client.units.list()
+   ```
+
+2. __Data Modeling API__: A copy of each unit is stored in the `cdf_cdm_units` space in the Data Modeling API. These nodes are used to assign direct relations from `CogniteTimeSeries` to a valid unit in the catalog. You can access units through the Data Modeling API as well.
+
+   ```python
+   from cognite.client import CogniteClient
+   import cognite.client.data_classes.data_modeling as dmc
+   import cognite.client.data_classes.filters as dmf
+   client = CogniteClient()
+
+   unit_instances = client.data_modeling.instances.list(
+      sources=[
+         dmc.ViewId(
+            space="cdf_cdm",
+            external_id="CogniteUnit",
+            version="v1"
+         )
+      ],
+      filter=dmf.Equals(
+         property=["node", "space"],
+         value="cdf_cdm_units"
+      ),
+      limit=1000
+   )
+   ```
+
+## Integration with Time Series
+
+### Creating Time Series with Units
+
+CDF supports two methods for creating time series with units. The choice between these methods depends on whether you want your time series to be part of the knowledge graph. For both methods, you can:
+- Assign units during time series creation
+- Add or update units after the time series has been created
+- Change units at any time during the time series lifecycle
+
+:::caution Important
+For both APIs, updating the unit (`unit` in Data Modeling API or `unitExternalId` in TimeSeries API) will not automatically convert previously ingested data points. The unit assignment provides typing information and enables unit conversion when querying data points, but the underlying data remains in its original unit. Always ensure you ingest data in the correct unit, regardless of when the unit is assigned.
+:::
+
+#### Method 1: Using Data Modeling API
+
+Use this method when you want your time series to be part of the CDF knowledge graph. Note that the `unit` field needs to be a direct relation reference to a unit from Cognite's unit catalog stored in the `cdf_cdm_units` space.
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+from cognite.client.data_classes.data_modeling.cdm.v1 import CogniteTimeSeriesApply
+client = CogniteClient()
+
+ts_instances = client.data_modeling.instances.apply(
+    nodes=[
+        CogniteTimeSeriesApply(
+            space="cdm-test",
+            external_id="test_unit_ts_1",
+            name="Temperature Sensor 1",
+            description="Temperature measured in degrees Celsius",
+            is_step=False,
+            time_series_type="numeric",
+            unit=dmc.DirectRelationReference("cdf_cdm_units", "temperature:deg_c"),
+            source_unit="C",
+        ),
+        CogniteTimeSeriesApply(
+            space="cdm-test",
+            external_id="test_unit_ts_2",
+            name="Temperature Sensor 2",
+            description="Temperature measured in degrees Fahrenheit",
+            is_step=False,
+            time_series_type="numeric",
+            unit=dmc.DirectRelationReference("cdf_cdm_units", "temperature:deg_f"),
+            source_unit="F",
+        )
+    ]
+)
+```
+
+#### Method 2: Using TimeSeries API
+
+Use this method when you need standalone time series that don't require integration with the knowledge graph. The `unitExternalId` field is used to assign a unit from the unit catalog to the time series.
+
+```python
+from cognite.client import CogniteClient
+from cognite.client.data_classes import TimeSeriesWrite
+client = CogniteClient()
+
+ts_list = client.time_series.create(
+    time_series = [
+        TimeSeriesWrite(
+            external_id="test_unit_ts_1",
+            name="Temperature Sensor 1",
+            unit="deg C",
+            unit_external_id="temperature:deg_c",
+            description="Temperature measured in degrees Celsius"
+        ),
+        TimeSeriesWrite(
+            external_id="test_unit_ts_2",
+            name="Temperature Sensor 2",
+            unit="F",
+            unit_external_id="temperature:deg_f",
+            description="Temperature measured in degrees Fahrenheit"
+        )
+    ]
+)
+```
+
+:::info tip
+The different field names between the APIs exist for historical reasons. The TimeSeries API's naming is maintained for backwards compatibility. The fields serve identical purposes:
+
+- In the TimeSeries API (legacy naming):
+  - `unit`: A free-text string that stores the unit name as it is defined in the source system (e.g., `"deg C"`)
+  - `unitExternalId`: Reference to a unit from the unit catalog (e.g., `"temperature:deg_c"`)
+
+- In the Data Modeling API:
+  - `sourceUnit`: A free-text string that stores the unit name as it is defined in the source system (e.g., `"deg C"`)
+  - `unit`: Direct relation reference to a unit from the catalog (e.g., `("cdf_cdm_units", "temperature:deg_c")`)
+:::
+
+### Querying Time Series with Units
+
+#### Filtering Time Series
+
+Once a time series is created (or updated) with units from the catalog, it's possible to filter both on `unitExternalId` and `unitQuantity` when using the TimeSeries API.
+
+The example below shows valid time series queries in the Python SDK:
+
+```python
+from cognite.client import CogniteClient
+client = CogniteClient()
+
+# List time series assigned to degree Fahrenheit
+client.time_series.list(
+   unit_external_id="temperature:deg_f"
+)
+
+# List time series assigned to units of quantity Temperature
+client.time_series.list(
+   unit_quantity="Temperature"
+)
+```
+
+When using the Data Modeling API, you can filter on the `unit` field, which is a direct relation reference to a unit from Cognite's unit catalog stored in the `cdf_cdm_units` space.
+
+The example below shows how to filter `CogniteTimeSeries` instances in DMS based on the direct relation reference to a unit.
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+import cognite.client.data_classes.filters as dmf
+client = CogniteClient()
+
+client.data_modeling.instances.list(
+    sources=[
+        dmc.ViewId(
+            space="cdf_cdm",
+            external_id="CogniteTimeSeries",
+            version="v1"
+        )
+    ],
+    filter=dmf.Equals(
+        property=["cdf_cdm", "CogniteTimeSeries/v1", "unit"],
+        value=dmc.DirectRelationReference("cdf_cdm_units", "temperature:deg_c"),
+    )
+)
+```
+
+The aggregate endpoints in the TimeSeries API also support `unitExternalId` and `unitQuantity`, so you can get counts of the time series according to units and quantities.
+The example below shows valid time series aggregations in the Python SDK.
+
+```python
+# Get the number of unique unitExternalIds associated with time series
+client.time_series.aggregate_cardinality_values(
+   property="unitExternalId"
+)
+
+# Get the number of unique unitQuantities associated with time series
+client.time_series.aggregate_cardinality_values(
+   property="unitQuantity"
+)
+
+# Get the count per unitExternalIds associated with time series
+client.time_series.aggregate_unique_values(
+   property="unitExternalId"
+)
+
+# Get the count per unitQuantities associated with time series
+client.time_series.aggregate_unique_values(
+   property="unitQuantity"
+)
+```
+
+#### Retrieving Data with Unit Conversion
+
+For time series with associated units from the catalog, you can query data points in a compatible unit (units from the same quantity).
+
+The example below displays the data point queries with unit conversion in the Python SDK.
+
+```python
+from cognite.client import CogniteClient
+from cognite.client.data_classes import DatapointsQuery
+import cognite.client.data_classes.data_modeling as dmc
+client = CogniteClient()
+
+# Retrieve data points using external_id
+dps1 = client.time_series.data.retrieve(
+   external_id=[
+     {
+       "external_id": "test_unit_ts_1",
+       "target_unit": "temperature:deg_c"
+     },
+     {
+       "external_id": "test_unit_ts_3",
+       "target_unit": "length:m"
+     }
+   ],
+   start="2w-ago",
+   end="now"
+)
+
+# retrieve data points using instance_id
+dps2 = client.time_series.data.retrieve(
+    instance_id=[
+        DatapointsQuery(
+            instance_id=dmc.NodeId(
+                space="cdm-test",
+                external_id="test_unit_ts_1"
+            ),
+            target_unit="temperature:k"
+        ),
+        DatapointsQuery(
+            instance_id=dmc.NodeId(
+                space="cdm-test",
+                external_id="test_unit_ts_3"
+            ),
+            target_unit="length:m"
+        )
+    ],
+    start="2w-ago",
+    end="now"
+)
+dps2
+```
+
+You can specify a target __unit system__ instead of specific units. The API will target the default unit for the allocated unit system.
+
+The example below shows the data points queries with unit conversion to a unit system in the Python SDK:
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+client = CogniteClient()
+
+client.time_series.data.retrieve(
+   external_id=["test_unit_ts_1", "test_unit_ts_3"],
+   instance_id=[dmc.NodeId(space="cdm-test", external_id="test_unit_ts_2")],
+   target_unit_system="SI",
+   start="2w-ago",
+   end="now"
+)
+```
+
+## Integration with Data Models
+
+### Creating Data Models with Units
+
+#### 1. Define Containers with Units
+
+You can associate float properties with specific units from the unit catalog within data models. This relationship occurs when you create or update a container.
+The example below demonstrates creating a container with float properties assigned to a specific unit.
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+client = CogniteClient()
+
+client.data_modeling.containers.apply(
+    dmc.ContainerApply(
+        space="pumps_space",
+        external_id="PumpSpecificationsContainer",
+        name="PumpSpecifications",
+        description="Container storing pump specifications",
+        used_for="node",
+        properties={
+            "maxPressure": dmc.ContainerProperty(
+                nullable=True,
+                description="Maximum Pump Pressure",
+                name="maxPressure",
+                type=dmc.Float64(
+                    unit=dmc.data_types.UnitReference(
+                        external_id="pressure:bar",
+                        source_unit="BAR"
+                    )
+                )
+            ),
+            "maxTemperature": dmc.ContainerProperty(
+                nullable=True,
+                description="Maximum Pump Temperature",
+                name="maxTemperature",
+                type=dmc.Float64(
+                    unit=dmc.data_types.UnitReference(
+                        external_id="temperature:deg_c"
+                    )
+                )
+            ),
+            "rotationConfigurations": dmc.ContainerProperty(
+                nullable=True,
+                description="Rotation Configurations",
+                name="rotationConfigurations",
+                type=dmc.Float64(
+                    is_list=True,
+                    unit=dmc.data_types.UnitReference(
+                        external_id="angular_velocity:rev-per-min"
+                    )
+                )
+            )
+        }
+    )
+)
+```
+
+Assigning `unit.externalId` and `unit.sourceUnit` to a float-type container property is optional. While `unit.externalId` must correspond to an entry in the unit catalog, `unit.sourceUnit` is a free text string where users can store the original name or alias used for the unit in the source system.
+
+:::caution Important
+Updating the `unit.externalId` on a container property will not automatically convert the values ingested to the container. The `unit.externalId` provides typing information and enables unit conversion when querying the data. Make sure you ingest data in the correct unit.
+:::
+
+#### 2. Create Views
+
+After you create the container, creating or updating views to map container properties is straightforward. For example, to map properties from the `PumpSpecificationsContainer` to a `PumpSpecificationsView`, see the Python code below:
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+client = CogniteClient()
+
+client.data_modeling.views.apply(
+    dmc.ViewApply(
+        space="pumps_space",
+        external_id="PumpSpecificationsView",
+        name="PumpSpecifications",
+        description="View pointing to pump specifications",
+        version="1",
+        properties={
+            "maxPressure": dmc.MappedPropertyApply(
+                name="maxPressure",
+                description="Maximum Pump Pressure",
+                container=dmc.ContainerId("pumps_space", "PumpSpecificationsContainer"),
+                container_property_identifier="maxPressure"
+            ),
+            "maxTemperature": dmc.MappedPropertyApply(
+                name="maxTemperature",
+                description="Maximum Pump Temperature",
+                container=dmc.ContainerId("pumps_space", "PumpSpecificationsContainer"),
+                container_property_identifier="maxTemperature"
+            ),
+            "rotationConfigurations": dmc.MappedPropertyApply(
+                name="rotationConfigurations",
+                description="Rotation Configurations",
+                container=dmc.ContainerId("pumps_space", "PumpSpecificationsContainer"),
+                container_property_identifier="rotationConfigurations"
+            )
+        }
+   )
+)
+```
+
+The view definition doesn't contain unit details. The unit information is stored in the container definition and automatically inherited by the view.
+
+#### 3. Create Data Model
+
+We use data models to organize collections of views. Here is an example of code to create a data model using the Python SDK:
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+client = CogniteClient()
+
+client.data_modeling.data_models.apply(
+    dmc.DataModelApply(
+        space="pumps_space",
+        external_id="PumpManagementModel",
+        name="Pump Management Model",
+        version="1",
+        views=[
+            dmc.ViewId(
+                space="pumps_space",
+                external_id="PumpSpecificationsView",
+                version="1"
+            )
+        ]
+    )
+)
+```
+
+Even though the data modeling service (DMS) API is the recommended way to manage containers, views and data models, it's possible to create them using the **Data modeling extension for GraphQL** (DML).
+
+The equivalent representation in DML for this container/view definition would be:
+
+```graphql
+type PumpSpecifications {
+  "Maximum Pump Pressure"
+  maxPressure: Float @unit(externalId: "pressure:bar", sourceUnit: "BAR")
+  "Maximum Pump Temperature"
+  maxTemperature: Float @unit(externalId: "temperature:deg_c")
+  "Rotation Configurations"
+  rotationConfigurations: [Float64] @unit(externalId: "angular_velocity:rev-per-min")
+}
+```
+
+Note: The `@unit` directive associates a property with a specific unit. (This works precisely like assigning units using DMS; the `externalId` argument must correspond to an entry in the unit catalog.)
+
+:::tip
+See the [**Data modeling extension for GraphQL** (DML) documentation](https://docs.cognite.com/cdf/dm/dm_graphql/dm_data_modeling_language/#specification-of-directives) for more information on using DML.
+:::
+
+### Querying Data Models with Units
+
+#### Using Data Modeling API
+
+When querying data, set `includeTyping` to `true` to retrieve information about the units associated with all properties included in the response.
+
+To add unit conversion into a response, specify either `unit.externalId` or `unit.unitSystemName` for each property requiring conversion within the `targetUnits` argument. When you set `includeTyping` to `true`, the typing information will reflect the units of the data included in the request. For example, if `maxPressure` was stored as `pressure:bar`, a request to convert to `pressure:pa` will result in both the data and typing information being in `pressure:pa`.
+
+When applying a filter to a property included in `targetUnits`, the filter will be unit-aware, ensuring that the value passed on the filter aligns with the unit of the data. For instance, if `maxPressure` was stored as `pressure:bar` and a request to convert to `pressure:pa` with a filter `greater than or equal to 3520000.0` will filter the data to instances where `maxPressure` is greater than or equal to `3520000.0 Pascal`.
+
+
+:::warning
+ Converting values across various units may introduce a minor conversion error in the data. For example, when you convert `1.69999999999` `meters` to `centimeters`, it results in `170` `centimeters`. This discrepancy becomes particularly evident with the application of filters. For instance, when applying a filter for `height less than 170 cm`, one might anticipate results including the original height value of `1.69999999999`, but due to rounding errors in conversion, these results might get excluded.
+:::
+
+:::caution Important
+Be aware of the potential ambiguities when setting target units with filters. For instance, consider a scenario where two different views map to the same property, `propertyA`, but each view uses a separate unit for the property. When you apply a filter on `propertyA` and reference the property through its container (for example, `[space, containerId, property]`), the system cannot determine the correct `source` and, therefore, the appropriate `targetUnit` for the filter. To avoid this ambiguity, explicitly reference `propertyA` in the filter by specifying the view (for example, `[space, viewId/viewVersion, property]`).
+:::
+
+All the data modeling query endpoints are updated to support typing information, unit conversion, and unit-aware filtering.
+
+The following section will explain some examples of valid queries.
+
+#### List instances with unit conversion and unit-aware filtering
+
+The example below shows a list instance with unit conversion and unit-aware filtering.
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+import cognite.client.data_classes.filters as dmf
+client = CogniteClient()
+
+instances = client.data_modeling.instances.list(
+    instance_type="node",
+    sources=dmc.query.SourceSelector(
+        source=dmc.ViewId(
+            space="pumps_space",
+            external_id="PumpSpecificationsView",
+            version="1"
+        ),
+        target_units=[
+            dmc.query.TargetUnit(
+                property="maxPressure",
+                unit=dmc.data_types.UnitReference(
+                    external_id="pressure:pa"
+                )
+            ),
+            dmc.query.TargetUnit(
+                property="maxTemperature",
+                unit=dmc.data_types.UnitSystemReference(
+                    unit_system_name="SI"
+                )
+            ),
+            dmc.query.TargetUnit(
+                property="rotationConfigurations",
+                unit=dmc.data_types.UnitSystemReference(
+                    unit_system_name="SI"
+                )
+            )
+        ]
+    ),
+    filter=dmf.Range(
+        property=("pumps_space", "PumpSpecificationsView/1", "maxPressure"),
+        gte=3520000.0
+    ),
+    include_typing=True
+)
+```
+
+#### Query instances with unit conversion and unit-aware filtering
+
+The example below shows a query instance with unit conversion and unit-aware filtering.
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+import cognite.client.data_classes.filters as dmf
+client = CogniteClient()
+
+instances = client.data_modeling.instances.query(
+    query=dmc.query.Query(
+        with_ = {
+            "pumpsHighPressure": dmc.query.NodeResultSetExpression(
+                filter=dmf.Range(
+                    property=("pumps_space", "PumpSpecificationsView/1", "maxPressure"),
+                    gte=3520000.0
+                ),
+                limit=1000
+            )
+        },
+        select = {
+            "pumpsHighPressure": dmc.query.Select(
+                sources=[
+                    dmc.query.SourceSelector(
+                        source=dmc.ViewId("pumps_space", "PumpSpecificationsView", "1"),
+                        properties=["maxPressure", "maxTemperature", "rotationConfigurations"],
+                        target_units=[
+                            dmc.query.TargetUnit(
+                                property="maxPressure",
+                                unit=dmc.data_types.UnitReference(
+                                    external_id="pressure:pa"
+                                )
+                            ),
+                            dmc.query.TargetUnit(
+                                property="maxTemperature",
+                                unit=dmc.data_types.UnitSystemReference(
+                                    unit_system_name="SI"
+                                )
+                            ),
+                            dmc.query.TargetUnit(
+                                property="rotationConfigurations",
+                                unit=dmc.data_types.UnitSystemReference(
+                                    unit_system_name="SI"
+                                )
+                            )
+                        ]
+                    )
+                ],
+                limit=1000
+            )
+        }
+    ),
+    include_typing=False
+)
+```
+
+#### Aggregate data across nodes/edges with unit conversion and unit-aware filtering
+
+The example below shows aggregate data across nodes/edges with unit conversion and unit-aware filtering.
+
+```python
+from cognite.client import CogniteClient
+import cognite.client.data_classes.data_modeling as dmc
+import cognite.client.data_classes.filters as dmf
+client = CogniteClient()
+
+aggregates = client.data_modeling.instances.aggregate(
+    instance_type="node",
+    view=dmc.ViewId(space="pumps_space", external_id="PumpSpecificationsView", version="1"),
+    aggregates=[
+        dmc.aggregations.Avg("maxPressure"),
+        dmc.aggregations.Avg("maxTemperature"),
+        dmc.aggregations.Count("rotationConfigurations")
+    ],
+    filter=dmf.Range(
+        property=("pumps_space", "PumpSpecificationsView/1", "maxPressure"),
+        gte=3520000.0
+    ),
+    target_units=[
+        dmc.query.TargetUnit(
+            property="maxPressure",
+            unit=dmc.data_types.UnitReference(
+                external_id="pressure:pa"
+            )
+        ),
+        dmc.query.TargetUnit(
+            property="maxTemperature",
+            unit=dmc.data_types.UnitSystemReference(
+                unit_system_name="SI"
+            )
+        ),
+        dmc.query.TargetUnit(
+            property="rotationConfigurations",
+            unit=dmc.data_types.UnitSystemReference(
+                unit_system_name="SI"
+            )
+        )
+    ],
+    limit=100
+)
+```
+
+:::caution Important
+Query parameter values are not unit-aware and are considered in the same unit as the underlying property. No unit conversion will occur if you provide a filter property through query parameters.
+:::
+
+#### Using GraphQL
+
+Apart from querying data using the DMS endpoints, use GraphQL to fetch data from views and time series data points. The GraphQL API is updated to support unit conversion and unit-aware filtering. See the below examples below for some valid queries.
+
+#### List query with unit conversion and unit-aware filtering
+
+The example below shows a list query with unit conversion and unit-aware filtering.
+
+```graphql
+query MyQuery {
+  # filter on maxPressure -> only 1 entry has maxPressure >= 3520000.0 Pa
+  listPumpSpecifications(filter: { maxPressure: { gte: 3520000.0 } }) {
+    items {
+      # return maxPressure and convert its values and the filter to Pa
+      maxPressure(targetUnit: "pressure:pa")
+      # return maxTemperature and convert its values to the SI unitSystem
+      maxTemperature(targetUnitSystem: "SI")
+      # return rotationConfigurations and convert its values to the SI unitSystem
+      rotationConfigurations(targetUnitSystem: "SI")
+    }
+    # the units which are associated with the values returned in the request
+    unitInfo {
+      maxPressure {
+        # externalId of the unit
+        unitExternalId
+        # free text unit alias
+        sourceUnit
+      }
+      maxTemperature {
+        unitExternalId
+      }
+      rotationConfigurations {
+        unitExternalId
+      }
+    }
+  }
+}
+```
+
+#### Aggregate query with unit conversion and filtering
+
+The example below shows an aggregate query with unit conversion and filtering.
+
+```graphql
+query MyQuery {
+  # filter on maxPressure -> only 1 entry has maxPressure >= 3520000.0 Pa
+  aggregatePumpSpecifications(filter: {maxPressure: {gte: 3520000.0}}) {
+    items {
+      avg {
+        maxPressure(targetUnit: "pressure:pa")
+        maxTemperature(targetUnitSystem: "SI")
+      }
+      count {
+        rotationConfigurations
+      }
+    }
+    unitInfo {
+      avg {
+        maxPressure {
+          unitExternalId
+          sourceUnit
+        }
+        maxTemperature {
+          sourceUnit
+          unitExternalId
+        }
+        rotationConfigurations {
+          sourceUnit
+          unitExternalId
+        }
+      }
+    }
+  }
+}
+```
+
+#### Time series data points query with unit conversion
+
+The example below shows time series data points query with unit conversion.
+
+```graphql
+query MyQuery($startTime: Int64!, $endTime: Int64!) {
+  # select only one instance based on the externalId
+  listSensorList( filter: { externalId: { eq: "TI-FORNEBU-02" } } ) {
+    items {
+      # externalId of the node
+      externalId
+      # property included in the view
+      name
+      sensor {
+        # externalId of the "sensor" time series
+        externalId
+        # name of the "sensor" time series
+        name
+        # free text unit assigned to the "sensor" time series
+        unit
+        # unitExternalId of the "sensor" time series where the data is stored
+        unitExternalId
+        getDataPoints(targetUnitSystem: "SI", start: $startTime, end: $endTime, granularity: "1h", aggregates: AVERAGE ) {
+          # unitExternalId of the datapoints returned in the request
+          unitExternalId
+          # datapoint items
+          items {
+            timestamp
+            average
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+For this query, we are using the following view definition:
+
+```graphql
+type SensorList @view(version: "1") {
+    name: String
+    sensor: TimeSeries
+}
+```
+
+:::info
+__Note__: You need to define the variables `startTime` and `endTime` before executing the query.
+:::
+
+For more detailed information, visit:
+- [Units API documentation](/api#tag/Units)
+- [Data models API documentation](/api#tag/Data-Modeling)
+- [Time Series API documentation](/api#tag/Time-series)

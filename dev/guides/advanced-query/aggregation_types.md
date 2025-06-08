@@ -1,0 +1,180 @@
+# Aggregation types
+
+Advanced aggregation APIs built on top of extended advanced filtering APIs support complex queries that combine simple operations, such as `equals`, `prefix`, `exists`, etc., using boolean operators `and`, `or`, and `not`. It also supports aggregate result filtering. The main goal is to contextualize user experience (for example, update available filters based on search queries) and provide the following capabilities to basic properties and metadata.
+
+Below is an overview of aggregations and explicit examples of each type.
+
+## Overview
+
+Let's use the simplified input data set below:
+
+```js
+{"a" : "1", b : "1", c: "2"}
+{"a" : "2", c : "2"}
+{"c" : "2", d : "1"}
+{"a" : "3", d : "2"}
+```
+
+Now, apply different aggregation types to the input data:
+
+```js
+Count:                  4
+Count for property:     {"a": 3, "b": 1, "c": 3, "d": 2}
+
+Cardinality properties: 4
+Cardinality values:     {"a": 3, "b": 1, "c": 1, "d": 2}
+
+Unique properties:      {"a": 3, "b": 1, "c": 3, "d": 2}
+Unique values:          {
+                          "a": {"1": 1, "2": 1, "3": 1},
+                          "b": {"1": 1},
+                          "c": {"2": 3},
+                          "d": {"1": 1, "2": 1}
+                        }
+```
+
+_Note: Bucket aggregations (uniqueProperties, uniqueValues) return properties and values with frequency (how many times a property appears in the input set or how many properties with a value are in the input set)._
+
+## Types
+
+Let's look at the examples for each aggregation type.
+
+### count
+Returns the count of items in the data set (i.e., number of Assets, Events, Time Series, etc.).
+For example, four items, A, B, C, and D, are present in the data set, so the count = 4.
+
+```js
+========== REQUEST ======================================================
+{
+  "filter": { ... },
+  "advancedFilter": { ... },
+  "aggregate": "count"
+}
+
+========== RESPONSE ======================================================
+{
+  "items": [
+    {
+      "count": 986294
+    }
+  ]
+}
+```
+
+_Note: Count supports optional *properties* attribute as well._
+
+### cardinalityValues
+Returns the number of instances that a property occurs in the data set.
+
+```js
+========== REQUEST ======================================================
+{
+  "filter": { ... },
+  "advancedFilter": { ... },
+  "aggregate": "cardinalityValues",
+  "properties": [
+    {
+      "property": ["type"]
+    }
+  ]
+}
+========== RESPONSE ======================================================
+{
+  "items": [
+    {
+      "count": 18
+    }
+  ]
+}
+```
+
+### cardinalityProperties
+Returns the number of unique properties per metadata key in the data set.
+
+```js
+========== REQUEST ======================================================
+{
+  "filter": { ... },
+  "advancedFilter": { ... },
+  "aggregate": "cardinalityProperties",
+  "path": ["metadata"]
+}
+
+========== RESPONSE ======================================================
+{
+  "items": [
+    {
+      "count": 13
+    }
+  ]
+}
+```
+
+### uniqueValues
+Returns an array of the unique instances of metadata values per metadata key and the associated count of their occurrence.
+
+```js
+========== REQUEST ======================================================
+{
+  "filter": { ... },
+  "advancedFilter": { ... },
+  "aggregate": "uniqueValues",
+  "properties": [
+    {
+      "property": ["metadata"]
+      // The 'filter' attribute has a higher priority than 'aggregateFilter'.
+      "filter": {"prefix": {"value": "A"}} 
+    }
+  ],
+  "aggregateFilter": {"prefix": {"value": "whatever"}}
+}
+
+========== RESPONSE ======================================================
+{
+  "items": [
+    {
+      "count": 7014, 
+      "values": ["A01"]
+    },
+    ...,
+    {
+      "count": 22,
+      "values": ["A27"]
+    }
+  ]
+}
+```
+
+<!--_Note: Count is the number of properties (in all items) with the values. It's different than the number of items as soon as one item can have multiple properties (metadata keys) with the same value. The values are ordered by frequency, e.g., how many documents have a particular value._-->
+
+### uniqueProperties
+Returns the number of unique properties that occur in the data set.
+
+```js
+========== REQUEST ======================================================
+{
+  "filter": { ... },
+  "advancedFilter": { ... },
+  "aggregate": "uniqueProperties",
+  "path": ["metadata"],
+  "aggregateFilter": {"or":[
+    {"prefix": {"value": "n"}},
+    {"prefix": {"value": "w"}},
+  ]}
+}
+
+========== RESPONSE ======================================================
+{
+  "items": [
+    {
+      "count": 8014,
+      "values": [{"property": ["metadata", "notificationType"]}]
+    },
+    ...,
+    {
+      "count": 14,
+      "values": [{"property": ["metadata", "workOrderNumber"]}]
+    }
+  ]
+}
+```

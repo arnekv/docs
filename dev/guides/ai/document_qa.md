@@ -1,0 +1,114 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Document question answering
+
+The Document question answering is an AI-powered assistant that, with the help of the [Semantic search API](./semantic_search), helps you find relevant information for any question and passes the retrieved information into an LLM for interpretation into a natural language answer.
+
+This article shows you how to implement the Document question answering API, upload a PDF to Cognite Data Fusion (CDF), and use this API to ask questions about the uploaded document. All PDF documents uploaded to CDF automatically pass through a Retrieval Augmented Generation (RAG) pipeline. The documents are parsed and OCRed, and all the contained information is indexed for the Semantic search API.
+
+You can also run the instruction and Python code in this article as a [Jupyter Notebook](./document_qa.ipynb) in your CDF project.
+
+:::info
+You can refer to the [Semantic search](./semantic_search) API as it relates to the Document question answering API.
+:::
+
+## Implement Document question answering
+
+You can implement the Document question answering API in the following way:
+
+  1. Pass the question and the list of file IDs to the Semantic search API and get a list of passages back.
+
+  2. Construct a prompt from the original question and the list of passages.
+
+  3. Pass the prompt to an LLM and get a natural language answer.
+
+  4. Return the answer from the LLM.
+
+## Step 1. Upload PDF
+
+You can upload a PDF file to CDF one of the following ways:
+
+* Go to **_CDF_** > **_Industrial tools_** > **_Canvas_** and drag your PDF file to the canvas or upload existing files by selecting **_+ Add data_**.  
+  If you don't have a good file to upload, try this [test file](./well_report.pdf).
+
+* Go to **_CDF_** > **_Industrial tools_** > **_Data explorer_** > **_Files_** and select **_Upload_**.
+
+* Use the Python code.
+
+```python
+response1 = client.files.upload(path="./well_report.pdf")
+document_id = response1.id
+print(document_id)
+```
+
+## Step 2. Ask questions
+
+Once the document is uploaded, we can start asking our questions.
+
+It may take some time before the document has been fully processed
+and ready so we wrap the API call in a while loop, so that we can
+retry until we get our answer.
+
+```python
+import json
+import time
+
+ask_path = f"/api/v1/projects/{client.config.project}/ai/tools/documents/ask"
+
+body = {
+    "question": "Where is the Volve field located?",
+    "fileIds": [
+        {
+            "id": document_id
+        }
+    ]
+}
+
+while True:
+    try:
+        response2 = client.post(ask_path, json=body).json()
+        break
+
+    except CogniteAPIError as e:
+        if e.code == 422 and len(e.missing) > 0:
+            print("Not ready yet, waiting 5 seconds...")
+            time.sleep(5)
+            continue
+
+        # re-raise any unexpected exceptions
+        raise
+
+print(json.dumps(response2, indent=2))
+```
+
+See the response for the test file.
+
+```json
+{
+  "content": [
+    {
+      "text": "The Volve field is located in the southern part of the North Sea, approximately eight kilometers north of Sleipner \u00d8st.",
+      "references": [
+        {
+          "fileId": 7743081064762478,
+          "fileName": "well_report.pdf",
+          "locations": [
+            {
+              "pageNumber": 4,
+              "left": 57.59,
+              "right": 60.66,
+              "top": 43.58,
+              "bottom": 53.54
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+The response is more than a simple textual answer. The response structure allows for a multi-part answer, where each part of the answer can have one or more references to the document locations that were used to build the answer. If you are not interested in showing these references, you can iterate over the `content` array and combine all the `text` fields.

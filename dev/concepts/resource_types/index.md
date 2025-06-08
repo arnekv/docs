@@ -1,0 +1,94 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# About resource types
+
+A resource is an individual data entity with a unique identifier. This article introduces the different **resource types** you can interact with using the Cognite API.
+
+## Assets
+
+The [assets](/api#tag/Assets) resource type stores **digital representations** of objects or groups of **objects from the physical world**. Assets are organized in **hierarchies**. For example, a **water pump** asset can be part of a **subsystem** asset on an **oil platform** asset.
+
+Assets **connect related data from different sources** and are core to identifying all the data relevant to an entity (**contextualization**) in Cognite Data Fusion. All other resource types, for example, time series, events, and files should be connected to **at least one** asset, and each asset can be connected to many resources and resource types.
+
+[Learn more](assets.md) about assets.
+
+## Time series
+
+The [time series](/api#tag/Time-series) resource type stores a series of **data points** in **time order**. Examples of a time series are the temperature of a water pump asset, the monthly precipitation in a location, and the daily average number of manufacturing defects.
+
+[Learn more](timeseries.md) about time series.
+
+## Events
+
+The [events](/api#tag/Events) resource type stores information that happens over **a period**. Events have a **start time** and an **end time** and can be related to **multiple assets**. For example, an event can describe two hours of maintenance on a water pump and associated pipes or a future period for when the pump is scheduled for inspection.
+
+[Learn more](events.md) about events.
+
+## Files
+
+The [files](/api#tag/Files) resource type stores documents that contain information related to **one or more assets**. For example, a file can contain a P&ID diagram that shows how many assets are connected.
+
+[Learn more](files.md) about files.
+
+## 3D models
+
+The [3D models](/api#tag/3D-Models/operation/create3DModels/) resource type stores files that offer **visual** and **geometrical data** and **context** to assets. For example, you can connect a pump asset with a 3D model of the plant floor where it's placed. Seeing asset data rendered in 3D helps you find the sensor data you are interested in faster.
+
+[Learn more](3dmodels.md) about 3D models.
+
+## Sequences
+
+The [Sequences](/api#tag/Sequences) resource type stores a series of rows indexed by row number. Each row has one or more columns with either string or numeric data. Examples of sequences are performance curves and various types of logs, for example, depth logs in drilling.
+
+[Learn more](sequences.md) about sequences.
+
+## Labels
+
+With [labels](/api#tag/Labels), you can create a predefined set of **managed terms** that you can use to annotate and group **assets**. You can organize the labels in a way that makes sense in your business and use them to make it easier to find what you want.
+
+For example, you can create a label called _pump_ and apply it to all asset resources that represent pumps and then filter assets to see only pumps.
+
+[Learn more](labels.md) about labels.
+
+## Relationships
+
+The [Relationships](/api#tag/Relationships) resource type represents connections between resource objects in Cognite Data Fusion (CDF). Each relationship is between a source and a target object and is defined by a **relationship type** and the **external IDs** and **resource types** of the source and target objects. Optionally, a relationship can be time-constrained with a start and end time.
+
+<!-- What can I use it for? -->
+
+[Learn more](relationships.md) about relationships.
+
+## RAW
+
+The [RAW](/api#tag/Raw) resource type is the staging area in CDF. You can ingest data in its original form into RAW resource type to reduce source system queries for the same data for different use cases and minimize the data extractors' logic. This makes it easy to re-run transformations on data in the cloud.
+
+[Learn more](raw.md) about CDF RAW.
+
+## Entity matching
+
+Different sources of industrial data can use different naming standards when they refer to the same entity. With [Entity matching](/api#tag/Entity-matching), you can match entities like time series, files, and sequences from different source systems to assets. With the mapped information, you can build applications where users, for example, can click a component in a 3D model to see all the related time series data or ask for all the pressure readings along a flow line.
+
+[Learn more](entity_matching.md) about entity matching.
+
+## Templates
+
+The [Templates](templates.md) resource type represents solutions' data model and connects the data model with data in Cognite Data Fusion (CDF).
+
+<!-- What can I use it for? -->
+
+[Learn more](templates.md) about templates.
+
+## Geospatial
+
+The [Geospatial](/api#tag/Geospatial) resource type represents data with a geospatial nature. This data, called _features_ in Geographic Information System (GIS) terminology, are grouped into _feature types_ that share several properties, such as name, type, and value, and have more than one spatial representation stored in configurable properties. Feature types are user-defined, and the CDF geospatial resource type doesn't come with pre-configured schemas to enable flexibility for modeling the client domain.
+
+[Learn more](geospatial.md) about geospatial data.
+
+## Seismic
+
+Use the [Seismic](/sdks/seismic/api/v1/v1.md) resource type to catalog and access seismic data volumes used by data managers, geologists, geophysicists, and other disciplines to explore, plan, and develop subsurface fields.
+
+[Learn more](seismic.md) about seismic data.

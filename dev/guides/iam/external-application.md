@@ -1,0 +1,38 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Authenticate an external application
+
+This guide will assist in integrating an application with Cognite Data Fusion (CDF) with respect to authentication. If you are developing an application that utilizes access to Cognite Data Fusion, token-based authentication is used for obtaining access to data.
+
+## Tokens
+
+Obtaining access to Cognite Data Fusion with a token implies that an application is accessing Cognite Data Fusion on behalf of a specific user. To obtain such a token, the user must sign in to an authorized identity provider for the project.
+
+When a user logs in through a web browser, they're sent to the Identity Provider (IdP) configured for the project (an OpenID Connect enabled provider, such as Azure AD) using an authorization code grant flow (see [IAM](index.md#projects)).
+
+Following authentication with the IdP, the browser will redirect you to the specified target with an authorization code that is then exchanged for an `id_token` and an `access_token`. These are valid only against the Cognite Data Fusion API.
+
+The access token should be treated as an opaque token (subject to format change and/or encrypted at any time), and claims in the associated id token help obtain user information.
+
+<img className="screenshot" src="/images/cdf/dev/guides/3d/iam/authn-1.png" alt="CDP OAuth Login" width="x%"/>
+
+Steps taken:
+
+1. Obtain the login URL, passing in the (URL name of the) project the user should sign in to, and the destinations if the sign-in succeeds or fails.
+
+2. A login URL is returned, specific to the project and the specific flow. If no IdP is configured for the project, no URL will be returned.
+
+3. GET the return URL. This will direct the browser to the IdP configured for the project.
+
+4. The user logs in to, and established an identity with the IdP, under whichever requirements are set by the IdP.
+
+5. The IdP redirects the browser to Cognite Data Fusion with an authorization grant and state.
+
+6. The browser is directed to Cognite Data Fusion with the IdP authorization grant and state.
+
+7. Cognite Data Fusion validates the existing flow and authorization grant, possibly retrieving group membership or other user details from the IdP, as configured. Lack of cookie support may cause this step to fail, as session details established when retrieving the login URL are checked to prevent interception.
+
+8. The browser is redirected to the target specified in step 1 with id and access tokens in the parameter, and a session is established.

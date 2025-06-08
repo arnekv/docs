@@ -1,0 +1,274 @@
+---
+pagination_next: null
+pagination_prev: null
+---
+
+# Files
+
+In Cognite Data Fusion, the file **resource type** stores **files** and **documents** that are related to one or more assets. For example, a file can contain a piping and instrumentation diagram (P&ID) that shows how several assets connect.
+
+## About files
+
+Files are created in two steps where the first step **stores the metadata** in a file object, and the second step **uploads the file contents**. This means that files can exist in Cognite Data Fusion without actually being uploaded.
+
+Each file has a unique `id` that's generated at file creation. Specify a `fileName` when the file is created.
+
+If you want to be in control of the file identifier, you can specify an `externalId` which must be unique within a project.
+
+A file can also have `metadata` key-value fields that are searchable. You can use these fields to store source system IDs and other information.
+
+Additionally, files can have `labels` attached to them, making it easier to organize and categorize files.
+
+You can retrieve the information for a file, both standard and dynamic metadata fields, using the files list or searching REST API calls. You can download the file contents with the file download REST API call.
+
+:::info TIP
+See the [Files API documentation](/api#tag/Files) to learn more about working with the files API.
+
+See the [Labels API documentation](/api#tag/Labels/operation/createLabelDefinitions) to learn more about managing Labels.
+:::
+
+## Geographic location of files
+
+Specify a file's geographic location, for example, its geometric features and coordinates, in the `geoLocation` field. Data in this field needs to follow the [GeoJSON specification](https://geojson.org/), explained in detail in [RFC 7946](https://tools.ietf.org/html/rfc7946). The [coordinate reference system](https://tools.ietf.org/html/rfc7946#section-4) for all GeoJSON coordinates is a geographic coordinate reference system that uses the [World Geodetic System 1984 (WGS84)](https://tools.ietf.org/html/rfc7946#ref-WGS84).
+
+### GeoJSON types
+
+A GeoJSON object has one of 3 types:
+
+- **Feature** - Geometric objects with (optional) extra features.
+- **FeatureCollection** - A collection of Features.
+- **GeometryCollection** - A collection of Geometry objects (see below).
+
+Currently, **Feature** is the only type supported by Cognite Data Fusion.
+
+To describe a geographic feature, the Geometry object needs a `type` and a corresponding array of `coordinates`. Below are the supported Geometry types:
+
+<!-- vale off -->
+
+| Type            | Description                                                       | Example                                                                                         |                                                                                                                                            |
+| --------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Point           | Only one exact point.                                             | ![point](/images/cdf/dev/concepts/resource_types/point.png)                     | `{"type": "Point", "coordinates": [30, 10]}`                                                                                               |
+| MultiPoint      | Multiple points.                                                  | ![multipoint](/images/cdf/dev/concepts/resource_types/multipoint.png)           | `{"type": "MultiPoint", "coordinates": [[10, 40], [40, 30], [20, 20], [30, 10]]}`                                                          |
+| LineString      | A line.                                                           | ![linestring](/images/cdf/dev/concepts/resource_types/linestring.png)            | `{"type": "LineString", "coordinates": [[30, 10], [10, 30], [40, 40]]}`                                                                    |
+| MultiLineString | Multiple lines.                                                   | ![multilinestring](/images/cdf/dev/concepts/resource_types/multilinestring.png) | `{"type": "MultiLineString", "coordinates": [[[10, 10], [20, 20], [10, 40]], [[40, 40], [30, 30], [40, 20], [30, 10]]]}`                   |
+| Polygon         | A closed shape. Can have inner holes of arbitrary shapes.         | ![polygon ](/images/cdf/dev/concepts/resource_types/polygon.png)                | `{"type": "Polygon", "coordinates": [[[35, 10], [45, 45], [15, 40], [10, 20], [35, 10]], [[20, 30], [35, 35], [30, 20], [20, 30]]]}`       |
+| MultiPolygon    | Multiple closed shapes. Can have inner holes of arbitrary shapes. | ![multipolygon](/images/cdf/dev/concepts/resource_types/multipolygon.png)       | `{"type": "MultiPolygon", "coordinates": [[[[30, 20], [45, 40], [10, 40], [30, 20]]], [[[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]]]}` |
+
+<!-- vale on -->
+
+### Adding geoLocation to a file
+
+The `geoLocation` field requires the following properties:
+
+#### type
+
+The type of GeoJSON. Cognite Data Fusion only supports the `Feature` type.
+
+#### geometry
+
+Represents the points, curves, and surfaces in coordinate space. The property consists of:
+
+- `type` - Must be one of the following geometry types: `Point`, `MultiPoint`, `LineString`, `MultiLineString`, `Polygon`, and `MultiPolygon`. See [GeoJSON types](#geojson-types) above.
+
+- `coordinates` - An array describing the specified geometry type. The type of geometry determines the shape of this array. For instance, a `Point` geometry type will contain a `coordinate` array consisting of just a single _x_ and a single _y_ coordinate. See [example 1](#example1) below.
+
+- A `LineString` geometry type will contain a `coordinate` array with two or more points, as shown in [example 2](#example2). A `Polygon` geometry type will need to contain an array of closed `LineStrings` with four or more points, as shown in [example 3](#example3). See [the GeoJSON spec](https://tools.ietf.org/html/rfc7946#section-3.1.1) for more details on the various shapes of the `coordinates` field.
+
+#### properties
+
+An optional field specifying extra information to enrich the `Feature`.
+
+**Example 1** <a name="example1"></a>
+
+```json
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [10.727414488792418, 6059.91713955864316]
+  },
+  "properties": {
+    "name": "Norwegian Royal Palace"
+  }
+}
+```
+
+**Example 2** <a name="example2"></a>
+
+```json
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [35, 10],
+      [45, 45],
+      [15, 40],
+      [10, 20],
+      [35, 10]
+    ]
+  }
+}
+```
+
+**Example 3** <a name="example3"></a>
+
+Note that in this example, the `Polygon` specifies an outer and inner `LineString`.
+
+A `Polygon` can (but doesn't have to) contain several of these `LineStrings`, where the first must be the exterior ring, and the next `LineStrings` are interior rings. This is how you would define a surface with holes.
+
+```json
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [35, 10],
+        [45, 45],
+        [15, 40],
+        [10, 20],
+        [35, 10]
+      ],
+      [
+        [20, 30],
+        [35, 35],
+        [30, 20],
+        [20, 30]
+      ]
+    ]
+  }
+}
+```
+
+### Upload example
+
+```json
+POST /api/v1/projects/publicdata/files
+Content-Type: application/json
+
+{
+  "name": "file1",
+  "externalId": "file",
+  "geoLocation": {
+    "type": "Feature",
+    "geometry": {
+      "type": "point",
+      "coordinates": [
+        10.727414488792418,
+        6059.91713955864316
+      ]
+    },
+    "properties": {
+      "name": "Norwegian Royal Palace"
+    }
+  }
+}
+```
+
+### Update example
+
+```json
+POST /api/v1/projects/publicdata/files/update
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "id": 123454321,
+      "update": {
+        "geoLocation": {
+          "set": {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                133.2,
+                2.5
+              ]
+            },
+            "properties": {
+              "name": "Another place"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+## GeoLocation filtering
+
+Filtering on, or searching for files matching a certain `geoLocation` requires two properties:
+
+- `relation` - The geographic relation, either `INTERSECTS`, `WITHIN` , or `DISJOINT`.
+
+- `shape` - The `geometry`, as described in [the geometry section](#adding-geolocation-to-a-file). Filtering is **not** available for the `MultiPoint` type.
+
+### Filter example
+
+```json
+POST /api/v1/projects/publicdata/files/list
+Content-Type: application/json
+
+{
+   "filter": {
+       "geoLocation": {
+         "relation": "intersects",
+         "shape": {
+           "type": "MultiPolygon",
+           "coordinates": [[
+            [[35, 10], [45, 45], [15, 40], [10, 20], [35, 10]],
+            [[20, 30], [35, 35], [30, 20], [20, 30]]
+            ], [
+          [[36, 11], [46, 46], [16, 41], [11, 21], [36, 11]],
+          [[21, 31], [36, 36], [31, 21], [21, 31]]
+          ]]
+         }
+       }
+
+   }
+}
+```
+
+
+## Rate and Concurrency Limits
+
+There are limits on the rate of requests (RPS) and the number of parallel requests. A request exceeding the limits will result in a 429 error response: Too Many Requests.
+
+Define limits at both the API service and endpoint levels. Every request has a different budget due to the varying resource consumption.
+For example, there are two types of requests: CRUD (Create(Upload/Upload multipart/Complete multipart), Retrieve, Request ByIDs, Get icon, Download, Update, and Delete) and Analytical (Aggregate, List, Search, and Filter). CRUD requests are less resource-intensive than Analytical requests. Among all Analytical requests, Aggregates are the most resource-intensive, so they receive their request budget within the overall Analytical request budget.
+
+The limits for the API service and its endpoints are shown in the diagram below. These limits are subject to change based on consumption patterns and resource availability over time.  Changes to limits will be notified in the changelog.
+
+<img src="https://apps-cdn.cogniteapp.com/@cognite/docs-portal-images/1.0.0/images/api-docs/FilesLimitsFeb2023.png" alt=" " width="80%"/>
+
+### Translate RPS to data speed
+A single request can retrieve up to 1000 items, where 1 item is a file record. The top API service level has a maximum theoretical data speed of 160,000 items per second for all consumers and 120,000 for a single identity or client in a project.
+
+### Use of parallel retrieval
+
+**Parallel retrieval** is a technique used to improve data retrieval performance in cases where due to query complexity, data retrieval speeds are lower than they would normally be with a fast, simple query. Use parallel retrieval to retrieve large data sets up to the capacity limits defined for an API service.
+
+For example, the Files API request has the following limits:
+
+* A single request can retrieve up to 1000 items.
+* Up to 23 requests per second may be issued for an analytical query (per identity), such as when using /list or /filter API endpoints (see above diagram).
+
+Resulting in:
+
+* A theoretical maximum of 23,000 items read per second per identity.
+
+Additionally, complex analytical queries may return data slower than the theoretical maximum. Typically, the more complex the query, the slower the data rate.
+
+Resulting in:
+
+* A single request taking longer than 1s to read or write 1000 items.
+
+Therefore, for complex 'analytical' queries that return data slower than the theoretical maximum, the query should retrieve fewer items per request and more in parallel until the theoretical maximum performance of 23,000 items per second is reached.
+
+:::info note
+Use parallel retrieval only when a single request flow provides data retrieval speeds significantly less than the theoretical maximum.
+The overall requests per second limit still apply regardless of the number of concurrent requests issued. For example, if a request returns data at 18,000 items per second, adding a second parallel request provides little benefit as only 5,000 more items can be returned before the budget limit is reached.
+:::
