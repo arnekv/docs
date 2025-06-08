@@ -14,11 +14,11 @@ mark {
 
 /* To mark up UI elements in Docusaurus: This is a **_UI element_**. */
 
-strong > em {
+em > strong {
   font-style: normal !important;
 }
 
-b,
+em,
 strong {
   font-weight: 500 !important;
 }
