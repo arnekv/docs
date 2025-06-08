@@ -41,10 +41,13 @@
           },
           {
             "tab": "Developer",
-            "pages": [
-              "/dev/overview"
-            ],
             "groups": [
+              {
+                "group": "Overview",
+                "pages": [
+                  "/dev/overview"
+                ]
+              },
               {
                 "group": "Get started",
                 "pages": [
