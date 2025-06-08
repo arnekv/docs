@@ -1,0 +1,25 @@
+/* This file is used to override the default Mintlify styles with Cognite's custom styles. */
+
+/* To mark up product/feature/company names: This is a ~~Product name~~. */
+
+del {
+  text-decoration: none !important;
+}
+
+/* This overrides the default formatting to allow us to use <mark> tags for strikethrough (we've repurposed the strikethrough markup (~~) in Docusaurus */
+
+mark {
+  text-decoration: line-through;
+}
+
+/* To mark up UI elements in Docusaurus: This is a **_UI element_**. */
+
+strong > em {
+  font-style: normal !important;
+}
+
+b,
+strong {
+  font-weight: 500 !important;
+}
+
