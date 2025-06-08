@@ -49,7 +49,7 @@
                 ]
               },
               {
-                "group": "Get started",
+                "group": "Getting started",
                 "pages": [
                   "/dev/quickstart",
                   "/dev/use_the_API",
