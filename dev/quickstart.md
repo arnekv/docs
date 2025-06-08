@@ -148,7 +148,6 @@ Cognite Data Fusion returns a list of all [asset objects](/api#tag/Assets) in re
 
 Once you have successfully made an API request, you’re ready to begin interacting with the Cognite Data Fusion API through the Software Development Kits (SDKs).
 
-<!-- Note that this headline is linked to from docs/dev/index.mdx, so if you reword or renumber it, you need to update that link. -->
 ## Step 5: Install a Software Development Kit (SDK)
 
 We provide official Software Development Kits (SDKs) for [Python](/sdks/python/) and [JavaScript](/sdks/js/) with libraries that interact with the Cognite Data Fusion API.
