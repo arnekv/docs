@@ -12,7 +12,7 @@ mark {
   text-decoration: line-through;
 }
 
-/* To mark up UI elements in Docusaurus: This is a **_UI element_**. */
+/* To mark up UI elements in Mintlify: This is a **_UI element_**. */
 
 em > strong {
   font-style: normal !important;
