@@ -27,6 +27,15 @@
                   "/cdf/explore/custom_apps",
                   "/cdf/industrial_tools/overview"
                 ]
+              },
+              {
+                "group": "Tutorials",
+                "icon": "book",
+                "pages": [
+                  "/cdf/learn/tutorial_guidance",
+                  "/cdf/learn/overview",
+                  "/cdf/learn/cdf_setup/overview"
+                ]
               }
             ]
           },
