@@ -11,6 +11,9 @@
   "icons": {
     "library": "lucide"
   },
+  "api": {
+    "openapi": "/api-reference/cog-api.json"
+  },
   "navigation": {
     "languages": [
       {
@@ -78,13 +81,6 @@
           {
       "tab": "API reference",
       "groups": [
-        {
-          "group": "Endpoints",
-          "openapi": {
-            "source": "/api-reference/cog-api.json"
-         }
-        },
-        
   {
     "group": "Token",
     "pages": [
