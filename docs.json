@@ -110,19 +110,19 @@
                       "api-reference/spaces/retrieve-spaces-by-their-space-ids",
                       "api-reference/spaces/delete-spaces"
                     ]
+                  },
+                  {
+                    "group": "Data models",
+                    "pages": [
+                      "api-reference/data-models/list-data-models-defined-in-the-project",
+                      "api-reference/data-models/create-or-update-data-models",
+                      "api-reference/data-models/retrieve-data-models-by-their-external-ids",
+                      "api-reference/data-models/delete-data-models"
+                    ]
                   }
                 ]
               },
 
-              {
-                "group": "Data models",
-                "pages": [
-                  "api-reference/data-models/list-data-models-defined-in-the-project",
-                  "api-reference/data-models/create-or-update-data-models",
-                  "api-reference/data-models/retrieve-data-models-by-their-external-ids",
-                  "api-reference/data-models/delete-data-models"
-                ]
-              },
               {
                 "group": "Views",
                 "pages": [
