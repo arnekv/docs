@@ -74,7 +74,19 @@
                 ]
               }
             ]
+          },
+          {
+      "tab": "API reference",
+      "groups": [
+        {
+          "group": "Endpoints",
+          "openapi": {
+            "source": "/api-reference/cog-api.json",
+            "directory": "api-reference"
           }
+        }
+      ]
+    }
         ]
       },
       {
