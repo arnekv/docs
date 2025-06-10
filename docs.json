@@ -81,7 +81,8 @@
         {
           "group": "Endpoints",
           "openapi": {
-            "source": "blob:https://api-docs.cognite.com/e67fad5b-539d-49f6-aff2-128d2adec47b"
+            "source": "https://api-docs.cognite.com/e67fad5b-539d-49f6-aff2-128d2adec47b",
+            "directory": "api-reference"
           }
         },
         
