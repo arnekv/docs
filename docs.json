@@ -82,7 +82,7 @@
             "tab": "API reference",
             "groups": [
               {
-                "group": "Endpoints",
+                "group": "Endpoint",
                 "pages": [
                   {
                     "group": "Token",
