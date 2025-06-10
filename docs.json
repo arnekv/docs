@@ -83,7 +83,8 @@
           {
             "group": "Hola",
             "pages": [
-              "es/cdf/explore/agents"
+              "es/cdf/explore/agents",
+              "es/cdf/explore/custom_apps"
             ]
           }
         ]
