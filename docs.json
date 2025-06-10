@@ -119,31 +119,31 @@
                       "api-reference/data-models/retrieve-data-models-by-their-external-ids",
                       "api-reference/data-models/delete-data-models"
                     ]
+                  },
+                  {
+                    "group": "Views",
+                    "pages": [
+                      "api-reference/views/list-views-defined-in-the-project",
+                      "api-reference/views/create-or-update-views",
+                      "api-reference/views/retrieve-views-by-their-external-ids",
+                      "api-reference/views/delete-views"
+                    ]
+                  },
+                  {
+                    "group": "Containers",
+                    "pages": [
+                      "api-reference/containers/list-containers-defined-in-the-project",
+                      "api-reference/containers/create-or-update-containers",
+                      "api-reference/containers/retrieve-containers-by-their-external-ids",
+                      "api-reference/containers/delete-containers",
+                      "api-reference/containers/delete-indexes-from-containers",
+                      "api-reference/containers/delete-constraints-from-containers",
+                      "api-reference/containers/inspect-containers"
+                    ]
                   }
                 ]
               },
 
-              {
-                "group": "Views",
-                "pages": [
-                  "api-reference/views/list-views-defined-in-the-project",
-                  "api-reference/views/create-or-update-views",
-                  "api-reference/views/retrieve-views-by-their-external-ids",
-                  "api-reference/views/delete-views"
-                ]
-              },
-              {
-                "group": "Containers",
-                "pages": [
-                  "api-reference/containers/list-containers-defined-in-the-project",
-                  "api-reference/containers/create-or-update-containers",
-                  "api-reference/containers/retrieve-containers-by-their-external-ids",
-                  "api-reference/containers/delete-containers",
-                  "api-reference/containers/delete-indexes-from-containers",
-                  "api-reference/containers/delete-constraints-from-containers",
-                  "api-reference/containers/inspect-containers"
-                ]
-              },
               {
                 "group": "Instances",
                 "pages": [
