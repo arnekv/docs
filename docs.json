@@ -87,23 +87,24 @@
                   {
                     "group": "Token",
                     "pages": ["api-reference/token/inspect"]
+                  },
+                  {
+                    "group": "Assets",
+                    "pages": [
+                      "api-reference/assets/list-assets",
+                      "api-reference/assets/create-assets",
+                      "api-reference/assets/retrieve-an-asset-by-its-id",
+                      "api-reference/assets/filter-assets",
+                      "api-reference/assets/aggregate-assets",
+                      "api-reference/assets/retrieve-assets",
+                      "api-reference/assets/update-assets",
+                      "api-reference/assets/search-assets",
+                      "api-reference/assets/delete-assets"
+                    ]
                   }
                 ]
               },
-              {
-                "group": "Assets",
-                "pages": [
-                  "api-reference/assets/list-assets",
-                  "api-reference/assets/create-assets",
-                  "api-reference/assets/retrieve-an-asset-by-its-id",
-                  "api-reference/assets/filter-assets",
-                  "api-reference/assets/aggregate-assets",
-                  "api-reference/assets/retrieve-assets",
-                  "api-reference/assets/update-assets",
-                  "api-reference/assets/search-assets",
-                  "api-reference/assets/delete-assets"
-                ]
-              },
+
               {
                 "group": "Spaces",
                 "pages": [
