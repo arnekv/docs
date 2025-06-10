@@ -83,7 +83,12 @@
             "groups": [
               {
                 "group": "Token",
-                "pages": ["api-reference/token/inspect"]
+                "pages": [
+                  {
+                    "group": "Token",
+                    "pages": ["api-reference/token/inspect"]
+                  }
+                ]
               },
               {
                 "group": "Assets",
