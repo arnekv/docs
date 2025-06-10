@@ -33,6 +33,7 @@
                 "icon": "book",
                 "pages": [
                   "/cdf/learn/tutorial_guidance",
+                  "/cdf/learn/tutorial_template",
                   "/cdf/learn/overview",
                   "/cdf/learn/cdf_setup/overview"
                 ]

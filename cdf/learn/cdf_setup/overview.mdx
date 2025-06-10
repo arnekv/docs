@@ -8,59 +8,62 @@ To follow the tutorial, familiarity with cloud concepts and basic knowledge of d
 
 By the end of this tutorial, you will have a fully functional CDF project that can be used to manage and analyze your data. You will create a project similar to the [Cognite Data Fusion Sample Project](https://example.com).
 
+## Step 1: Get a CDF project and set up the basic configuration
+
+To get started, you need a Cognite Data Fusion (CDF) project. If you don't have a CDF project yet, you can sign up for a free trial or contact your Cognite representative to get access.
+
 <Steps>
-<Step title="Get a CDF project">
 
-    To get started, you need a Cognite Data Fusion (CDF) project.
+<Step title="Get a CDF project and gain access to public data sets">
 
-    If you already have a CDF project, you can skip this step. To register for a CDF project.
+ 1. Navigate to the [Cognite Data Fusion registration page](https://example.com).
+ 2. Fill in the required information, including your name, email address, and organization.
+ 3. Select [the region and cluster](/cdf/admin/clusters_regions) for your project.
+ 4. Click "Register" to submit your request.
+ 5. Optional: Go to the [Cognite Hub](https://hub.cognite.com) and [sign up](https://hub.cognite.com/welcome-to-cognite-hub-73/how-to-sign-up-for-cognite-hub-and-cognite-academy-617) to get access to the public data sets.
 
-    1. Navigate to the [Cognite Data Fusion registration page](https://example.com).
-    2. Fill in the required information, including your name, email address, and organization.
-    3. Select [the region and cluster](/cdf/admin/clusters_regions) for your project.
-    4. Click "Register" to submit your request.
+ 6. Learn more about the public data sets in the [Open Industrial Data](https://hub.cognite.com/open-industrial-data-211) section of the Cognite Hub.
+
+</Step>
+
+<Step title="Configure your identity provider (IdP) and the firewall allowlist">
+
+Once your project is created, you will receive an email with instructions on how to access it.
+
+1. Sign in to your CDF project using the credentials provided in the email.
+2. Follow the instructions in the [Access Management documentation](https://docs.cognite.com/cdf/deploy/cdf_deploy/cdf_deploy_access_management) to configure your identity provider (IdP).
+
+    This step is essential for allowing apps and users to sign in to Cognite Data Fusion with their organizational ID.
+3. Add [these URLs](https://docs.cognite.com/cdf/admin/allowlist) to your allowlist to ensure that user interfaces load correctly.
 </Step>
 
 </Steps>
 
-## Get access to publicdata
-
-When you sign up for the Cognite Hub, you get access to public data sets that can be used in your CDF project. The data originates from a single compressor on Aker BP’s Valhall oil platform:
-
-1. Go to the [Cognite Hub](https://hub.cognite.com) and [sign up](https://hub.cognite.com/welcome-to-cognite-hub-73/how-to-sign-up-for-cognite-hub-and-cognite-academy-617).
-
-You can learn more about the public data sets in the [Open Industrial Data](https://hub.cognite.com/open-industrial-data-211) section of the Cognite Hub.
-
-## Configure your identity provider (IdP)
-
-To allow apps and users to sign in to Cognite Data Fusion with their organizational ID, configure your identity provider (IdP):
-
-- <https://docs.cognite.com/cdf/deploy/cdf_deploy/cdf_deploy_access_management>
-
-## Allowlist URLs on your firewall
-
-To load user interfaces correctly:
-
-1. Add these URLs to your allowlist: [Allowlist URLs](https://docs.cognite.com/cdf/admin/allowlist)
-
 ## Step 2: Deploy with the Cognite Toolkit
 
-Prerequisites for this step include: A recent version of Python, at minimum v3.10.
-Recommended: a virtual environment manager like Poetry or pyenv for Python versions and dependencies.
-Recommended: Basic knowledge of Git.
+Before you begin this step, make sure you have the following:
 
-### Set up the Cognite Toolkit
+- Python (version 3.10 or later) installed on your system.
+- (Recommended) A virtual environment manager such as Poetry or pyenv to manage Python versions and dependencies.
+- (Recommended) Basic familiarity with Git for version control.
 
-1. <https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/setup>
+<Steps>
+<Step title="Install the Cognite Toolkit">
+    1. Follow the steps in the [Setting up the Cognite Toolkit](https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/setup) article to install the Cognite Toolkit and the basic file structure on your computer and prepare the configuration for integration with version control repository.
+    2. Set up authentication and authorization for Cognite Toolkit by following the instructions in the [Authentication documentation](https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/auth).
+</Step>
 
-## Configure, build, and deploy modules
-
-1. <https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/usage>
-1. <https://docs.cognite.com/cdf/deploy/cdf_toolkit/references/packages/quickstart>
-
-## Set up authentication and authorization
-
-1. <https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/auth>
+<Step title="Configure, build, and deploy modules">
+    1. Follow the steps in the [Setting up the Cognite Toolkit](https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/setup) article to install the Cognite Toolkit and the basic file structure on your computer and prepare the configuration for integration with version control repository.
+    1. Create a new directory for your project and navigate to it in your terminal.
+    1. Run the command `cognite init` to initialize a new CDF project.
+    1. Follow the prompts to configure your project, including setting the project name, description, and region.
+    1. Follow the steps in the [Setting up the Cognite Toolkit](https://docs.cognite.com/cdf/deploy/cdf_toolkit/guides/setup) article to install the Cognite Toolkit and the basic file structure on your computer and prepare the configuration for integration with version control repository.
+    1. Create a new directory for your project and navigate to it in your terminal.
+    1. Run the command `cognite init` to initialize a new CDF project.
+    1. Follow the prompts to configure your project, including setting the project name, description, and region.
+</Step>
+</Steps>
 
 ## Troubleshooting
 
