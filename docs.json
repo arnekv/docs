@@ -101,19 +101,19 @@
                       "api-reference/assets/search-assets",
                       "api-reference/assets/delete-assets"
                     ]
+                  },
+                  {
+                    "group": "Spaces",
+                    "pages": [
+                      "api-reference/spaces/list-spaces-defined-in-the-project",
+                      "api-reference/spaces/create-or-update-spaces",
+                      "api-reference/spaces/retrieve-spaces-by-their-space-ids",
+                      "api-reference/spaces/delete-spaces"
+                    ]
                   }
                 ]
               },
 
-              {
-                "group": "Spaces",
-                "pages": [
-                  "api-reference/spaces/list-spaces-defined-in-the-project",
-                  "api-reference/spaces/create-or-update-spaces",
-                  "api-reference/spaces/retrieve-spaces-by-their-space-ids",
-                  "api-reference/spaces/delete-spaces"
-                ]
-              },
               {
                 "group": "Data models",
                 "pages": [
