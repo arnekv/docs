@@ -78,875 +78,867 @@
           {
       "tab": "API reference",
       "groups": [
-        {
-          "group": "Endpoints",
-          "openapi": {
-            "source": "/api-reference/cog-api.json",
-            "directory": "api-reference"
-          }
-        },
-        
   {
     "group": "Token",
     "pages": [
-      "api-reference\\token\\inspect"
+      "api-reference/token/inspect"
     ]
   },
   {
     "group": "Assets",
     "pages": [
-      "api-reference\\assets\\list-assets",
-      "api-reference\\assets\\create-assets",
-      "api-reference\\assets\\retrieve-an-asset-by-its-id",
-      "api-reference\\assets\\filter-assets",
-      "api-reference\\assets\\aggregate-assets",
-      "api-reference\\assets\\retrieve-assets",
-      "api-reference\\assets\\update-assets",
-      "api-reference\\assets\\search-assets",
-      "api-reference\\assets\\delete-assets"
+      "api-reference/assets/list-assets",
+      "api-reference/assets/create-assets",
+      "api-reference/assets/retrieve-an-asset-by-its-id",
+      "api-reference/assets/filter-assets",
+      "api-reference/assets/aggregate-assets",
+      "api-reference/assets/retrieve-assets",
+      "api-reference/assets/update-assets",
+      "api-reference/assets/search-assets",
+      "api-reference/assets/delete-assets"
     ]
   },
   {
     "group": "Spaces",
     "pages": [
-      "api-reference\\spaces\\list-spaces-defined-in-the-project",
-      "api-reference\\spaces\\create-or-update-spaces",
-      "api-reference\\spaces\\retrieve-spaces-by-their-space-ids",
-      "api-reference\\spaces\\delete-spaces"
+      "api-reference/spaces/list-spaces-defined-in-the-project",
+      "api-reference/spaces/create-or-update-spaces",
+      "api-reference/spaces/retrieve-spaces-by-their-space-ids",
+      "api-reference/spaces/delete-spaces"
     ]
   },
   {
     "group": "Data models",
     "pages": [
-      "api-reference\\data-models\\list-data-models-defined-in-the-project",
-      "api-reference\\data-models\\create-or-update-data-models",
-      "api-reference\\data-models\\retrieve-data-models-by-their-external-ids",
-      "api-reference\\data-models\\delete-data-models"
+      "api-reference/data-models/list-data-models-defined-in-the-project",
+      "api-reference/data-models/create-or-update-data-models",
+      "api-reference/data-models/retrieve-data-models-by-their-external-ids",
+      "api-reference/data-models/delete-data-models"
     ]
   },
   {
     "group": "Views",
     "pages": [
-      "api-reference\\views\\list-views-defined-in-the-project",
-      "api-reference\\views\\create-or-update-views",
-      "api-reference\\views\\retrieve-views-by-their-external-ids",
-      "api-reference\\views\\delete-views"
+      "api-reference/views/list-views-defined-in-the-project",
+      "api-reference/views/create-or-update-views",
+      "api-reference/views/retrieve-views-by-their-external-ids",
+      "api-reference/views/delete-views"
     ]
   },
   {
     "group": "Containers",
     "pages": [
-      "api-reference\\containers\\list-containers-defined-in-the-project",
-      "api-reference\\containers\\create-or-update-containers",
-      "api-reference\\containers\\retrieve-containers-by-their-external-ids",
-      "api-reference\\containers\\delete-containers",
-      "api-reference\\containers\\delete-indexes-from-containers",
-      "api-reference\\containers\\delete-constraints-from-containers",
-      "api-reference\\containers\\inspect-containers"
+      "api-reference/containers/list-containers-defined-in-the-project",
+      "api-reference/containers/create-or-update-containers",
+      "api-reference/containers/retrieve-containers-by-their-external-ids",
+      "api-reference/containers/delete-containers",
+      "api-reference/containers/delete-indexes-from-containers",
+      "api-reference/containers/delete-constraints-from-containers",
+      "api-reference/containers/inspect-containers"
     ]
   },
   {
     "group": "Instances",
     "pages": [
-      "api-reference\\instances\\create-or-update-nodesedges",
-      "api-reference\\instances\\filter-nodesedges",
-      "api-reference\\instances\\retrieve-nodesedges-by-their-external-ids",
-      "api-reference\\instances\\search-for-nodesedges",
-      "api-reference\\instances\\aggregate-data-across-nodesedges",
-      "api-reference\\instances\\delete-nodesedges",
-      "api-reference\\instances\\query-nodesedges",
-      "api-reference\\instances\\sync-nodesedges",
-      "api-reference\\instances\\inspect-instances"
+      "api-reference/instances/create-or-update-nodesedges",
+      "api-reference/instances/filter-nodesedges",
+      "api-reference/instances/retrieve-nodesedges-by-their-external-ids",
+      "api-reference/instances/search-for-nodesedges",
+      "api-reference/instances/aggregate-data-across-nodesedges",
+      "api-reference/instances/delete-nodesedges",
+      "api-reference/instances/query-nodesedges",
+      "api-reference/instances/sync-nodesedges",
+      "api-reference/instances/inspect-instances"
     ]
   },
   {
     "group": "Streams",
     "pages": [
-      "api-reference\\streams\\retrieve-stream",
-      "api-reference\\streams\\delete-stream"
+      "api-reference/streams/retrieve-stream",
+      "api-reference/streams/delete-stream"
     ]
   },
   {
     "group": "Events",
     "pages": [
-      "api-reference\\events\\list-events",
-      "api-reference\\events\\create-events",
-      "api-reference\\events\\receive-an-event-by-its-id",
-      "api-reference\\events\\filter-events",
-      "api-reference\\events\\aggregate-events",
-      "api-reference\\events\\retrieve-events",
-      "api-reference\\events\\update-events",
-      "api-reference\\events\\search-events",
-      "api-reference\\events\\delete-events"
+      "api-reference/events/list-events",
+      "api-reference/events/create-events",
+      "api-reference/events/receive-an-event-by-its-id",
+      "api-reference/events/filter-events",
+      "api-reference/events/aggregate-events",
+      "api-reference/events/retrieve-events",
+      "api-reference/events/update-events",
+      "api-reference/events/search-events",
+      "api-reference/events/delete-events"
     ]
   },
   {
     "group": "Files",
     "pages": [
-      "api-reference\\files\\list-files",
-      "api-reference\\files\\upload-file",
-      "api-reference\\files\\upload-multipart-file",
-      "api-reference\\files\\get-upload-file-link",
-      "api-reference\\files\\get-multipart-file-upload-link",
-      "api-reference\\files\\retrieve-a-file-by-its-id",
-      "api-reference\\files\\filter-files",
-      "api-reference\\files\\retrieve-files",
-      "api-reference\\files\\search-files",
-      "api-reference\\files\\delete-files",
-      "api-reference\\files\\download-files",
-      "api-reference\\files\\get-icon",
-      "api-reference\\files\\update-files",
-      "api-reference\\files\\aggregate-files",
-      "api-reference\\files\\complete-multipart-upload"
+      "api-reference/files/list-files",
+      "api-reference/files/upload-file",
+      "api-reference/files/upload-multipart-file",
+      "api-reference/files/get-upload-file-link",
+      "api-reference/files/get-multipart-file-upload-link",
+      "api-reference/files/retrieve-a-file-by-its-id",
+      "api-reference/files/filter-files",
+      "api-reference/files/retrieve-files",
+      "api-reference/files/search-files",
+      "api-reference/files/delete-files",
+      "api-reference/files/download-files",
+      "api-reference/files/get-icon",
+      "api-reference/files/update-files",
+      "api-reference/files/aggregate-files",
+      "api-reference/files/complete-multipart-upload"
     ]
   },
   {
     "group": "Functions",
     "pages": [
-      "api-reference\\functions\\list-functions",
-      "api-reference\\functions\\create-functions",
-      "api-reference\\functions\\functions-limits",
-      "api-reference\\functions\\filter-functions",
-      "api-reference\\functions\\delete-functions",
-      "api-reference\\functions\\retrieve-a-function-by-its-id",
-      "api-reference\\functions\\retrieve-functions",
-      "api-reference\\functions\\get-activation-status",
-      "api-reference\\functions\\activate-functions"
+      "api-reference/functions/list-functions",
+      "api-reference/functions/create-functions",
+      "api-reference/functions/functions-limits",
+      "api-reference/functions/filter-functions",
+      "api-reference/functions/delete-functions",
+      "api-reference/functions/retrieve-a-function-by-its-id",
+      "api-reference/functions/retrieve-functions",
+      "api-reference/functions/get-activation-status",
+      "api-reference/functions/activate-functions"
     ]
   },
   {
     "group": "Function calls",
     "pages": [
-      "api-reference\\function-calls\\call-a-function-asynchronously",
-      "api-reference\\function-calls\\list-function-calls",
-      "api-reference\\function-calls\\retrieve-calls",
-      "api-reference\\function-calls\\retrieve-a-function-call-by-its-id",
-      "api-reference\\function-calls\\retrieve-logs-for-function-call",
-      "api-reference\\function-calls\\retrieve-response-for-function-call",
-      "api-reference\\function-calls\\filter-function-calls"
+      "api-reference/function-calls/call-a-function-asynchronously",
+      "api-reference/function-calls/list-function-calls",
+      "api-reference/function-calls/retrieve-calls",
+      "api-reference/function-calls/retrieve-a-function-call-by-its-id",
+      "api-reference/function-calls/retrieve-logs-for-function-call",
+      "api-reference/function-calls/retrieve-response-for-function-call",
+      "api-reference/function-calls/filter-function-calls"
     ]
   },
   {
     "group": "Function schedules",
     "pages": [
-      "api-reference\\function-schedules\\list-schedules",
-      "api-reference\\function-schedules\\create-schedules",
-      "api-reference\\function-schedules\\filter-function-schedules",
-      "api-reference\\function-schedules\\retrieve-a-function-schedule-by-its-id",
-      "api-reference\\function-schedules\\retrieve-schedules",
-      "api-reference\\function-schedules\\delete-schedules",
-      "api-reference\\function-schedules\\retrieve-function-input-data"
+      "api-reference/function-schedules/list-schedules",
+      "api-reference/function-schedules/create-schedules",
+      "api-reference/function-schedules/filter-function-schedules",
+      "api-reference/function-schedules/retrieve-a-function-schedule-by-its-id",
+      "api-reference/function-schedules/retrieve-schedules",
+      "api-reference/function-schedules/delete-schedules",
+      "api-reference/function-schedules/retrieve-function-input-data"
     ]
   },
   {
     "group": "3D Files",
     "pages": [
-      "api-reference\\3d-files\\retrieve-a-single-3d-file",
-      "api-reference\\3d-files\\retrieve-a-3d-directory-file"
+      "api-reference/3d-files/retrieve-a-single-3d-file",
+      "api-reference/3d-files/retrieve-a-3d-directory-file"
     ]
   },
   {
     "group": "3D Models",
     "pages": [
-      "api-reference\\3d-models\\list-3d-models",
-      "api-reference\\3d-models\\create-3d-models",
-      "api-reference\\3d-models\\update-3d-models",
-      "api-reference\\3d-models\\delete-3d-models",
-      "api-reference\\3d-models\\retrieve-a-3d-model"
+      "api-reference/3d-models/list-3d-models",
+      "api-reference/3d-models/create-3d-models",
+      "api-reference/3d-models/update-3d-models",
+      "api-reference/3d-models/delete-3d-models",
+      "api-reference/3d-models/retrieve-a-3d-model"
     ]
   },
   {
     "group": "3D Model Revisions",
     "pages": [
-      "api-reference\\3d-model-revisions\\list-3d-revisions",
-      "api-reference\\3d-model-revisions\\create-3d-revisions",
-      "api-reference\\3d-model-revisions\\update-3d-revisions",
-      "api-reference\\3d-model-revisions\\delete-3d-revisions",
-      "api-reference\\3d-model-revisions\\retrieve-a-3d-revision",
-      "api-reference\\3d-model-revisions\\list-3d-revision-logs",
-      "api-reference\\3d-model-revisions\\update-3d-revision-thumbnail",
-      "api-reference\\3d-model-revisions\\list-available-outputs",
-      "api-reference\\3d-model-revisions\\list-3d-nodes",
-      "api-reference\\3d-model-revisions\\filter-3d-nodes",
-      "api-reference\\3d-model-revisions\\get-3d-nodes-by-id",
-      "api-reference\\3d-model-revisions\\list-3d-ancestor-nodes"
+      "api-reference/3d-model-revisions/list-3d-revisions",
+      "api-reference/3d-model-revisions/create-3d-revisions",
+      "api-reference/3d-model-revisions/update-3d-revisions",
+      "api-reference/3d-model-revisions/delete-3d-revisions",
+      "api-reference/3d-model-revisions/retrieve-a-3d-revision",
+      "api-reference/3d-model-revisions/list-3d-revision-logs",
+      "api-reference/3d-model-revisions/update-3d-revision-thumbnail",
+      "api-reference/3d-model-revisions/list-available-outputs",
+      "api-reference/3d-model-revisions/list-3d-nodes",
+      "api-reference/3d-model-revisions/filter-3d-nodes",
+      "api-reference/3d-model-revisions/get-3d-nodes-by-id",
+      "api-reference/3d-model-revisions/list-3d-ancestor-nodes"
     ]
   },
   {
     "group": "3D Asset Mapping",
     "pages": [
-      "api-reference\\3d-asset-mapping\\list-3d-asset-mappings",
-      "api-reference\\3d-asset-mapping\\create-3d-asset-mappings",
-      "api-reference\\3d-asset-mapping\\delete-3d-asset-mappings",
-      "api-reference\\3d-asset-mapping\\filter-3d-asset-mappings",
-      "api-reference\\3d-asset-mapping\\list-mappings-for-one-assetid-across-all-3d-models",
-      "api-reference\\3d-asset-mapping\\filter-which-nodes-are-within-a-boundingbox-for-a-revision"
+      "api-reference/3d-asset-mapping/list-3d-asset-mappings",
+      "api-reference/3d-asset-mapping/create-3d-asset-mappings",
+      "api-reference/3d-asset-mapping/delete-3d-asset-mappings",
+      "api-reference/3d-asset-mapping/filter-3d-asset-mappings",
+      "api-reference/3d-asset-mapping/list-mappings-for-one-assetid-across-all-3d-models",
+      "api-reference/3d-asset-mapping/filter-which-nodes-are-within-a-boundingbox-for-a-revision"
     ]
   },
   {
     "group": "3D Jobs",
     "pages": [
-      "api-reference\\3d-jobs\\create-a-job-using-3d-source-data",
-      "api-reference\\3d-jobs\\list-jobs",
-      "api-reference\\3d-jobs\\delete-jobs",
-      "api-reference\\3d-jobs\\list-job-results",
-      "api-reference\\3d-jobs\\update-job-result-rejections",
-      "api-reference\\3d-jobs\\list-job-result-rejections"
+      "api-reference/3d-jobs/create-a-job-using-3d-source-data",
+      "api-reference/3d-jobs/list-jobs",
+      "api-reference/3d-jobs/delete-jobs",
+      "api-reference/3d-jobs/list-job-results",
+      "api-reference/3d-jobs/update-job-result-rejections",
+      "api-reference/3d-jobs/list-job-result-rejections"
     ]
   },
   {
     "group": "Time series",
     "pages": [
-      "api-reference\\time-series\\list-time-series",
-      "api-reference\\time-series\\create-time-series",
-      "api-reference\\time-series\\retrieve-time-series",
-      "api-reference\\time-series\\filter-time-series",
-      "api-reference\\time-series\\aggregate-time-series",
-      "api-reference\\time-series\\search-time-series",
-      "api-reference\\time-series\\update-time-series",
-      "api-reference\\time-series\\delete-time-series",
-      "api-reference\\time-series\\insert-data-points",
-      "api-reference\\time-series\\retrieve-data-points",
-      "api-reference\\time-series\\retrieve-latest-data-point",
-      "api-reference\\time-series\\delete-data-points"
+      "api-reference/time-series/list-time-series",
+      "api-reference/time-series/create-time-series",
+      "api-reference/time-series/retrieve-time-series",
+      "api-reference/time-series/filter-time-series",
+      "api-reference/time-series/aggregate-time-series",
+      "api-reference/time-series/search-time-series",
+      "api-reference/time-series/update-time-series",
+      "api-reference/time-series/delete-time-series",
+      "api-reference/time-series/insert-data-points",
+      "api-reference/time-series/retrieve-data-points",
+      "api-reference/time-series/retrieve-latest-data-point",
+      "api-reference/time-series/delete-data-points"
     ]
   },
   {
     "group": "Data point subscriptions",
     "pages": [
-      "api-reference\\data-point-subscriptions\\list-subscriptions",
-      "api-reference\\data-point-subscriptions\\create-subscriptions",
-      "api-reference\\data-point-subscriptions\\list-subscription-members",
-      "api-reference\\data-point-subscriptions\\retrieve-subscriptions",
-      "api-reference\\data-point-subscriptions\\update-subscriptions",
-      "api-reference\\data-point-subscriptions\\delete-subscriptions",
-      "api-reference\\data-point-subscriptions\\list-subscription-data"
+      "api-reference/data-point-subscriptions/list-subscriptions",
+      "api-reference/data-point-subscriptions/create-subscriptions",
+      "api-reference/data-point-subscriptions/list-subscription-members",
+      "api-reference/data-point-subscriptions/retrieve-subscriptions",
+      "api-reference/data-point-subscriptions/update-subscriptions",
+      "api-reference/data-point-subscriptions/delete-subscriptions",
+      "api-reference/data-point-subscriptions/list-subscription-data"
     ]
   },
   {
     "group": "Synthetic Time Series",
     "pages": [
-      "api-reference\\synthetic-time-series\\synthetic-query"
+      "api-reference/synthetic-time-series/synthetic-query"
     ]
   },
   {
     "group": "Raw",
     "pages": [
-      "api-reference\\raw\\list-databases",
-      "api-reference\\raw\\create-databases",
-      "api-reference\\raw\\delete-databases",
-      "api-reference\\raw\\list-tables-in-a-database",
-      "api-reference\\raw\\create-tables-in-a-database",
-      "api-reference\\raw\\delete-tables-in-a-database",
-      "api-reference\\raw\\retrieve-cursors-for-parallel-reads",
-      "api-reference\\raw\\retrieve-rows-from-a-table",
-      "api-reference\\raw\\insert-rows-into-a-table",
-      "api-reference\\raw\\retrieve-row-by-key",
-      "api-reference\\raw\\delete-rows-in-a-table"
+      "api-reference/raw/list-databases",
+      "api-reference/raw/create-databases",
+      "api-reference/raw/delete-databases",
+      "api-reference/raw/list-tables-in-a-database",
+      "api-reference/raw/create-tables-in-a-database",
+      "api-reference/raw/delete-tables-in-a-database",
+      "api-reference/raw/retrieve-cursors-for-parallel-reads",
+      "api-reference/raw/retrieve-rows-from-a-table",
+      "api-reference/raw/insert-rows-into-a-table",
+      "api-reference/raw/retrieve-row-by-key",
+      "api-reference/raw/delete-rows-in-a-table"
     ]
   },
   {
     "group": "Groups",
     "pages": [
-      "api-reference\\groups\\list-groups",
-      "api-reference\\groups\\create-groups",
-      "api-reference\\groups\\delete-groups"
+      "api-reference/groups/list-groups",
+      "api-reference/groups/create-groups",
+      "api-reference/groups/delete-groups"
     ]
   },
   {
     "group": "Security categories",
     "pages": [
-      "api-reference\\security-categories\\list-security-categories",
-      "api-reference\\security-categories\\create-security-categories",
-      "api-reference\\security-categories\\delete-security-categories"
+      "api-reference/security-categories/list-security-categories",
+      "api-reference/security-categories/create-security-categories",
+      "api-reference/security-categories/delete-security-categories"
     ]
   },
   {
     "group": "Data sets",
     "pages": [
-      "api-reference\\data-sets\\create-data-sets",
-      "api-reference\\data-sets\\filter-data-sets",
-      "api-reference\\data-sets\\aggregate-data-sets",
-      "api-reference\\data-sets\\retrieve-data-sets",
-      "api-reference\\data-sets\\update-data-sets"
+      "api-reference/data-sets/create-data-sets",
+      "api-reference/data-sets/filter-data-sets",
+      "api-reference/data-sets/aggregate-data-sets",
+      "api-reference/data-sets/retrieve-data-sets",
+      "api-reference/data-sets/update-data-sets"
     ]
   },
   {
     "group": "Sequences",
     "pages": [
-      "api-reference\\sequences\\list-sequences",
-      "api-reference\\sequences\\create-sequences",
-      "api-reference\\sequences\\filter-sequences",
-      "api-reference\\sequences\\aggregate-sequences",
-      "api-reference\\sequences\\retrieve-sequences",
-      "api-reference\\sequences\\search-sequences",
-      "api-reference\\sequences\\update-sequences",
-      "api-reference\\sequences\\delete-sequences",
-      "api-reference\\sequences\\insert-rows",
-      "api-reference\\sequences\\retrieve-rows",
-      "api-reference\\sequences\\retrieve-last-row",
-      "api-reference\\sequences\\delete-rows"
+      "api-reference/sequences/list-sequences",
+      "api-reference/sequences/create-sequences",
+      "api-reference/sequences/filter-sequences",
+      "api-reference/sequences/aggregate-sequences",
+      "api-reference/sequences/retrieve-sequences",
+      "api-reference/sequences/search-sequences",
+      "api-reference/sequences/update-sequences",
+      "api-reference/sequences/delete-sequences",
+      "api-reference/sequences/insert-rows",
+      "api-reference/sequences/retrieve-rows",
+      "api-reference/sequences/retrieve-last-row",
+      "api-reference/sequences/delete-rows"
     ]
   },
   {
     "group": "Labels",
     "pages": [
-      "api-reference\\labels\\create-label-definitions",
-      "api-reference\\labels\\filter-labels",
-      "api-reference\\labels\\retrieve-labels",
-      "api-reference\\labels\\delete-label-definitions"
+      "api-reference/labels/create-label-definitions",
+      "api-reference/labels/filter-labels",
+      "api-reference/labels/retrieve-labels",
+      "api-reference/labels/delete-label-definitions"
     ]
   },
   {
     "group": "Relationships",
     "pages": [
-      "api-reference\\relationships\\list-relationships",
-      "api-reference\\relationships\\create-relationships",
-      "api-reference\\relationships\\update-relationships",
-      "api-reference\\relationships\\delete-relationships",
-      "api-reference\\relationships\\retrieve-relationships",
-      "api-reference\\relationships\\filter-relationships"
+      "api-reference/relationships/list-relationships",
+      "api-reference/relationships/create-relationships",
+      "api-reference/relationships/update-relationships",
+      "api-reference/relationships/delete-relationships",
+      "api-reference/relationships/retrieve-relationships",
+      "api-reference/relationships/filter-relationships"
     ]
   },
   {
     "group": "Engineering diagrams",
     "pages": [
-      "api-reference\\engineering-diagrams\\detect-annotations-in-engineering-diagrams",
-      "api-reference\\engineering-diagrams\\retrieve-engineering-diagram-detect-results",
-      "api-reference\\engineering-diagrams\\convert-a-diagram-to-image-format",
-      "api-reference\\engineering-diagrams\\get-the-results-for-converting-an-engineering-diagram-to-an-image"
+      "api-reference/engineering-diagrams/detect-annotations-in-engineering-diagrams",
+      "api-reference/engineering-diagrams/retrieve-engineering-diagram-detect-results",
+      "api-reference/engineering-diagrams/convert-a-diagram-to-image-format",
+      "api-reference/engineering-diagrams/get-the-results-for-converting-an-engineering-diagram-to-an-image"
     ]
   },
   {
     "group": "Entity matching",
     "pages": [
-      "api-reference\\entity-matching\\list-entity-matching-models",
-      "api-reference\\entity-matching\\create-entity-matcher-model",
-      "api-reference\\entity-matching\\retrieve-an-entity-matching-model-by-the-id-of-the-model",
-      "api-reference\\entity-matching\\retrieve-entity-matching-models",
-      "api-reference\\entity-matching\\filter-models",
-      "api-reference\\entity-matching\\update-entity-matching-models",
-      "api-reference\\entity-matching\\delete-entity-matcher-model",
-      "api-reference\\entity-matching\\predict-matches",
-      "api-reference\\entity-matching\\retrieve-entity-matcher-predict-results",
-      "api-reference\\entity-matching\\re-fit-entity-matcher-model"
+      "api-reference/entity-matching/list-entity-matching-models",
+      "api-reference/entity-matching/create-entity-matcher-model",
+      "api-reference/entity-matching/retrieve-an-entity-matching-model-by-the-id-of-the-model",
+      "api-reference/entity-matching/retrieve-entity-matching-models",
+      "api-reference/entity-matching/filter-models",
+      "api-reference/entity-matching/update-entity-matching-models",
+      "api-reference/entity-matching/delete-entity-matcher-model",
+      "api-reference/entity-matching/predict-matches",
+      "api-reference/entity-matching/retrieve-entity-matcher-predict-results",
+      "api-reference/entity-matching/re-fit-entity-matcher-model"
     ]
   },
   {
     "group": "Connections",
     "pages": [
-      "api-reference\\connections\\list-connections",
-      "api-reference\\connections\\create-connections",
-      "api-reference\\connections\\retrieve-connections",
-      "api-reference\\connections\\delete-connections"
+      "api-reference/connections/list-connections",
+      "api-reference/connections/create-connections",
+      "api-reference/connections/retrieve-connections",
+      "api-reference/connections/delete-connections"
     ]
   },
   {
     "group": "Diagrams",
     "pages": [
-      "api-reference\\diagrams\\list-diagrams",
-      "api-reference\\diagrams\\retrieve-diagrams",
-      "api-reference\\diagrams\\filter-diagrams",
-      "api-reference\\diagrams\\get-an-extended-diagram-by-external-id",
-      "api-reference\\diagrams\\get-an-extended-diagram-by-file-reference",
-      "api-reference\\diagrams\\get-an-extended-diagram-with-paths-by-external-id"
+      "api-reference/diagrams/list-diagrams",
+      "api-reference/diagrams/retrieve-diagrams",
+      "api-reference/diagrams/filter-diagrams",
+      "api-reference/diagrams/get-an-extended-diagram-by-external-id",
+      "api-reference/diagrams/get-an-extended-diagram-by-file-reference",
+      "api-reference/diagrams/get-an-extended-diagram-with-paths-by-external-id"
     ]
   },
   {
     "group": "Geometries",
     "pages": [
-      "api-reference\\geometries\\list-geometries",
-      "api-reference\\geometries\\create-geometries",
-      "api-reference\\geometries\\retrieve-geometries",
-      "api-reference\\geometries\\delete-geometries",
-      "api-reference\\geometries\\update-geometries"
+      "api-reference/geometries/list-geometries",
+      "api-reference/geometries/create-geometries",
+      "api-reference/geometries/retrieve-geometries",
+      "api-reference/geometries/delete-geometries",
+      "api-reference/geometries/update-geometries"
     ]
   },
   {
     "group": "Libraries",
     "pages": [
-      "api-reference\\libraries\\list-libraries",
-      "api-reference\\libraries\\create-libraries",
-      "api-reference\\libraries\\get-a-library-with-symbols",
-      "api-reference\\libraries\\copy-library",
-      "api-reference\\libraries\\retrieve-libraries",
-      "api-reference\\libraries\\delete-libraries",
-      "api-reference\\libraries\\update-libraries"
+      "api-reference/libraries/list-libraries",
+      "api-reference/libraries/create-libraries",
+      "api-reference/libraries/get-a-library-with-symbols",
+      "api-reference/libraries/copy-library",
+      "api-reference/libraries/retrieve-libraries",
+      "api-reference/libraries/delete-libraries",
+      "api-reference/libraries/update-libraries"
     ]
   },
   {
     "group": "Entities",
     "pages": [
-      "api-reference\\entities\\list-diagram-entities",
-      "api-reference\\entities\\create-diagram-entities",
-      "api-reference\\entities\\retrieve-diagram-entities",
-      "api-reference\\entities\\delete-diagram-entities",
-      "api-reference\\entities\\update-diagram-entities"
+      "api-reference/entities/list-diagram-entities",
+      "api-reference/entities/create-diagram-entities",
+      "api-reference/entities/retrieve-diagram-entities",
+      "api-reference/entities/delete-diagram-entities",
+      "api-reference/entities/update-diagram-entities"
     ]
   },
   {
     "group": "Parsing",
     "pages": [
-      "api-reference\\parsing\\run-parsing-for-files",
-      "api-reference\\parsing\\run-an-instant-parsing-job-for-a-file",
-      "api-reference\\parsing\\run-parsing-with-tag-detection-for-files"
+      "api-reference/parsing/run-parsing-for-files",
+      "api-reference/parsing/run-an-instant-parsing-job-for-a-file",
+      "api-reference/parsing/run-parsing-with-tag-detection-for-files"
     ]
   },
   {
     "group": "Symbols",
     "pages": [
-      "api-reference\\symbols\\list-symbols",
-      "api-reference\\symbols\\create-symbols",
-      "api-reference\\symbols\\retrieve-symbols",
-      "api-reference\\symbols\\delete-symbols",
-      "api-reference\\symbols\\update-symbols"
+      "api-reference/symbols/list-symbols",
+      "api-reference/symbols/create-symbols",
+      "api-reference/symbols/retrieve-symbols",
+      "api-reference/symbols/delete-symbols",
+      "api-reference/symbols/update-symbols"
     ]
   },
   {
     "group": "SVG Data",
     "pages": [
-      "api-reference\\svg-data\\get-svg-data-by-diagramid",
-      "api-reference\\svg-data\\get-svg-data-by-file-reference"
+      "api-reference/svg-data/get-svg-data-by-diagramid",
+      "api-reference/svg-data/get-svg-data-by-file-reference"
     ]
   },
   {
     "group": "Vision",
     "pages": [
-      "api-reference\\vision\\extract-features-from-images",
-      "api-reference\\vision\\retrieve-results-from-a-feature-extraction-job-on-images"
+      "api-reference/vision/extract-features-from-images",
+      "api-reference/vision/retrieve-results-from-a-feature-extraction-job-on-images"
     ]
   },
   {
     "group": "Document AI",
     "pages": [
-      "api-reference\\document-ai\\ask-questions-about-one-or-more-documents",
-      "api-reference\\document-ai\\summarize-documents"
+      "api-reference/document-ai/ask-questions-about-one-or-more-documents",
+      "api-reference/document-ai/summarize-documents"
     ]
   },
   {
     "group": "Document parsing",
     "pages": [
-      "api-reference\\document-parsing\\write-results-to-data-models-internal"
+      "api-reference/document-parsing/write-results-to-data-models-internal"
     ]
   },
   {
     "group": "Documents",
     "pages": [
-      "api-reference\\documents\\search-for-documents",
-      "api-reference\\documents\\semantic-search-for-passages",
-      "api-reference\\documents\\aggregate-documents",
-      "api-reference\\documents\\list-documents",
-      "api-reference\\documents\\retrieve-document-content",
-      "api-reference\\documents\\retrieve-document-content-1"
+      "api-reference/documents/search-for-documents",
+      "api-reference/documents/semantic-search-for-passages",
+      "api-reference/documents/aggregate-documents",
+      "api-reference/documents/list-documents",
+      "api-reference/documents/retrieve-document-content",
+      "api-reference/documents/retrieve-document-content-1"
     ]
   },
   {
     "group": "Document preview",
     "pages": [
-      "api-reference\\document-preview\\retrieve-a-image-preview-of-a-page-from-a-document",
-      "api-reference\\document-preview\\retrieve-a-pdf-preview-of-a-document",
-      "api-reference\\document-preview\\retrieve-a-temporary-link-to-a-pdf-preview-of-a-document"
+      "api-reference/document-preview/retrieve-a-image-preview-of-a-page-from-a-document",
+      "api-reference/document-preview/retrieve-a-pdf-preview-of-a-document",
+      "api-reference/document-preview/retrieve-a-temporary-link-to-a-pdf-preview-of-a-document"
     ]
   },
   {
     "group": "Geospatial",
     "pages": [
-      "api-reference\\geospatial\\list-coordinate-reference-systems",
-      "api-reference\\geospatial\\create-coordinate-reference-systems",
-      "api-reference\\geospatial\\get-coordinate-reference-systems",
-      "api-reference\\geospatial\\delete-coordinate-reference-systems",
-      "api-reference\\geospatial\\create-feature-types",
-      "api-reference\\geospatial\\retrieve-feature-types",
-      "api-reference\\geospatial\\list-feature-types",
-      "api-reference\\geospatial\\update-feature-types",
-      "api-reference\\geospatial\\delete-feature-types",
-      "api-reference\\geospatial\\get-features",
-      "api-reference\\geospatial\\create-features",
-      "api-reference\\geospatial\\filter-all-features",
-      "api-reference\\geospatial\\retrieve-features",
-      "api-reference\\geospatial\\update-features",
-      "api-reference\\geospatial\\delete-features",
-      "api-reference\\geospatial\\search-features",
-      "api-reference\\geospatial\\search-and-stream-features",
-      "api-reference\\geospatial\\aggregate-features",
-      "api-reference\\geospatial\\compute",
-      "api-reference\\geospatial\\put-a-raster-into-a-feature-property",
-      "api-reference\\geospatial\\get-a-raster-from-a-feature-property",
-      "api-reference\\geospatial\\delete-a-raster-from-a-feature-property"
+      "api-reference/geospatial/list-coordinate-reference-systems",
+      "api-reference/geospatial/create-coordinate-reference-systems",
+      "api-reference/geospatial/get-coordinate-reference-systems",
+      "api-reference/geospatial/delete-coordinate-reference-systems",
+      "api-reference/geospatial/create-feature-types",
+      "api-reference/geospatial/retrieve-feature-types",
+      "api-reference/geospatial/list-feature-types",
+      "api-reference/geospatial/update-feature-types",
+      "api-reference/geospatial/delete-feature-types",
+      "api-reference/geospatial/get-features",
+      "api-reference/geospatial/create-features",
+      "api-reference/geospatial/filter-all-features",
+      "api-reference/geospatial/retrieve-features",
+      "api-reference/geospatial/update-features",
+      "api-reference/geospatial/delete-features",
+      "api-reference/geospatial/search-features",
+      "api-reference/geospatial/search-and-stream-features",
+      "api-reference/geospatial/aggregate-features",
+      "api-reference/geospatial/compute",
+      "api-reference/geospatial/put-a-raster-into-a-feature-property",
+      "api-reference/geospatial/get-a-raster-from-a-feature-property",
+      "api-reference/geospatial/delete-a-raster-from-a-feature-property"
     ]
   },
   {
     "group": "Sessions",
     "pages": [
-      "api-reference\\sessions\\list-sessions",
-      "api-reference\\sessions\\create-sessions",
-      "api-reference\\sessions\\retrieve-sessions-with-given-ids",
-      "api-reference\\sessions\\revoke-sessions"
+      "api-reference/sessions/list-sessions",
+      "api-reference/sessions/create-sessions",
+      "api-reference/sessions/retrieve-sessions-with-given-ids",
+      "api-reference/sessions/revoke-sessions"
     ]
   },
   {
     "group": "Extraction Pipelines",
     "pages": [
-      "api-reference\\extraction-pipelines\\list-extraction-pipelines",
-      "api-reference\\extraction-pipelines\\create-extraction-pipelines",
-      "api-reference\\extraction-pipelines\\delete-extraction-pipelines",
-      "api-reference\\extraction-pipelines\\update-extraction-pipelines",
-      "api-reference\\extraction-pipelines\\retrieve-an-extraction-pipeline-by-its-id",
-      "api-reference\\extraction-pipelines\\retrieve-extraction-pipelines",
-      "api-reference\\extraction-pipelines\\filter-extraction-pipelines"
+      "api-reference/extraction-pipelines/list-extraction-pipelines",
+      "api-reference/extraction-pipelines/create-extraction-pipelines",
+      "api-reference/extraction-pipelines/delete-extraction-pipelines",
+      "api-reference/extraction-pipelines/update-extraction-pipelines",
+      "api-reference/extraction-pipelines/retrieve-an-extraction-pipeline-by-its-id",
+      "api-reference/extraction-pipelines/retrieve-extraction-pipelines",
+      "api-reference/extraction-pipelines/filter-extraction-pipelines"
     ]
   },
   {
     "group": "Extraction Pipelines Config",
     "pages": [
-      "api-reference\\extraction-pipelines-config\\get-a-single-configuration-revision",
-      "api-reference\\extraction-pipelines-config\\create-extraction-configuration-revision",
-      "api-reference\\extraction-pipelines-config\\list-configuration-revisions",
-      "api-reference\\extraction-pipelines-config\\revert-configuration-revision"
+      "api-reference/extraction-pipelines-config/get-a-single-configuration-revision",
+      "api-reference/extraction-pipelines-config/create-extraction-configuration-revision",
+      "api-reference/extraction-pipelines-config/list-configuration-revisions",
+      "api-reference/extraction-pipelines-config/revert-configuration-revision"
     ]
   },
   {
     "group": "Extraction Pipelines Runs",
     "pages": [
-      "api-reference\\extraction-pipelines-runs\\list-extraction-pipeline-runs",
-      "api-reference\\extraction-pipelines-runs\\create-extraction-pipeline-runs",
-      "api-reference\\extraction-pipelines-runs\\filter-extraction-pipeline-runs"
+      "api-reference/extraction-pipelines-runs/list-extraction-pipeline-runs",
+      "api-reference/extraction-pipelines-runs/create-extraction-pipeline-runs",
+      "api-reference/extraction-pipelines-runs/filter-extraction-pipeline-runs"
     ]
   },
   {
     "group": "Extractors",
     "pages": [
-      "api-reference\\extractors\\list-extractors",
-      "api-reference\\extractors\\retrieve-extractors",
-      "api-reference\\extractors\\list-releases",
-      "api-reference\\extractors\\retrieve-releases",
-      "api-reference\\extractors\\list-source-systems",
-      "api-reference\\extractors\\retrieve-source-systems",
-      "api-reference\\extractors\\list-solutions",
-      "api-reference\\extractors\\retrieve-solutions",
-      "api-reference\\extractors\\get-config-schema"
+      "api-reference/extractors/list-extractors",
+      "api-reference/extractors/retrieve-extractors",
+      "api-reference/extractors/list-releases",
+      "api-reference/extractors/retrieve-releases",
+      "api-reference/extractors/list-source-systems",
+      "api-reference/extractors/retrieve-source-systems",
+      "api-reference/extractors/list-solutions",
+      "api-reference/extractors/retrieve-solutions",
+      "api-reference/extractors/get-config-schema"
     ]
   },
   {
     "group": "Transformations",
     "pages": [
-      "api-reference\\transformations\\list-transformations",
-      "api-reference\\transformations\\create-transformations",
-      "api-reference\\transformations\\retrieve-transformations",
-      "api-reference\\transformations\\filter-transformations",
-      "api-reference\\transformations\\delete-transformations",
-      "api-reference\\transformations\\update-transformations",
-      "api-reference\\transformations\\run-a-transformation",
-      "api-reference\\transformations\\cancel-a-transformation"
+      "api-reference/transformations/list-transformations",
+      "api-reference/transformations/create-transformations",
+      "api-reference/transformations/retrieve-transformations",
+      "api-reference/transformations/filter-transformations",
+      "api-reference/transformations/delete-transformations",
+      "api-reference/transformations/update-transformations",
+      "api-reference/transformations/run-a-transformation",
+      "api-reference/transformations/cancel-a-transformation"
     ]
   },
   {
     "group": "Transformation Jobs",
     "pages": [
-      "api-reference\\transformation-jobs\\list-jobs",
-      "api-reference\\transformation-jobs\\retrieve-jobs-by-ids",
-      "api-reference\\transformation-jobs\\list-job-metrics-by-job-id"
+      "api-reference/transformation-jobs/list-jobs",
+      "api-reference/transformation-jobs/retrieve-jobs-by-ids",
+      "api-reference/transformation-jobs/list-job-metrics-by-job-id"
     ]
   },
   {
     "group": "Transformation Schedules",
     "pages": [
-      "api-reference\\transformation-schedules\\list-all-schedules",
-      "api-reference\\transformation-schedules\\schedule-transformations",
-      "api-reference\\transformation-schedules\\retrieve-schedules",
-      "api-reference\\transformation-schedules\\unschedule-transformations",
-      "api-reference\\transformation-schedules\\update-schedules"
+      "api-reference/transformation-schedules/list-all-schedules",
+      "api-reference/transformation-schedules/schedule-transformations",
+      "api-reference/transformation-schedules/retrieve-schedules",
+      "api-reference/transformation-schedules/unschedule-transformations",
+      "api-reference/transformation-schedules/update-schedules"
     ]
   },
   {
     "group": "Transformation Notifications",
     "pages": [
-      "api-reference\\transformation-notifications\\list-notification-subscriptions",
-      "api-reference\\transformation-notifications\\subscribe-for-notifications",
-      "api-reference\\transformation-notifications\\delete-notification-subscriptions-by-notification-id"
+      "api-reference/transformation-notifications/list-notification-subscriptions",
+      "api-reference/transformation-notifications/subscribe-for-notifications",
+      "api-reference/transformation-notifications/delete-notification-subscriptions-by-notification-id"
     ]
   },
   {
     "group": "Schema",
     "pages": [
-      "api-reference\\schema\\get-the-schema-of-a-sequence",
-      "api-reference\\schema\\get-instance-schema",
-      "api-reference\\schema\\get-the-schema-of-resource-type"
+      "api-reference/schema/get-the-schema-of-a-sequence",
+      "api-reference/schema/get-instance-schema",
+      "api-reference/schema/get-the-schema-of-resource-type"
     ]
   },
   {
     "group": "Query",
     "pages": [
-      "api-reference\\query\\run-query"
+      "api-reference/query/run-query"
     ]
   },
   {
     "group": "Annotations",
     "pages": [
-      "api-reference\\annotations\\create-annotations",
-      "api-reference\\annotations\\suggest-annotations",
-      "api-reference\\annotations\\get-an-annotation",
-      "api-reference\\annotations\\filter-annotations",
-      "api-reference\\annotations\\retrieve-annotations",
-      "api-reference\\annotations\\delete-annotations",
-      "api-reference\\annotations\\update-annotations"
+      "api-reference/annotations/create-annotations",
+      "api-reference/annotations/suggest-annotations",
+      "api-reference/annotations/get-an-annotation",
+      "api-reference/annotations/filter-annotations",
+      "api-reference/annotations/retrieve-annotations",
+      "api-reference/annotations/delete-annotations",
+      "api-reference/annotations/update-annotations"
     ]
   },
   {
     "group": "Seismic",
     "pages": [
-      "api-reference\\seismic\\download-a-seismic-object-as-a-seg-y-file",
-      "api-reference\\seismic\\download-multiple-seismic-objects-as-a-zip-archive"
+      "api-reference/seismic/download-a-seismic-object-as-a-seg-y-file",
+      "api-reference/seismic/download-multiple-seismic-objects-as-a-zip-archive"
     ]
   },
   {
     "group": "User profiles",
     "pages": [
-      "api-reference\\user-profiles\\list-all-user-profiles-in-the-current-project",
-      "api-reference\\user-profiles\\deprecated-get-the-user-profile-of-the-principal-issuing-the-request",
-      "api-reference\\user-profiles\\retrieve-profiles-by-id-in-the-current-project",
-      "api-reference\\user-profiles\\search-user-profiles-in-the-current-project",
-      "api-reference\\user-profiles\\get-the-user-profile-of-the-principal-issuing-the-request"
+      "api-reference/user-profiles/list-all-user-profiles-in-the-current-project",
+      "api-reference/user-profiles/deprecated-get-the-user-profile-of-the-principal-issuing-the-request",
+      "api-reference/user-profiles/retrieve-profiles-by-id-in-the-current-project",
+      "api-reference/user-profiles/search-user-profiles-in-the-current-project",
+      "api-reference/user-profiles/get-the-user-profile-of-the-principal-issuing-the-request"
     ]
   },
   {
     "group": "Workflows",
     "pages": [
-      "api-reference\\workflows\\list-workflows",
-      "api-reference\\workflows\\create-or-update-a-workflow",
-      "api-reference\\workflows\\delete-workflows",
-      "api-reference\\workflows\\retrieve-a-workflow"
+      "api-reference/workflows/list-workflows",
+      "api-reference/workflows/create-or-update-a-workflow",
+      "api-reference/workflows/delete-workflows",
+      "api-reference/workflows/retrieve-a-workflow"
     ]
   },
   {
     "group": "Workflow versions",
     "pages": [
-      "api-reference\\workflow-versions\\filter-workflow-versions",
-      "api-reference\\workflow-versions\\create-or-update-a-workflow-version",
-      "api-reference\\workflow-versions\\retrieve-a-workflow-version",
-      "api-reference\\workflow-versions\\delete-workflow-versions"
+      "api-reference/workflow-versions/filter-workflow-versions",
+      "api-reference/workflow-versions/create-or-update-a-workflow-version",
+      "api-reference/workflow-versions/retrieve-a-workflow-version",
+      "api-reference/workflow-versions/delete-workflow-versions"
     ]
   },
   {
     "group": "Workflow executions",
     "pages": [
-      "api-reference\\workflow-executions\\run-a-workflow",
-      "api-reference\\workflow-executions\\filter-workflow-executions",
-      "api-reference\\workflow-executions\\retrieve-workflow-execution-details",
-      "api-reference\\workflow-executions\\cancel-a-workflow-execution",
-      "api-reference\\workflow-executions\\retry-workflow-execution"
+      "api-reference/workflow-executions/run-a-workflow",
+      "api-reference/workflow-executions/filter-workflow-executions",
+      "api-reference/workflow-executions/retrieve-workflow-execution-details",
+      "api-reference/workflow-executions/cancel-a-workflow-execution",
+      "api-reference/workflow-executions/retry-workflow-execution"
     ]
   },
   {
     "group": "Tasks",
     "pages": [
-      "api-reference\\tasks\\update-task-status"
+      "api-reference/tasks/update-task-status"
     ]
   },
   {
     "group": "Workflow triggers",
     "pages": [
-      "api-reference\\workflow-triggers\\list-triggers",
-      "api-reference\\workflow-triggers\\create-or-update-triggers",
-      "api-reference\\workflow-triggers\\delete-triggers",
-      "api-reference\\workflow-triggers\\get-the-run-history-of-a-trigger"
+      "api-reference/workflow-triggers/list-triggers",
+      "api-reference/workflow-triggers/create-or-update-triggers",
+      "api-reference/workflow-triggers/delete-triggers",
+      "api-reference/workflow-triggers/get-the-run-history-of-a-trigger"
     ]
   },
   {
     "group": "Destinations",
     "pages": [
-      "api-reference\\destinations\\list-destinations",
-      "api-reference\\destinations\\create-destinations",
-      "api-reference\\destinations\\retrieve-destinations",
-      "api-reference\\destinations\\delete-destinations",
-      "api-reference\\destinations\\update-destinations"
+      "api-reference/destinations/list-destinations",
+      "api-reference/destinations/create-destinations",
+      "api-reference/destinations/retrieve-destinations",
+      "api-reference/destinations/delete-destinations",
+      "api-reference/destinations/update-destinations"
     ]
   },
   {
     "group": "Jobs",
     "pages": [
-      "api-reference\\jobs\\list-jobs",
-      "api-reference\\jobs\\create-jobs",
-      "api-reference\\jobs\\retrieve-jobs",
-      "api-reference\\jobs\\delete-jobs",
-      "api-reference\\jobs\\get-job-logs",
-      "api-reference\\jobs\\get-job-metrics",
-      "api-reference\\jobs\\update-jobs"
+      "api-reference/jobs/list-jobs",
+      "api-reference/jobs/create-jobs",
+      "api-reference/jobs/retrieve-jobs",
+      "api-reference/jobs/delete-jobs",
+      "api-reference/jobs/get-job-logs",
+      "api-reference/jobs/get-job-metrics",
+      "api-reference/jobs/update-jobs"
     ]
   },
   {
     "group": "Sources",
     "pages": [
-      "api-reference\\sources\\list-sources",
-      "api-reference\\sources\\create-sources",
-      "api-reference\\sources\\retrieve-sources",
-      "api-reference\\sources\\delete-sources",
-      "api-reference\\sources\\update-sources"
+      "api-reference/sources/list-sources",
+      "api-reference/sources/create-sources",
+      "api-reference/sources/retrieve-sources",
+      "api-reference/sources/delete-sources",
+      "api-reference/sources/update-sources"
     ]
   },
   {
     "group": "Mappings",
     "pages": [
-      "api-reference\\mappings\\list-mappings",
-      "api-reference\\mappings\\create-mappings",
-      "api-reference\\mappings\\retrieve-mappings",
-      "api-reference\\mappings\\delete-mappings",
-      "api-reference\\mappings\\update-mappings"
+      "api-reference/mappings/list-mappings",
+      "api-reference/mappings/create-mappings",
+      "api-reference/mappings/retrieve-mappings",
+      "api-reference/mappings/delete-mappings",
+      "api-reference/mappings/update-mappings"
     ]
   },
   {
     "group": "Previews",
     "pages": [
-      "api-reference\\previews\\create-preview",
-      "api-reference\\previews\\get-preview-result",
-      "api-reference\\previews\\download-preview-result"
+      "api-reference/previews/create-preview",
+      "api-reference/previews/get-preview-result",
+      "api-reference/previews/download-preview-result"
     ]
   },
   {
     "group": "Postgres Gateway Users",
     "pages": [
-      "api-reference\\postgres-gateway-users\\list-users",
-      "api-reference\\postgres-gateway-users\\create-users",
-      "api-reference\\postgres-gateway-users\\filter-users",
-      "api-reference\\postgres-gateway-users\\retrieve-users",
-      "api-reference\\postgres-gateway-users\\update-users",
-      "api-reference\\postgres-gateway-users\\delete-users"
+      "api-reference/postgres-gateway-users/list-users",
+      "api-reference/postgres-gateway-users/create-users",
+      "api-reference/postgres-gateway-users/filter-users",
+      "api-reference/postgres-gateway-users/retrieve-users",
+      "api-reference/postgres-gateway-users/update-users",
+      "api-reference/postgres-gateway-users/delete-users"
     ]
   },
   {
     "group": "Postgres Gateway Tables",
     "pages": [
-      "api-reference\\postgres-gateway-tables\\list-tables",
-      "api-reference\\postgres-gateway-tables\\create-tables",
-      "api-reference\\postgres-gateway-tables\\retrieve-tables",
-      "api-reference\\postgres-gateway-tables\\delete-tables"
+      "api-reference/postgres-gateway-tables/list-tables",
+      "api-reference/postgres-gateway-tables/create-tables",
+      "api-reference/postgres-gateway-tables/retrieve-tables",
+      "api-reference/postgres-gateway-tables/delete-tables"
     ]
   },
   {
     "group": "SAP Instances",
     "pages": [
-      "api-reference\\sap-instances\\list-sap-instances",
-      "api-reference\\sap-instances\\create-sap-instances",
-      "api-reference\\sap-instances\\retrieve-sap-instances",
-      "api-reference\\sap-instances\\delete-sap-instances"
+      "api-reference/sap-instances/list-sap-instances",
+      "api-reference/sap-instances/create-sap-instances",
+      "api-reference/sap-instances/retrieve-sap-instances",
+      "api-reference/sap-instances/delete-sap-instances"
     ]
   },
   {
     "group": "SAP Endpoints",
     "pages": [
-      "api-reference\\sap-endpoints\\list-sap-endpoints",
-      "api-reference\\sap-endpoints\\create-sap-endpoints",
-      "api-reference\\sap-endpoints\\retrieve-sap-endpoints",
-      "api-reference\\sap-endpoints\\delete-sap-endpoints",
-      "api-reference\\sap-endpoints\\verify-sap-endpoint"
+      "api-reference/sap-endpoints/list-sap-endpoints",
+      "api-reference/sap-endpoints/create-sap-endpoints",
+      "api-reference/sap-endpoints/retrieve-sap-endpoints",
+      "api-reference/sap-endpoints/delete-sap-endpoints",
+      "api-reference/sap-endpoints/verify-sap-endpoint"
     ]
   },
   {
     "group": "Schema Mappings",
     "pages": [
-      "api-reference\\schema-mappings\\list-mappings",
-      "api-reference\\schema-mappings\\create-mappings",
-      "api-reference\\schema-mappings\\retrieve-mappings",
-      "api-reference\\schema-mappings\\delete-mappings"
+      "api-reference/schema-mappings/list-mappings",
+      "api-reference/schema-mappings/create-mappings",
+      "api-reference/schema-mappings/retrieve-mappings",
+      "api-reference/schema-mappings/delete-mappings"
     ]
   },
   {
     "group": "Writeback Requests",
     "pages": [
-      "api-reference\\writeback-requests\\list-writeback-requests",
-      "api-reference\\writeback-requests\\create-writeback-requests",
-      "api-reference\\writeback-requests\\retrieve-writeback-requests"
+      "api-reference/writeback-requests/list-writeback-requests",
+      "api-reference/writeback-requests/create-writeback-requests",
+      "api-reference/writeback-requests/retrieve-writeback-requests"
     ]
   },
   {
     "group": "Simulation Runs",
     "pages": [
-      "api-reference\\simulation-runs\\run-simulation",
-      "api-reference\\simulation-runs\\filter-simulation-runs",
-      "api-reference\\simulation-runs\\simulation-by-id",
-      "api-reference\\simulation-runs\\simulation-data-by-run-id"
+      "api-reference/simulation-runs/run-simulation",
+      "api-reference/simulation-runs/filter-simulation-runs",
+      "api-reference/simulation-runs/simulation-by-id",
+      "api-reference/simulation-runs/simulation-data-by-run-id"
     ]
   },
   {
     "group": "Simulator Integrations",
     "pages": [
-      "api-reference\\simulator-integrations\\filter-simulator-integrations",
-      "api-reference\\simulator-integrations\\delete-simulator-integrations"
+      "api-reference/simulator-integrations/filter-simulator-integrations",
+      "api-reference/simulator-integrations/delete-simulator-integrations"
     ]
   },
   {
     "group": "Simulator Models",
     "pages": [
-      "api-reference\\simulator-models\\create-simulator-model",
-      "api-reference\\simulator-models\\filter-simulator-models",
-      "api-reference\\simulator-models\\aggregate-simulator-models",
-      "api-reference\\simulator-models\\delete-simulator-model",
-      "api-reference\\simulator-models\\update-simulator-model",
-      "api-reference\\simulator-models\\retrieve-simulator-model",
-      "api-reference\\simulator-models\\create-simulator-model-revision",
-      "api-reference\\simulator-models\\filter-simulator-model-revisions",
-      "api-reference\\simulator-models\\retrieve-simulator-model-revisions"
+      "api-reference/simulator-models/create-simulator-model",
+      "api-reference/simulator-models/filter-simulator-models",
+      "api-reference/simulator-models/aggregate-simulator-models",
+      "api-reference/simulator-models/delete-simulator-model",
+      "api-reference/simulator-models/update-simulator-model",
+      "api-reference/simulator-models/retrieve-simulator-model",
+      "api-reference/simulator-models/create-simulator-model-revision",
+      "api-reference/simulator-models/filter-simulator-model-revisions",
+      "api-reference/simulator-models/retrieve-simulator-model-revisions"
     ]
   },
   {
     "group": "Simulator Routines",
     "pages": [
-      "api-reference\\simulator-routines\\create-simulator-routine",
-      "api-reference\\simulator-routines\\filter-simulator-routines",
-      "api-reference\\simulator-routines\\delete-simulator-routine",
-      "api-reference\\simulator-routines\\create-simulator-routine-revision",
-      "api-reference\\simulator-routines\\filter-simulator-routine-revisions",
-      "api-reference\\simulator-routines\\retrieve-simulator-routine-revisions"
+      "api-reference/simulator-routines/create-simulator-routine",
+      "api-reference/simulator-routines/filter-simulator-routines",
+      "api-reference/simulator-routines/delete-simulator-routine",
+      "api-reference/simulator-routines/create-simulator-routine-revision",
+      "api-reference/simulator-routines/filter-simulator-routine-revisions",
+      "api-reference/simulator-routines/retrieve-simulator-routine-revisions"
     ]
   },
   {
     "group": "Simulator Logs",
     "pages": [
-      "api-reference\\simulator-logs\\simulator-logs-by-ids"
+      "api-reference/simulator-logs/simulator-logs-by-ids"
     ]
   },
   {
     "group": "Simulators",
     "pages": [
-      "api-reference\\simulators\\filter-simulators"
+      "api-reference/simulators/filter-simulators"
     ]
   },
   {
     "group": "Units",
     "pages": [
-      "api-reference\\units\\retrieve-units-by-external-ids",
-      "api-reference\\units\\retrieve-unit-by-external-id",
-      "api-reference\\units\\list-all-units"
+      "api-reference/units/retrieve-units-by-external-ids",
+      "api-reference/units/retrieve-unit-by-external-id",
+      "api-reference/units/list-all-units"
     ]
   },
   {
     "group": "Unit Systems",
     "pages": [
-      "api-reference\\unit-systems\\list-all-unit-systems"
+      "api-reference/unit-systems/list-all-unit-systems"
     ]
   },
   {
     "group": "Organizations",
     "pages": [
-      "api-reference\\organizations\\list-child-organizations",
-      "api-reference\\organizations\\create-an-organization",
-      "api-reference\\organizations\\retrieve-an-organization",
-      "api-reference\\organizations\\delete-an-organization"
+      "api-reference/organizations/list-child-organizations",
+      "api-reference/organizations/create-an-organization",
+      "api-reference/organizations/retrieve-an-organization",
+      "api-reference/organizations/delete-an-organization"
     ]
   },
   {
     "group": "Projects",
     "pages": [
-      "api-reference\\projects\\list-projects-in-an-organization",
-      "api-reference\\projects\\create-a-project"
+      "api-reference/projects/list-projects-in-an-organization",
+      "api-reference/projects/create-a-project"
     ]
   },
   {
     "group": "Principals",
     "pages": [
-      "api-reference\\principals\\get-the-current-callers-information",
-      "api-reference\\principals\\list-principals",
-      "api-reference\\principals\\retrieve-principals-by-reference"
+      "api-reference/principals/get-the-current-callers-information",
+      "api-reference/principals/list-principals",
+      "api-reference/principals/retrieve-principals-by-reference"
     ]
   }
       ]
