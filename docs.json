@@ -81,7 +81,7 @@
         {
           "group": "Endpoints",
           "openapi": {
-            "source": "https://api-docs.cognite.com/e67fad5b-539d-49f6-aff2-128d2adec47b",
+            "source": "/api-reference/cog-api.json",
             "directory": "api-reference"
           }
         },
