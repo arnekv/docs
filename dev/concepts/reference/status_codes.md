@@ -10,14 +10,16 @@ The implementation follows the OPC UA standard, and both the [Cognite OPC UA][op
 By default, the time series API only includes data points where the status code is _Good_ and disregards other data points.
 To include data points with other status codes, you must pass additional parameters to the API.
 
-[opcua-extractor]: https://docs.cognite.com/cdf/integration/guides/extraction/opc_ua/
-[pi-extractor]: https://docs.cognite.com/cdf/integration/guides/extraction/pi
+[opcua-extractor](https://docs.cognite.com/cdf/integration/guides/extraction/opc_ua/)
+[pi-extractor](https://docs.cognite.com/cdf/integration/guides/extraction/pi)
 
 ## Main status codes
+
 All status codes fall into one of the main categories: _Good_, _Uncertain_, or _Bad_.
 If status code is missing, it is assumed to be _Good_ (with code = 0).
 
 The API uses decimal numbers to represent status codes, but we have included the hexadecimal representation for reference.
+
 <table>
 <tr><th>Symbolic representation</th><th>Code (decimal)</th><th>Code (hexadecimal)</th></tr>
 <tr><td>Good</td><td>0</td><td>0x00000000</td></tr>
@@ -26,10 +28,12 @@ The API uses decimal numbers to represent status codes, but we have included the
 </table>
 
 ### Good
+
 _Good_ status codes are the default, and indicate that the data point is valid. If status
 code is missing, it is assumed to be _Good_ with code = 0.
 
 ### Bad
+
 _Bad_ status codes are by default omitted from the responses, and indicate that the value cannot be trusted.
 
 ### Uncertain
@@ -568,10 +572,10 @@ Using the example data from above, the response looks like this:
 }
 ```
 
-:::note
+<Note>
 The example doesn't include parameters to take uncertain and bad datapoints into account.
 Therefore, the count, average, min, and max calculations are performed ignoring uncertain and bad data points.
-:::
+</Note>
 
 #### Treating uncertain data points as good
 
