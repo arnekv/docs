@@ -89,6 +89,14 @@
                           "dev/concepts/reference/ts_plotting_charts"
                         ]
                       },
+                      "dev/concepts/resource_types/events",
+                      "dev/concepts/resource_types/files",
+                      "dev/concepts/resource_types/3dmodels",
+                      "dev/concepts/resource_types/sequences",
+                      "dev/concepts/resource_types/labels",
+                      "dev/concepts/resource_types/relationships",
+                      "dev/concepts/resource_types/raw",
+                      "dev/concepts/resource_types/entity_matching",
                       "dev/concepts/resource_types/geospatial",
                       "dev/concepts/resource_types/seismic",
                       {
