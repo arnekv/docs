@@ -61,12 +61,10 @@
             "groups": [
               {
                 "group": "Developer",
-                "icon": "code",
                 "pages": [
                   "/dev/overview",
                   {
                     "group": "Getting started",
-                    "icon": "rocket",
                     "pages": [
                       "/dev/quickstart",
                       "/dev/use_the_API",
@@ -82,7 +80,7 @@
             "tab": "API reference",
             "groups": [
               {
-                "group": "Endpoint",
+                "group": "Endpoints",
                 "pages": [
                   {
                     "group": "Token",
