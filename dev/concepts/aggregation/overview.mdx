@@ -111,7 +111,6 @@ Content-Type: application/json
 
 Cognite Data Fusion (CDF) supports the aggregation functions described below.
 
-<!--vale on -->
 
 | Function                                  | How it’s calculated                                                                                | When to use                                                               |
 |-------------------------------------------|----------------------------------------------------------------------------------------------------| ------------------------------------------------------------------------- |
@@ -247,6 +246,8 @@ If CDF only has the value of _f_ in a finite number of points, there are differe
 
 ![Vc=1b-aabf(t)²dt -(1b-aabf(t)dt)²](/images/cdf/dev/concepts/aggregation/continuous_variance.png)
 
+$$Vc=1b-aabf(t)²dt -(1b-aabf(t)dt)²$$
+
 The time intervals between data points can vary due to a sampling setting that tries to capture the behavior of _f_ with a piecewise linear function (or a step function) using relatively few data points. These are cases when the continuous variance is a meaningful variance for the function. On the other hand, if the data points are sampled at even time intervals, independently of the value of _f_, the piecewise linear function will cut away extremal points, and CDF will get a variance lower than the actual variance.
 
 ### discreteVariance
@@ -255,10 +256,14 @@ The `discreteVariance`function is for cases where the data points are measured a
 
 ![Vd=1ni=1nf(ti)² -(1ni=1nf(ti))²](/images/cdf/dev/concepts/aggregation/discrete_variance.png)
 
+$$Vd=1ni=1nf(ti)² -(1ni=1nf(ti))²$$
+
 ### totalVariation
 
 The `totalVariation` function returns the total absolute change in the function values within a time interval. If the time interval goes from _t_=_a_ to _t_=_b_ with _n_ data points, the total variation is defined as:
 
 ![V=|f(t1)-f(a)|+i=1n-1|f(ti+1)-f(ti)|+|f(b)-f(tn)|](/images/cdf/dev/concepts/aggregation/total_variation.png)
+
+$$V=|f(t1)-f(a)|+i=1n-1|f(ti+1)-f(ti)|+|f(b)-f(tn)|$$
 
 CDF uses the interpolated values for _f_ at _a_ and _b_.

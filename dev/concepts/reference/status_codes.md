@@ -1,10 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
 title: Status codes
+description: Information about status codes in Cognite Data Fusion.
 ---
-
-# Status codes
 
 Status codes are used to determine the quality of time series data points.
 The status code impacts data retrieval, aggregate compuation, and how the time series should be visualized.

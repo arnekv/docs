@@ -1,4 +1,7 @@
-# Best practices for plotting charts with data points
+---
+title: Best practices for plotting charts with data points
+description: A guide to using the Time Series API for high fidelity chart rendering in Cognite Data Fusion.
+---
 
 This best practice guide focuses on giving developers the ability to use the powerful and flexible Time Series API to render the most precise, high fidelity charts possible.  Whilst the guide focuses on high fidelity charts, the techniques outlined herein may be adapted to suit different use cases where lower granularity/ lower fidelity is preferred (such as weekly or monthly reports).
 
@@ -36,7 +39,7 @@ With less granular plots, with fewer aggregate buckets along the X-axis, the sca
 
 Let’s use a worked example to illustrate how the Time Series API may be used to select the most appropriate aggregate bucket size to render the most precise view of the data.  This example uses the average aggregation. The example is also valid for use of Min and Max aggregate types.  
 
-NOTE: This example does not suggest that plotting the highest fidelity graph is best practice in all cases.  The mode of visualisation should be chosen appropriate to the customer use case.  In some scenarios, a lower granularity, scatter type plot may be more useful than the high granularity example illustrated here. 
+<Note>This example does not suggest that plotting the highest fidelity graph is best practice in all cases.  The mode of visualisation should be chosen appropriate to the customer use case.  In some scenarios, a lower granularity, scatter type plot may be more useful than the high granularity example illustrated here.</Note>
 
 Example 1:
 * A sensor produces temperature readings at a frequency of 1hz, or 60 data points per minute.
