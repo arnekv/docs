@@ -1,17 +1,12 @@
 ---
-title: Status codes
-description: Information about status codes in Cognite Data Fusion.
+title: "Status codes"
+description: "Information about status codes in Cognite Data Fusion."
 ---
 
-Status codes are used to determine the quality of time series data points.
-The status code impacts data retrieval, aggregate compuation, and how the time series should be visualized.
-The implementation follows the OPC UA standard, and both the [Cognite OPC UA][opcua-extractor] and [PI extractors][pi-extractor] support this feature.
+Status codes are used to determine the quality of time series data points. The status code impacts data retrieval, aggregate compuation, and how the time series should be visualized. The implementation follows the OPC UA standard, and both the [Cognite OPC UA](cdf/integration/guides/extraction/opc_ua/) and [PI extractors](cdf/integration/guides/extraction/pi) support this feature.
 
-By default, the time series API only includes data points where the status code is _Good_ and disregards other data points.
-To include data points with other status codes, you must pass additional parameters to the API.
+By default, the time series API only includes data points where the status code is _Good_ and disregards other data points. To include data points with other status codes, you must pass additional parameters to the API.
 
-[opcua-extractor](https://docs.cognite.com/cdf/integration/guides/extraction/opc_ua/)
-[pi-extractor](https://docs.cognite.com/cdf/integration/guides/extraction/pi)
 
 ## Main status codes
 
@@ -20,12 +15,11 @@ If status code is missing, it is assumed to be _Good_ (with code = 0).
 
 The API uses decimal numbers to represent status codes, but we have included the hexadecimal representation for reference.
 
-<table>
-<tr><th>Symbolic representation</th><th>Code (decimal)</th><th>Code (hexadecimal)</th></tr>
-<tr><td>Good</td><td>0</td><td>0x00000000</td></tr>
-<tr><td>Uncertain</td><td>1073741824</td><td>0x40000000</td></tr>
-<tr><td>Bad</td><td>2147483648</td><td>0x80000000</td></tr>
-</table>
+| Symbolic representation | Code (decimal) | Code (hexadecimal) |
+|------------------------|----------------|--------------------|
+| Good                   | 0              | 0x00000000         |
+| Uncertain              | 1073741824     | 0x40000000         |
+| Bad                    | 2147483648     | 0x80000000         |
 
 ### Good
 
