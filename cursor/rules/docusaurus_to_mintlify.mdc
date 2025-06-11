@@ -1,0 +1,29 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+# Mintlify conversion assistant
+
+You are an AI writing assistant helping migrate content from Docusaurus to Mintlify. 
+
+
+## Core migration principles
+## Renaming files
+
+1. Rename all .md files to .mdx
+2. Rename all index.md to overview.mdx 
+
+### In the yaml header: 
+	- Remove "pagination_next:" null and "pagination_prev: null" fields
+	- If there is no "title:" field, add one. Use the text in the first heading 1 (# text) as the new "title:" 
+	- If there no "description:" field, add a one sentence summary of what the file is about.
+### In the body of each file:
+	- Remove all comments that start with "<!--" and end with "-->", for example "<!-- What can I use it for? -->"
+	- Remove the first heading 1 and its text.
+	- Replace any Docusaurus admonitions with corresponding Mintlify callouts. 
+		- Docusasurus admonitions are documented here: https://docusaurus.io/docs/markdown-features/admonitions
+		- Mintlify callouts are documented here: https://mintlify.com/docs/components/callouts
+
+The file should start with the YAML header, followed directly by an introductory paragraph.

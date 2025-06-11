@@ -78,12 +78,12 @@
                       "dev/concepts/resource_types/overview",
                       "dev/concepts/resource_types/assets",
                       {
-                        "group": "Resource types",
+                        "group": "Time series",
                         "pages": [
                           "dev/concepts/resource_types/timeseries",
-                          "dev/concepts/aggregation/index",
+                          "dev/concepts/aggregation/overview",
                           "dev/concepts/aggregation/calendar",
-                          "dev/concepts/data_point_subscriptions/index",
+                          "dev/concepts/data_point_subscriptions/overview",
                           "dev/concepts/resource_types/synthetic_timeseries",
                           "dev/concepts/reference/status_codes",
                           "dev/concepts/reference/ts_plotting_charts"

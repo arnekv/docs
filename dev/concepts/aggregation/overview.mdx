@@ -1,9 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+ttle: Aggregation
+description: Learn how Cognite Data Fusion aggregates and interpolates time series data, and see the details about the available aggregation functions.
 ---
-
-# Aggregation
 
 Learn how Cognite Data Fusion **aggregates** and **interpolates** time series data, and see the details about the available [aggregation functions](#aggregation-functions).
 
@@ -15,14 +13,14 @@ In your queries, you can specify one or more aggregates (for example `average`, 
 
 Aggregates are aligned to the start time modulo of the granularity unit. If you ask for daily average temperatures since Monday afternoon last week, the first aggregated data point will contain averages for the whole of Monday, the second for Tuesday, etc.
 
-:::info NOTE
+<Info>
 Cognite Data Fusion determines aggregate alignment based only on the granularity unit. If you specify hour aggregates, and the start time of the request is in the middle of the hour, the start time will be rounded down to the start time of the hour.
 
 As a result, you can get different results if you aggregate over 60 minutes than if you aggregate over 1 hour because the two queries are aligned differently. For example, if the start time is `3:43:25`:
 
 ![1h vs 60 min granularity](/images/cdf/dev/concepts/aggregation/granularity_hour_vs_60min.png)
 
-:::
+<Info>
 
 ### Aggregating data points
 
@@ -70,17 +68,11 @@ The value of an aggregate for a time range may also depend on data outside of th
   </tr>
 </table>
 
-<!-- TODO:
-
-#### Time window
-
-Do we need to define this? Maybe mention inclusive begin, exclusive end?-->
 
 ### Missing data
 
 CDF doesn't return aggregates or interpolations for time ranges that have no data points, even if there are previous and next data points present for that period. As a result, the returned aggregates may skip large periods of time if the underlying data is sparse.
 
-<!-- TODO: what do we do if there are data points within the range, but no outside points? -->
 
 ### Previous and next data point
 
@@ -136,7 +128,6 @@ Cognite Data Fusion (CDF) supports the aggregation functions described below.
 | [discreteVariance](#discretevariance)     | The variance of the discrete set of data points, no weighting for density of points in time.       | Evenly spaced data points.                                                |
 | [totalVariation](#totalvariation)         | The sum of absolute differences between neighboring data points in a period.                       | Data quality checks or outlier detection.                                 |
 
-<!-- vale off -->
 
 ### average
 
@@ -153,11 +144,11 @@ The `average` function computes the time-weighted average value of the time seri
 The value is defined as the integral of the time series divided by the length of the time range.
 In the figures, this is represented as the average height of the grey area.
 
-:::info NOTE
+<Info>
 To retrieve the average value of the _individual_ data points (arithmetic mean), use the `sum` function, divided by the `count` function.
 The `average` function interpolates between data points, also if these are outside the time range,
 and can thus differ significantly from the average of the individual data points. It can even be greater/smaller than `max`/`min`.
-:::
+</Info>
 
 When calculating the average, there is a difference between the stepwise and continuous data.
 
@@ -233,7 +224,7 @@ The `sum` function returns the sum of the values of all data points in the time 
 
 The `interpolation` function interpolates the value of the time series at the start of each time range. The method of interpolation is based on whether the time series is continuous or stepwise.
 
-**Note:** For stepwise time series this is the same as the `stepInterpolation` function.
+<Note>For stepwise time series this is the same as the `stepInterpolation` function.<Note>
 
 <table>
 <thead></thead>
