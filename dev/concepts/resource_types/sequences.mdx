@@ -7,8 +7,6 @@ In Cognite Data Fusion (CDF), a sequence is a generic **resource type** for inde
 
 An asset can have one or more sequences connected to it. You can analyze and visualize sequences to **draw inferences** from the data, for example, to visualize the expected performance of a generator given its load. Another common way to use sequences is to store large amounts of data index of which isn't linked to time.
 
-<!--What is a row? More details + specific information for the Cognite implementation-->
-
 A **row** is a piece of information associated with a **row number**. Each **row** has a number of **columns**, each containing an **integer**, **floating point**, or **string** value. When you create the sequence, you define the column types, and each sequence can have up to 200 columns. The rows are identified by their **row number**, a searchable positive 64-bit integer. You can't search by other columns than the row number. The rows don't have to be consecutive or start at a specific number.
 
 Typical use cases for sequences include:
@@ -19,8 +17,6 @@ Typical use cases for sequences include:
 <Tip>
 See the [sequences API documentation](/api#tag/Sequences) for more information about how to work with sequences.
 </Tip>
-
-<!--Add examples to support and illustrate the concepts above -->
 
 ## Create a sequence
 

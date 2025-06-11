@@ -92,8 +92,6 @@ Most aggregates are constant for the whole duration of _granularity_. The only e
 
 ### Alignment
 
-<!-- vale off -->
-
 The alignment decides the start of the intervals and is specified in milliseconds.
 
 The `alignment` parameter lets you align weekly aggregates to start on specific days of the week, for example, Saturday or Monday. By default, aggregation with synthetic time series is aligned to _Thursday 00:00:00 UTC, 1 January 1970_, for instance, `alignment=0`.
@@ -113,8 +111,6 @@ You can also use alignment to create aggregates that are aligned to different ti
 :::info TIP
 The alignment must be a multiple of the granularity unit. In the example above, the alignment needs to be a multiple of a whole hour, since the granularity is 24h.
 :::
-
-<!-- vale on -->
 
 All intervals are on the form `(N*granularity + alignment, (N+1)*granularity + alignment)`, where `N` is an integer.
 
