@@ -140,31 +140,31 @@
                       "api-reference/containers/delete-constraints-from-containers",
                       "api-reference/containers/inspect-containers"
                     ]
+                  },
+                  {
+                    "group": "Instances",
+                    "pages": [
+                      "api-reference/instances/create-or-update-nodesedges",
+                      "api-reference/instances/filter-nodesedges",
+                      "api-reference/instances/retrieve-nodesedges-by-their-external-ids",
+                      "api-reference/instances/search-for-nodesedges",
+                      "api-reference/instances/aggregate-data-across-nodesedges",
+                      "api-reference/instances/delete-nodesedges",
+                      "api-reference/instances/query-nodesedges",
+                      "api-reference/instances/sync-nodesedges",
+                      "api-reference/instances/inspect-instances"
+                    ]
+                  },
+                  {
+                    "group": "Streams",
+                    "pages": [
+                      "api-reference/streams/retrieve-stream",
+                      "api-reference/streams/delete-stream"
+                    ]
                   }
                 ]
               },
 
-              {
-                "group": "Instances",
-                "pages": [
-                  "api-reference/instances/create-or-update-nodesedges",
-                  "api-reference/instances/filter-nodesedges",
-                  "api-reference/instances/retrieve-nodesedges-by-their-external-ids",
-                  "api-reference/instances/search-for-nodesedges",
-                  "api-reference/instances/aggregate-data-across-nodesedges",
-                  "api-reference/instances/delete-nodesedges",
-                  "api-reference/instances/query-nodesedges",
-                  "api-reference/instances/sync-nodesedges",
-                  "api-reference/instances/inspect-instances"
-                ]
-              },
-              {
-                "group": "Streams",
-                "pages": [
-                  "api-reference/streams/retrieve-stream",
-                  "api-reference/streams/delete-stream"
-                ]
-              },
               {
                 "group": "Events",
                 "pages": [
