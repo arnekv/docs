@@ -1,17 +1,16 @@
 ---
-pagination_next: null
-pagination_prev: null
-title: Introduction
+title: Units
+description: Standardizing and managing measurement units in Cognite Data Fusion.
 ---
-
-# Units in Cognite Data Fusion
 
 Cognite Data Fusion (CDF) uses Units to standardize measurement data across your industrial data resources. Whether you're working with time series or data models, Units help ensure consistent measurement representation and enable seamless unit conversion.
 
 ## Core Concepts
 
 ### Understanding Units
+
 The units service in CDF consists of three key components:
+
 1. __Quantity__: A specific, measurable property or characteristic of a physical system or substance. For example, temperature, pressure, mass, and length.
 2. __Unit__: A standard amount or value of a particular quantity by which other amounts of the same quantity can be measured or expressed. For example, `°C` and `°F` are used for temperature, and `bar` and `psi` are used for pressure.
 3. __Unit system__: A collection of default units for given quantities. Examples include the `SI` unit system ( The default value is `K` for temperature and `Pascal` for pressure) and the `Imperial` unit system ( The default value is `°F` for temperature and `psi` for pressure).
@@ -19,6 +18,7 @@ The units service in CDF consists of three key components:
 ### Unit Structure
 
 Every CDF project comes with a list of standard industry-relevant units. Each unit contains:
+
 - `externalId`: A unique identifier structured as `{quantity}:{unit}` (for example, `temperature:deg_c`).
 - `name`: The primary name of the unit, such as `DEG_C`.
 - `longName`: A descriptive name for the unit, like `degree Celsius`.
@@ -77,6 +77,7 @@ You can access units through two primary APIs:
 ### Creating Time Series with Units
 
 CDF supports two methods for creating time series with units. The choice between these methods depends on whether you want your time series to be part of the knowledge graph. For both methods, you can:
+
 - Assign units during time series creation
 - Add or update units after the time series has been created
 - Change units at any time during the time series lifecycle
@@ -438,7 +439,7 @@ client.data_modeling.data_models.apply(
 )
 ```
 
-Even though the data modeling service (DMS) API is the recommended way to manage containers, views and data models, it's possible to create them using the **Data modeling extension for GraphQL** (DML).
+Even though the data modeling service (DMS) API is the recommended way to manage containers, views and data models, it's possible to create them using the __Data modeling extension for GraphQL__ (DML).
 
 The equivalent representation in DML for this container/view definition would be:
 
@@ -456,7 +457,7 @@ type PumpSpecifications {
 Note: The `@unit` directive associates a property with a specific unit. (This works precisely like assigning units using DMS; the `externalId` argument must correspond to an entry in the unit catalog.)
 
 :::tip
-See the [**Data modeling extension for GraphQL** (DML) documentation](https://docs.cognite.com/cdf/dm/dm_graphql/dm_data_modeling_language/#specification-of-directives) for more information on using DML.
+See the [__Data modeling extension for GraphQL__ (DML) documentation](https://docs.cognite.com/cdf/dm/dm_graphql/dm_data_modeling_language/#specification-of-directives) for more information on using DML.
 :::
 
 ### Querying Data Models with Units
@@ -468,7 +469,6 @@ When querying data, set `includeTyping` to `true` to retrieve information about 
 To add unit conversion into a response, specify either `unit.externalId` or `unit.unitSystemName` for each property requiring conversion within the `targetUnits` argument. When you set `includeTyping` to `true`, the typing information will reflect the units of the data included in the request. For example, if `maxPressure` was stored as `pressure:bar`, a request to convert to `pressure:pa` will result in both the data and typing information being in `pressure:pa`.
 
 When applying a filter to a property included in `targetUnits`, the filter will be unit-aware, ensuring that the value passed on the filter aligns with the unit of the data. For instance, if `maxPressure` was stored as `pressure:bar` and a request to convert to `pressure:pa` with a filter `greater than or equal to 3520000.0` will filter the data to instances where `maxPressure` is greater than or equal to `3520000.0 Pascal`.
-
 
 :::warning
  Converting values across various units may introduce a minor conversion error in the data. For example, when you convert `1.69999999999` `meters` to `centimeters`, it results in `170` `centimeters`. This discrepancy becomes particularly evident with the application of filters. For instance, when applying a filter for `height less than 170 cm`, one might anticipate results including the original height value of `1.69999999999`, but due to rounding errors in conversion, these results might get excluded.
@@ -763,6 +763,7 @@ __Note__: You need to define the variables `startTime` and `endTime` before exec
 :::
 
 For more detailed information, visit:
+
 - [Units API documentation](/api#tag/Units)
 - [Data models API documentation](/api#tag/Data-Modeling)
 - [Time Series API documentation](/api#tag/Time-series)

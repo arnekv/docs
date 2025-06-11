@@ -1,13 +1,10 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: Files
+description: Storing and managing files and documents related to assets in Cognite Data Fusion.
 ---
-
-# Files
 
 In Cognite Data Fusion, the file **resource type** stores **files** and **documents** that are related to one or more assets. For example, a file can contain a piping and instrumentation diagram (P&ID) that shows how several assets connect.
 
-## About files
 
 Files are created in two steps where the first step **stores the metadata** in a file object, and the second step **uploads the file contents**. This means that files can exist in Cognite Data Fusion without actually being uploaded.
 
@@ -232,7 +229,6 @@ Content-Type: application/json
 }
 ```
 
-
 ## Rate and Concurrency Limits
 
 There are limits on the rate of requests (RPS) and the number of parallel requests. A request exceeding the limits will result in a 429 error response: Too Many Requests.
@@ -245,6 +241,7 @@ The limits for the API service and its endpoints are shown in the diagram below.
 <img src="https://apps-cdn.cogniteapp.com/@cognite/docs-portal-images/1.0.0/images/api-docs/FilesLimitsFeb2023.png" alt=" " width="80%"/>
 
 ### Translate RPS to data speed
+
 A single request can retrieve up to 1000 items, where 1 item is a file record. The top API service level has a maximum theoretical data speed of 160,000 items per second for all consumers and 120,000 for a single identity or client in a project.
 
 ### Use of parallel retrieval
@@ -253,18 +250,18 @@ A single request can retrieve up to 1000 items, where 1 item is a file record. T
 
 For example, the Files API request has the following limits:
 
-* A single request can retrieve up to 1000 items.
-* Up to 23 requests per second may be issued for an analytical query (per identity), such as when using /list or /filter API endpoints (see above diagram).
+- A single request can retrieve up to 1000 items.
+- Up to 23 requests per second may be issued for an analytical query (per identity), such as when using /list or /filter API endpoints (see above diagram).
 
 Resulting in:
 
-* A theoretical maximum of 23,000 items read per second per identity.
+- A theoretical maximum of 23,000 items read per second per identity.
 
 Additionally, complex analytical queries may return data slower than the theoretical maximum. Typically, the more complex the query, the slower the data rate.
 
 Resulting in:
 
-* A single request taking longer than 1s to read or write 1000 items.
+- A single request taking longer than 1s to read or write 1000 items.
 
 Therefore, for complex 'analytical' queries that return data slower than the theoretical maximum, the query should retrieve fewer items per request and more in parallel until the theoretical maximum performance of 23,000 items per second is reached.
 

@@ -1,9 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: Events
+description: Information about events and their management in Cognite Data Fusion.
 ---
-
-# Events
 
 In Cognite Data Fusion, the event **resource type** stores complex information that happens over **a period**. Events have a **start time** and an **end time** and can be related to **multiple assets**. For example, Events API includes Alarms, Process Data, and Logs.
 
@@ -21,9 +19,9 @@ For more information about how to work with events, see [Events API](/api#tag/Ev
 
 ## Rate and Concurrency Limits
 
-There are limits on the rate of requests (RPS) and the number of parallel requests. A request exceeding the limits will result in a 429 error response: Too Many Requests. 
+There are limits on the rate of requests (RPS) and the number of parallel requests. A request exceeding the limits will result in a 429 error response: Too Many Requests.
 
-Define limits at both the API service and endpoint levels. Every request has a different budget due to the varying resource consumption. 
+Define limits at both the API service and endpoint levels. Every request has a different budget due to the varying resource consumption.
 For example, there are two types of requests: CRUD (Create, Retrieve, Request ByIDs, Update, and Delete) and Analytical (List, Search, and Filter). CRUD requests are less resource-intensive than Analytical requests. Among all Analytical requests, Aggregates are the most resource-intensive, so they receive their request budget within the overall Analytical request budget.
 
 The limits for the API service and its endpoints are shown in the diagram below. These limits are subject to change based on consumption patterns and resource availability over time.  Changes to limits will be notified in the changelog.
@@ -31,6 +29,7 @@ The limits for the API service and its endpoints are shown in the diagram below.
 <img src="https://apps-cdn.cogniteapp.com/@cognite/docs-portal-images/1.0.0/images/api-docs/EventsLimitsNov23.png" alt=" " width="80%"/>
 
 ### Translate RPS to data speed
+
 A single request can retrieve up to 1000 items, where 1 item is an event record. The top API service level has a maximum theoretical data speed of 200,000 items per second for all consumers and 150,000 for a single identity or client in a project.
 
 ### Use of parallel retrieval
