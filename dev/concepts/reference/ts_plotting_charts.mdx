@@ -3,65 +3,67 @@ title: Best practices for plotting charts with data points
 description: A guide to using the Time Series API for high fidelity chart rendering in Cognite Data Fusion.
 ---
 
-This best practice guide focuses on giving developers the ability to use the powerful and flexible Time Series API to render the most precise, high-fidelity charts possible. While the guide focuses on high-fidelity charts, the techniques outlined here can be adapted for use cases where lower granularity or fidelity is preferred (such as weekly or monthly reports).
+This best practice guide helps developers use the Time Series API to render precise, high-fidelity charts. While the focus is on high fidelity, you can adapt these techniques for lower granularity or lower fidelity use cases, such as weekly or monthly reports.
 
 ## Plot area resolution
 
-It is important to know the resolution of the plot area to determine the maximum data fidelity possible. If a single pixel represents a single data point, then the horizontal resolution of the plot area represents the maximum number of data points it is possible to plot. This is true for both raw data points and aggregations. When drawing a plot where the number of data points approaches the number of pixels available, we can call this the highest data fidelity approach to plotting.
+To maximize data fidelity, determine the resolution of the plot area. If one pixel represents one data point, the horizontal resolution sets the maximum number of data points you can plot. This applies to both raw data points and aggregations. When the number of data points approaches the number of pixels, you achieve the highest data fidelity.
 
-Starting with the highest possible fidelity chart we can draw. Let’s assume we have a 1080p monitor with a horizontal resolution of 1920 pixels. Let’s assume that our chart plot area is 1500 pixels wide, leaving some space either side for other GUI elements. If we fully ‘zoom in’ to the data, we can plot 1500 raw data points on the screen at any one time.
+For example, with a 1080p monitor (1920 pixels wide) and a chart plot area of 1500 pixels, you can plot 1500 raw data points when fully zoomed in.
 
-However, when we ‘zoom out’ and view the data over a longer period of time, we will begin to have more data points in the desired plot than there are pixels to plot on. In this situation, aggregation is required to happen in order to fit the data on the screen.
+When you zoom out to view a longer period, you may have more data points than pixels. In this case, aggregate the data to fit the plot area.
 
-Aggregation can happen in several ways. If the chart retrieves more raw data points than there are pixels, aggregation happens within the graphical layer, where the graphics driver of the machine rendering the plot will aggregate or interpolate based on the algorithms built into the graphics driver. While this form of client-side aggregation may render a reasonable approximation of the chart we wish to plot, we lose control over how we want the plot to behave to the graphics driver, which in many data science scenarios may result in a loss of precision we wish to avoid. This approach also risks slowing down client applications, due to the client first having to download an excessive number of raw data points, and then due to excessive RAM utilization (holding all the raw data points in memory).
+Aggregation can happen in several ways. If the chart retrieves more raw data points than there are pixels, aggregation happens within the graphical layer, where the graphics driver aggregates or interpolates based on built-in algorithms. This client-side aggregation may render a reasonable approximation, but you lose control over the plot's behavior and may lose precision. It can also slow down client applications due to excessive data download and RAM usage.
 
-A better way to render aggregated data points in the client application is to use the aggregate function within the Time Series API. The aggregate function allows the user to more precisely define the size of the aggregate buckets we wish to plot (i.e., the number of data points in each aggregation bucket). Using the Time Series API aggregate function also improves client system performance, as the user retrieves only the number of aggregated data points required to plot on the screen and no more (consuming far less network bandwidth, RAM, and other system resources).
+A better approach is to use the aggregate function in the Time Series API. This lets you define the size of aggregation buckets and retrieve only the number of aggregated data points needed for the screen, improving performance and reducing resource usage.
 
-In summary, when the number of data points we need to plot exceeds the number of pixels available in the plot area, the Time Series API aggregate function should be used.
+In summary, when the number of data points exceeds the number of pixels, use the Time Series API aggregate function.
 
 ## Average, min, max, and standard variance
 
-When plotting charts where the data is aggregated, a natural first choice is to calculate the average value of the data points for each bucket. However, if there are outlier values in a given bucket, using only the average calculated values will lose potentially valuable information. Therefore, when plotting data using aggregate buckets, consider whether to also include plotting of min and max values along with the average to provide the fuller picture.
+When plotting aggregated charts, calculating the average value for each bucket is a natural first step. However, if there are outliers, using only the average may lose valuable information. Consider also plotting min and max values with the average for a fuller picture.
 
-Further insight may be gained by including the variance aggregate values. For example, by calculating the square root of the **continuousVariance** value for a given aggregation period, it will tell you the standard deviation. This could be plotted on a chart to indicate to the viewer the proportion of outliers from the mean there are in that time period.
+You can gain further insight by including variance aggregates. For example, the square root of the **continuousVariance** value for a period gives the standard deviation, which you can plot to show the proportion of outliers from the mean.
 
-<Note>For the most common cases when analyzing time series data, <strong>continuousVariance</strong> is the most appropriate aggregate. For time series with a fixed frequency, <strong>discreteVariance</strong> may be used.</Note>
+<Note>
+For most time series analysis, use **continuousVariance**. For fixed-frequency time series, use **discreteVariance**.
+</Note>
 
-When maximizing the use of the screen real estate to provide the highest possible data fidelity (i.e., plotting aggregated data points per pixel), using the format illustrated in the chart below may be desirable.
+When maximizing screen real estate for high fidelity (aggregated data points per pixel), use the format shown in the chart below.
 
-![High fidelity plot with average, min and max values](/images/cdf/dev/concepts/resource_types/high_fidelity_datapoints_avg_min_max.png)
+<img className="screenshot" src="/images/cdf/dev/concepts/resource_types/high_fidelity_datapoints_avg_min_max.png" alt="High fidelity plot with average, min and max values " width="100%"/>
 
-With less granular plots, with fewer aggregate buckets along the X-axis, the scatter plot format may be more appropriate such as depicted below:
+For less granular plots with fewer aggregate buckets, a scatter plot format may be more appropriate:
 
-![Daily granularity plot with average, min and max values](/images/cdf/dev/concepts/resource_types/LoFi_daily_avg_min_max.png)
+<img className="screenshot" src="/images/cdf/dev/concepts/resource_types/LoFi_daily_avg_min_max.png" alt="Daily granularity plot with average, min and max values " width="100%"/>
 
 ## How to choose aggregate bucket size
 
-Let’s use a worked example to illustrate how the Time Series API may be used to select the most appropriate aggregate bucket size to render the most precise view of the data. This example uses the average aggregation. The example is also valid for use of Min and Max aggregate types.
+Let's use an example to illustrate how to select the best aggregate bucket size with the Time Series API. This example uses the average aggregation, but the approach also works for min and max aggregates.
 
-<Note>This example does not suggest that plotting the highest fidelity graph is best practice in all cases. The mode of visualization should be chosen appropriate to the customer use case. In some scenarios, a lower granularity, scatter-type plot may be more useful than the high granularity example illustrated here.</Note>
+<Note>
+This example does not suggest that plotting the highest fidelity graph is best practice in all cases. Choose the visualization mode that fits the customer use case. In some scenarios, a lower granularity, scatter plot may be more useful than the high granularity example here.
+</Note>
 
 Example 1:
+- A sensor produces temperature readings at 1 Hz (60 data points per minute).
+- You want to plot the readings on a chart with a horizontal resolution of 1500 px.
+- The initial timespan is 30 days.
 
-* A sensor produces temperature readings at a frequency of 1hz, or 60 data points per minute.
-* We wish to plot the reading data on a chart, with a horizontal resolution of 1500 px.
-* The initial timespan of the plot will be 30 days.
+In this scenario, there are 2,592,000 raw data points, but only 1500 pixels to plot them. You need to aggregate the data into buckets.
 
-In this scenario, there will be 2,592,000 raw data points to plot on the graph, but with only 1500 pixels to plot against, we will need to put these data points into aggregated buckets in order to render them.
+The X-axis represents time in days. Each pixel can represent 28.8 minutes (total minutes in plot: 43,200 / 1500). Round each aggregate bucket up to 30 minutes. Rounding up ensures the number of buckets is less than the number of pixels.
 
-As the X-axis will represent time in days, each pixel can represent 28.8 minutes (total number of minutes in plot - 43,200 / 1,500). It seems sensible to round each aggregate bucket up to 30 minutes in this case. Rounding up ensures that the number of aggregate buckets is less than the number of pixels available in the plot area.
+With each pixel containing a 30-minute aggregation, there are 1440 buckets in 30 days, so you can plot the data within the plot area.
 
-With each pixel therefore containing a 30 minute aggregation, there are 1,440 30-minute buckets in 30 days, therefore we can plot our data within our plot area.
-
-The Time Series API supports time granularities expressed in days, hours, minutes, or seconds. So in our example here, a sample API call might look like this:
+The Time Series API supports granularities in days, hours, minutes, or seconds. In this example, an API call might look like this:
 
 ```json
-title="Sample API call"
 {
   "items": [
     {
-      "start": "2023-04-01T00:00:00",
-      "end": "2023-04-30T23:59:59",
+      "start": 2023-04-01T00:00:00,
+      "end": 2023-04-30T23:59:59,
       "limit": 0,
       "aggregates": [
         "average"
@@ -88,21 +90,21 @@ title="Sample API call"
 
 ### Changing the plot time span
 
-Now let’s say we want to zoom out, and look at a calendar quarter of data. From 1st April to June 30th. This quarter will contain 91 days, which in turn is 131,040 minutes.
+If you want to zoom out and look at a calendar quarter (April 1 to June 30), the quarter has 91 days (131,040 minutes).
 
-Dividing the amount of minutes into the number of pixels available to plot gives us an aggregate bucket size of 87.36 minutes per bucket. Let us round this up to 90 mins. This will result in 1,456 aggregate buckets in the plot area, so just within our pixel count.
+Divide the minutes by the number of pixels to get an aggregate bucket size of 87.36 minutes. Round up to 90 minutes. This results in 1456 buckets, just within the pixel count.
 
 ### Changes in plot resolution
 
-In modern web-based applications, it is likely that the browser window will be resized to fit different screen sizes and resolutions. Display horizontal resolutions may range from 1024px in the case of older industrial laptops through to 7680px for modern 8K resolution screens. In video wall applications, resolutions may be even greater (e.g., three 4K monitors side by side provides a total of 11,520px). In addition, users may dynamically resize the browser window. In such cases, the plot area will also change in resolution, and thus it becomes useful to calculate the aggregate bucket sizes where the plot area pixel count is a variable.
+Modern web applications may be resized for different screens and resolutions. Display resolutions may range from 1024px (older laptops) to 7680px (8K screens). Video walls can be even larger. Users may also resize browser windows, changing the plot area resolution. In these cases, calculate aggregate bucket sizes where the plot area pixel count is a variable.
 
-## Summary
+# Summary
 
-Calculate the appropriate aggregate bucket size, taking into account the following variables:
+Calculate the appropriate aggregate bucket size by considering:
 
-* The frequency of the time series data points
-* The desired time span to visualize the data over
-* The horizontal resolution available in the plot area
-* The use case requirements for high vs. low fidelity (managing information overload)
+- The frequency of the time series data points
+- The desired time span to visualize
+- The horizontal resolution of the plot area
+- The use case requirements for high vs. low fidelity (managing information overload)
 
-Round up aggregate bucket size to the nearest sensible number, ensuring the data will fit within the plot area.
+Round up the aggregate bucket size to the nearest sensible number to ensure the data fits within the plot area.

@@ -3,42 +3,43 @@ title: Contributing to the unit catalog
 description: How to contribute new units or unit systems to the Cognite unit catalog.
 ---
 
-At Cognite, we maintain a global unit catalog filled with units and unit systems that are accessible to all CDF projects. We believe in the power of open-source and collaboration, so we've made our unit catalog open to contributions from our users.
+At Cognite, we maintain a global unit catalog with units and unit systems available to all CDF projects. We believe in open source and collaboration, and our unit catalog is open for user contributions.
 
-While we encourage contributions to enhance the unit catalog, it is important to note that the catalog is made available to all Cognite customers. Therefore, we will carefully evaluate each submission to ensure that the additions are suitable for our broad customer base.
+We encourage you to contribute to the unit catalog. Since the catalog is shared with all Cognite customers, we review each submission to ensure it is suitable for a broad audience.
 
 ## How to contribute
 
-### Step 1: Access the unit catalog repository
+<Note>
+You need a GitHub account to contribute.
+</Note>
 
-- Visit [cognitedata/units-catalog](https://github.com/cognitedata/units-catalog) to access the public repository.
-- **Note**: You need a GitHub account to contribute.
+<Steps>
+  <Step title="Access the unit catalog repository">
+    1. Visit [cognitedata/units-catalog](https://github.com/cognitedata/units-catalog) to access the public repository.
+  </Step>
+  <Step title="Familiarize yourself with the project">
+    1. Read the **README** file to understand the project structure, contribution guidelines, and validation requirements.
+  </Step>
+  <Step title="Make your changes">
+    1. Edit `units.json` and/or `unitSystems.json` to add your new units or unit systems.
+    2. Ensure your additions conform to the validation rules and tests outlined in the README.
+    3. Provide a reliable source for the unit conversion factors (e.g., UoM standards, books, or journals; Google or Wikis are not considered valid sources).
+  </Step>
+  <Step title="Submit a pull request">
+    1. Save your changes and create a Pull Request (PR).
+    2. For faster review, create one PR per unit, or bundle up to 5 units per PR. Larger PRs may take longer to review.
+  </Step>
+  <Step title="Review and approval">
+    1. Your PR will be reviewed by Cognite engineering to ensure it meets the contribution guidelines and is suitable for inclusion in the unit catalog.
+    2. The review process may result in a request for changes or clarification, or the PR may be accepted and merged directly.
+  </Step>
+  <Step title="Release and deployment">
+    1. After reviewing and merging approved PRs, Cognite creates new releases of the unit catalog at most every 2 months, depending on contributions.
+    2. Critical bug fixes may be released outside of this schedule as needed.
+    3. Once a release is issued on GitHub, the changes are deployed across all CDF clusters within the following two weeks.
+  </Step>
+</Steps>
 
-### Step 2: Familiarize yourself with the project
-
-- Read the **README** file to understand the project structure, contribution guidelines, and validation requirements.
-
-### Step 3: Make your changes
-
-- Edit the `units.json` and/or `unitSystems.json` files to add your new units or unit systems. Ensure that your additions conform to the validation rules and tests outlined in the README.
-- Provide a reliable source for the unit conversion factors. Accepted sources include UoM standards (e.g., Energistics, qudt.org), books, or journals. Google or Wikis are not considered valid sources.
-
-### Step 4: Submit a pull request
-
-- Save your changes and raise a Pull request (PR).
-- To expedite the review process, we recommend creating one PR per unit, or bundling up to 5 units per PR. Larger PRs may take longer to review.
-
-### Step 5: Review and approval
-
-- Your PR will be reviewed by Cognite engineering to ensure it meets the contribution guidelines and is suitable for inclusion in the unit catalog.
-- The review process may result in a request for changes or clarification, or the PR may be accepted and merged directly.
-
-### Step 6: Release and deployment
-
-- After reviewing and merging approved PRs, Cognite creates new releases of the unit catalog at most every 2 months, depending on contributions.
-- Critical bug fixes may be released outside of this schedule as needed.
-- Once a release is issued on GitHub, the changes are deployed across all CDF clusters within the following two weeks.
-
-:::info tip
-**Note**: Cognite reserves the right to evaluate and refuse additions that are not suitable for our broad customer base. We appreciate your understanding and cooperation in this regard.
-:::
+<Note>
+Cognite reserves the right to evaluate and refuse additions that are not suitable for our broad customer base. We appreciate your understanding and cooperation in this regard.
+</Note>
