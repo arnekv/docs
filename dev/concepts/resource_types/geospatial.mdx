@@ -9,11 +9,11 @@ In Cognite Data Fusion (CDF), the geospatial endpoint is the base entry point fo
 
 In addition, and following the Open Geospatial Consortium recommendations, each spatial representation should have an associated Coordinate Reference System (CRS), but this isn't mandatory. The Geospatial API also enables feature search using filters of arbitrary complexity, with a boolean expression of conditions on the properties. Defining a feature type is up to the client, and CDF geospatial doesn't come with pre-configured schemas and provides excellent flexibility for modeling the client problem domain.
 
-:::tip
+<Tip>
 See the [Geospatial API documentation](/api#tag/Geospatial) for more information.
 
 See [Geospatial Examples](https://github.com/cognitedata/geospatial-examples) for Python SDK examples.
-:::
+</Tip>
 
 ## Authentication and authorization
 
@@ -61,9 +61,9 @@ Assuming that
 | Create feature Y (data set id 5678) of feature type FT1  | (`geospatial:read:1234` or `geospatial:read:all`) and (`geospatial:write:5678` or `geospatial:write:all`) and `dataset:owner:5678` |
 | Create feature Y without data set id of feature type FT1 | (`geospatial:read:1234` or `geospatial:read:all`) and (`geospatial:write:all`)                                                     |
 
-:::info NOTE
+<Note>
 CRSs don't support data sets.
-:::
+</Note>
 
 ## Feature types
 
@@ -191,7 +191,7 @@ In addition to spatial property types, the following versatile types are support
 
 | Type        | Description                                         | Example                 |
 | ----------- | --------------------------------------------------- | ----------------------- |
-| String      | A character string.                                 | “Powered by geospatial” |
+| String      | A character string.                                 | "Powered by geospatial" |
 | Long        | A 64-bit signed integer.                            | 1234567                 |
 | Double      | A 64-bit double precision floating point number.    | 12345.6789              |
 | Boolean     | True or False.                                      | true                    |
@@ -735,9 +735,9 @@ The supported raster data format is defined by the GDAL ([documentation](https:/
 
 A CDF Geospatial feature type can have zero, one, or many raster properties.
 
-:::info NOTE
+<Note>
 A feature type raster property must be optional and require a fixed SRID.
-:::
+</Note>
 
 You can set the storage type for the raster to:
 
@@ -791,9 +791,9 @@ PUT /geospatial/featuretypes/<id>/features/<id>/rasters/<id>?format=XYZ&srid=432
 <raster data>
 ```
 
-:::info NOTE
+<Note>
 Depending on the GDAL driver used to read GDAL input content, there is potential precision loss when ingesting the raster. For example, ASCII Gridded XYZ driver only supports a single precision floating point. When getting XYZ raster, SIGNIFICANT_DIGITS option can be used to specify the number of significant digits of the output raster.
-:::
+</Note>
 
 ## Computation
 

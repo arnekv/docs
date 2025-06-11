@@ -16,9 +16,9 @@ Typical use cases for sequences include:
 - Storing and retrieving an entire curve with an x-y dependency. In this case, use two floating-point columns so that the integer type on the row number doesn't restrict you..
 - Storing a log based on distance or depth, with information in columns of different types for each entry. If you store the distance or depth as the row number (an integer), you may lose precision but can search for all events that occurred at a particular distance or depth.
 
-:::info TIP
+<Tip>
 See the [sequences API documentation](/api#tag/Sequences) for more information about how to work with sequences.
-:::
+</Tip>
 
 <!--Add examples to support and illustrate the concepts above -->
 
@@ -114,15 +114,13 @@ Content-Type: application/json
 }
 ```
 
-:::info NOTE
+<Note>
 
 - `end` is exclusive. Even if you specify a higher limit, the request returns a maximum of five rows.
 
 - Unlike the endpoints for creating sequences and inserting rows, you can only request rows from a single sequence here.
 
 - We skip rows where all column values are null/missing.
-
-:::
 
 The response will look similar to this:
 
@@ -164,6 +162,8 @@ The response will look similar to this:
   ]
 }
 ```
+
+</Note>
 
 ## Add (or modify) columns to a sequence
 
@@ -242,9 +242,8 @@ Content-Type: application/json
 }
 ```
 
-:::info NOTE
+<Note>
 10000 is the maximum limit per request.
-:::
 
 The response will look similar to this:
 
@@ -278,3 +277,5 @@ The response will look similar to this:
 ```
 
 To retrieve the next 10000 rows, pass the same request with the `cursor` field changed to the value returned in `nextCursor`.
+
+</Note>

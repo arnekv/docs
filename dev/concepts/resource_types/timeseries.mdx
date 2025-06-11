@@ -32,9 +32,9 @@ There are three categories of status codes: `Good`, `Uncertain`, and `Bad`.
 By default, only `Good` data points are returned, but the you opt-in to take all data points into account.
 For more information, see the [status code](/dev/concepts/reference/status_codes.md) page.
 
-:::info tip
+<Tip>
 See the [time series API documentation](/api#tag/Time-series) for more information about how to work with time series.
-:::
+</Tip>
 
 <!--The examples below should support and illustrate the concepts above -->
 
@@ -213,9 +213,9 @@ If you still get the error, try again after 2 seconds, followed by 4, 8, 10, 10 
 
 You can try to scale up when you're no longer rate-limited with a 429.
 
-:::info NOTE
+<Note>
 There's no fixed limit of requests before you receive 429. The limit depends on the complexity of the requests, other users on the server, and service performance.
-:::
+</Note>
 
 #### 5xx - Server errors
 
@@ -235,6 +235,6 @@ When you modify or delete time series, next requests can fail harmlessly if the 
 
 The only endpoint that's not idempotent is creating a time series **without externalId**. For each successful request, you generate a new time series. The recommendation is to always use _externalId_ on your time series.
 
-:::info NOTE
+<Note>
 We always apply the complete request or nothing at all. A 200 response indicates that we applied the complete request.
-:::
+</Note>

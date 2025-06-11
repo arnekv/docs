@@ -11,9 +11,9 @@ Different sources of industrial data can use different naming standards when the
 
 [Assets](assets) in CDF connect related data from different sources, such as time series, files, sequences, and events. The data often use different naming conventions, even when they refer to the same **entity**. Entity matching applies artificial intelligence techniques to automatically match the different resources according to name, description, etc.
 
-:::info TIP
+<Tip>
 See the [entity matching API documentation](/api#tag/Entity-matching) for more information on working with relationships.
-:::
+</Tip>
 
 ## Example data
 
@@ -131,9 +131,9 @@ Content-Type: application/json
 ]
 ```
 
-:::info note
+<Note>
 For both `matchFrom` items, the two matches have an equal score, and the model isn't able to distinguish between the correct and incorrect match. Also, the scores are relatively low. When the data set is small, [unsupervised](#fit-unsupervised-model) learning makes more sense.
-:::
+</Note>
 
 ### Refit
 
@@ -171,9 +171,9 @@ GET /api/v1/projects/publicdata/context/entitymatching/jobs/<job_id>
 Content-Type: application/json
 ```
 
-:::info note
+<Note>
 In this example, the results are the same. The new `true-match` follows the exact same pattern as the original.
-:::
+</Note>
 
 ## Fit an unsupervised ML model
 
@@ -302,10 +302,6 @@ By default, only `name` in sources and `name` in targets are used to calculate s
 
 In this example, it looks like comparing the `description` field for both targets and sources could improve the model.
 
-:::info note
-Calculating similarity measures can be time-consuming. It's recommended that you don't use `match_fields` combinations that add little or no information to the model.
-:::
-
 ```http
 POST /api/v1/projects/publicdata/context/entitymatching/
 Content-Type: application/json
@@ -361,9 +357,9 @@ Content-Type: application/json
 }
 ```
 
-:::info note
+<Note>
 The model gives the correct matches a score of 1 and the incorrect matches a score of 0.5.
-:::
+</Note>
 
 ### Using feature types
 
@@ -445,9 +441,9 @@ Content-Type: application/json
  'statusTime': 1606153318777}
 ```
 
-:::info note
+<Note>
 The new target items have identical scores to the correct matches. This is because with `feature_type="simple"`, only the number of matching tokens are considered.
-:::
+</Note>
 
 Target items with `id` _0_ _21_, _AA_, _1019_, and _CA_ match a token in sources items with `id` _0_. Target items with `id` _10_ _21_, _KKL_, _1019_, and _CA_ matches a token in source items with `id` _0_. Thus, the same number of tokens matches.
 

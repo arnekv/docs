@@ -5,7 +5,6 @@ description: Storing and managing files and documents related to assets in Cogni
 
 In Cognite Data Fusion, the file **resource type** stores **files** and **documents** that are related to one or more assets. For example, a file can contain a piping and instrumentation diagram (P&ID) that shows how several assets connect.
 
-
 Files are created in two steps where the first step **stores the metadata** in a file object, and the second step **uploads the file contents**. This means that files can exist in Cognite Data Fusion without actually being uploaded.
 
 Each file has a unique `id` that's generated at file creation. Specify a `fileName` when the file is created.
@@ -18,11 +17,13 @@ Additionally, files can have `labels` attached to them, making it easier to orga
 
 You can retrieve the information for a file, both standard and dynamic metadata fields, using the files list or searching REST API calls. You can download the file contents with the file download REST API call.
 
-:::info TIP
+<Tip>
 See the [Files API documentation](/api#tag/Files) to learn more about working with the files API.
+</Tip>
 
+<Tip>
 See the [Labels API documentation](/api#tag/Labels/operation/createLabelDefinitions) to learn more about managing Labels.
-:::
+</Tip>
 
 ## Geographic location of files
 
@@ -265,7 +266,7 @@ Resulting in:
 
 Therefore, for complex 'analytical' queries that return data slower than the theoretical maximum, the query should retrieve fewer items per request and more in parallel until the theoretical maximum performance of 23,000 items per second is reached.
 
-:::info note
+<Note>
 Use parallel retrieval only when a single request flow provides data retrieval speeds significantly less than the theoretical maximum.
 The overall requests per second limit still apply regardless of the number of concurrent requests issued. For example, if a request returns data at 18,000 items per second, adding a second parallel request provides little benefit as only 5,000 more items can be returned before the budget limit is reached.
-:::
+</Note>
