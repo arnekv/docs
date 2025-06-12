@@ -1,9 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: "Geospatial"
+description: "Information about geospatial data and its management in Cognite Data Fusion."
 ---
-
-# Geospatial
 
 In Cognite Data Fusion (CDF), the geospatial endpoint is the base entry point for many resource types that enable storing and querying item collections that have a geospatial nature. Those items, features in Geographic Information System (GIS) terminology, are grouped in feature types. Features of the same type share several properties (a name, a type, and a value) and have more than one spatial representation stored in configurable properties.
 
@@ -81,7 +79,6 @@ A feature is an item following the specification given by its corresponding feat
 
 Feature types have predefined properties that enable close integration with the rest of the CDF. These properties are:
 
-<!-- vale off -->
 
 | Name            | Type        | Description                                     |
 | --------------- | ----------  | ----------------------------------------------- |
@@ -102,7 +99,6 @@ Features have the same predefined properties and in addition the `assetIds` prop
 | dataSetId       | Long        | The standard CDF data set id.                    |
 | assetIds        | Array[Long] | The standard CDF internal asset ids (links).     |
 
-<!-- vale on -->
 
 #### Reserved property names
 
@@ -121,7 +117,7 @@ You can find the GeoJSON specification at [GeoJSON](https://geojson.org/) and th
 ### 2D
 
 The Geospatial service supports the following vector types, located in a 2-dimensional space, each as an X and a Y coordinate:
-<!-- vale off -->
+
 | Type            | Description                                                                                                      | Example WKT                                                                            | Example Geojson                                                                                                                      |
 | --------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | POINT           | A simple `point`.                                                                                                | `POINT(1 -1)`                                                                          | `{"type": "Point", "coordinates": [1, -1]}`                                                                                          |
@@ -130,11 +126,11 @@ The Geospatial service supports the following vector types, located in a 2-dimen
 | MULTIPOINT      | A set of POINTs.                                                                                                 | `MULTIPOINT(-1 1, 0 0, 2 3)`                                                           |                                                                                                                                      |
 | MULTILINESTRING | A set of LINESTRINGs.                                                                                            | `MULTILINESTRING((0 0,0 1,1 1), (-1 1,-1 -1))`                                         |                                                                                                                                      |
 | MULTIPOLYGON    | A set of POLYGONs.                                                                                               | `MULTIPOLYGON(((2.25 0,1.25 1,1.25 -1,2.25 0)),((1 -1,1 1,0 0,1 -1)))`                 |                                                                                                                                      |
-<!-- vale on -->
+
 ### 3D
 
 The Geospatial service supports the following vector types, located in a 3-dimensional space, each as an X, Y, and Z coordinate. The GeoJSON notation don't support the following vector types:
-<!-- vale off -->
+
 | Type            | Description                                                                                                      | Example WKT                                                                                      |
 | --------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | POINTZ          | A simple point.                                                                                                  | `POINTZ(1 -1 1)`                                                                                 |
@@ -143,13 +139,13 @@ The Geospatial service supports the following vector types, located in a 3-dimen
 | MULTIPOINTZ     | A set of POINTZs.                                                                                                | `MULTIPOINTZ(-1 1 1, 0 0 3, 2 3 2)`                                                              |
 | MULTILINESTRING | A set of LINESTRINGZs.                                                                                           | `MULTILINESTRINGZ((0 0 1, 0 1 2, 1 1 3), (-1 1 2, -1 -1 2))`                                     |
 | MULTIPOLYGON    | A set of POLYGONZs.                                                                                              | `MULTIPOLYGONZ(((2.25 0,1.25 1,1.25 -1,2.25 0)),((1 -1,1 1,0 0,1 -1)))`                          |
-<!-- vale on -->
+
 The fact that a geometry has a Z coordinate doesn't make it a volumetric geometry. It remains a planar 2D geometry described in a 3D space.
 
 ### 2D + measurement / time
 
 The Geospatial service supports the following vector types, located in a 2-dimensional space plus an extra measure, each as an X, Y, and M coordinates. The GeoJSON notation doesn't support the below vector types:
-<!-- vale off -->
+
 | Type             | Description                                                                                                       | Example WKT                                                                                      |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | POINTM           | A simple point.                                                                                                   | `POINTM(1 -1 1122)`                                                                              |
@@ -158,13 +154,13 @@ The Geospatial service supports the following vector types, located in a 2-dimen
 | MULTIPOINTM      | A set of points.                                                                                                  | `MULTIPOINTM(-1 1 1, 0 0 3, 2 3 2)`                                                              |
 | MULTILINESTRINGM | A set of LINESTRINGMs.                                                                                            | `MULTILINESTRINGM((0 0 1, 0 1 2, 1 1 3), (-1 1 2, -1 -1 2))`                                     |
 | MULTIPOLYGONM    | A set of POLYGONMs.                                                                                               | `MULTIPOLYGONM(((2.25 0,1.25 1,1.25 -1,2.25 0)),((1 -1,1 1,0 0,1 -1)))`                          |
-<!-- vale on -->
+
 The M coordinate is convenient to associate a measure with a point in space. Without the M coordinate, you'd require an extra property (of array type, not supported by the service) to store the measurement. The M coordinate doesn't require a spatial interpretation, and its unit isn't related to the X, Y, and Z coordinates. The M coordinate remains unchanged when the geometry gets transformed.
 
 ### 3D + measurement / time
 
 The Geospatial service supports the following vector types, located in a 3-dimensional space plus an extra measure, each as an X, Y, Z, and M coordinates. The GeoJSON notation doesn't support the following vector types:
-<!-- vale off -->
+
 | Type              | Description                                                                                                        | Example WKT                                                                                                                           |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | POINTZM           | A simple point.                                                                                                    | `POINTZM(1 -1 11 22)`                                                                                                                 |
@@ -173,7 +169,7 @@ The Geospatial service supports the following vector types, located in a 3-dimen
 | MULTIPOINTZM      | A set of POINTZMs.                                                                                                 | `MULTIPOINTZM(-1 1 1 0, 0 0 3 0, 2 3 2 0)`                                                                                            |
 | MULTILINESTRINGZM | A set of LINESTRINGZMs.                                                                                            | `MULTILINESTRINGZM((0 0 1 1, 0 1 2 2, 1 1 3 3), (-1 1 2 1, -1 -1 2 2))`                                                               |
 | MULTIPOLYGONZM    | A set of POLYGONZMs.                                                                                               | `MULTIPOLYGONZM(((2.25 0 1 1,1.25 1 1 1,1.25 -1 1 1,2.25 0 1 1)),((1 -1 1 1,1 1 1 1,0 0 1 1,1 -1 1 1)))`                              |
-<!-- vale on -->
+
 ### Geometry collections
 
 The Geospatial service finally supports collections of the earlier vector types. It's a collection of heterogeneous vector types. The GeoJSON notation doesn't support the below vector types:
@@ -184,7 +180,6 @@ The Geospatial service finally supports collections of the earlier vector types.
 | GEOMETRYCOLLECTIONZ  | A collection of 3D geometries.                    | `GEOMETRYCOLLECTION Z (MULTIPOINT Z(-1 1 4, 0 0 2, 2 3 2), MULTILINESTRING Z ((0 0 1, 0 1 2, 1 1 3), (-1 1 1, -1 -1 2)), POLYGON Z(`<p>`(-0.25 -1.25 1, -0.25 1.25 2, 2.5 1.25 3, 2.5 -1.25 1, -0.25 -1.25 1),(2.25 0 2, 1.25 1 1, 1.25 -1 1, 2.25 0 2),(1 -1 2, 1 1 2, 0 0 2,1 -1 2)))`</p> |
 | GEOMETRYCOLLECTIONM  | A collection of 2D geometries with a measurement. | `GEOMETRYCOLLECTION M (MULTIPOINT Z(-1 1 4, 0 0 2, 2 3 2), MULTILINESTRING M ((0 0 1, 0 1 2, 1 1 3), (-1 1 1, -1 -1 2)), POLYGON M(`<p>`(-0.25 -1.25 1, -0.25 1.25 2, 2.5 1.25 3, 2.5 -1.25 1, -0.25 -1.25 1),(2.25 0 2, 1.25 1 1, 1.25 -1 1, 2.25 0 2),(1 -1 2, 1 1 2, 0 0 2,1 -1 2)))`</p> |
 | GEOMETRYCOLLECTIONZM | A collection of 3D geometries with a measurement. | `GEOMETRYCOLLECTION ZM (MULTIPOINT ZM(-1 1 4 5, 0 0 2 5, 2 3 2 5))`                                                                                                                                                                                                                          |
-<!-- vale off -->
 ### Simple types
 
 In addition to spatial property types, the following versatile types are supported:
@@ -198,7 +193,6 @@ In addition to spatial property types, the following versatile types are support
 | Timestamp   | Unix timestamp, number of milliseconds since epoch. | 1637764395456           |
 | TimestampTz | ISO-8601 timestamp                                  | 2022-08-30T07:28:24.91Z |
 
-<!-- vale on -->
 
 ### More on properties
 
@@ -705,7 +699,6 @@ Again, with **allowCrsTransformation** set to **false** or unspecified, the API 
 
 ## Raster data
 
-<!-- vale off -->
 
 Rasters organize data into pixels or cells and can be split into rectangular tiles. The number of horizontal and vertical pixels defines the size of a raster tile. Each pixel is identified by a row and column in a tile and represents a position. A pixel is also a placeholder for data. The data elements rest in bands, also known as channels or dimensions. Rasters can be georeferenced, where each pixel corresponds to a defined area on earth, in a defined [Coordinate Reference System](/dev/concepts/resource_types/geospatial#coordinate-reference-systems).
 
@@ -724,7 +717,7 @@ Typical metadata associated with a raster:
 - skewy: the georeference Y skew.
 - srid: the spatial reference identifier of the raster.
 - numbands: the number of bands in the raster object.
-<!-- vale on -->
+
 You can store raster data in a database (embedded) or outside a database, for instance as a CDF File or using cloud storage. If the data is stored outside a database, the raster field has metadata defining the width, the height, the geometric bounding box, and a reference to the file and the file region that the raster tile references.
 
 The geospatial endpoint supports georeferenced rasters.

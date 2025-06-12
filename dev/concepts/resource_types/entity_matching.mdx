@@ -1,6 +1,6 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: "Entity matching"
+description: "Use entity matching to contextualize your data with machine learning (ML) and rules engines, and then let domain experts validate and fine-tune the results."
 ---
 
 Use **entity matching** to contextualize your data with machine learning (ML) and rules engines, and then let domain experts validate and fine-tune the results.
@@ -16,8 +16,6 @@ See the [entity matching API documentation](/api#tag/Entity-matching) for more i
 </Tip>
 
 ## Example data
-
-<!--create dummy data for entity matching  -->
 
 This tutorial uses a small example data set to show how to do entity matching. The data is in Python format, and you can convert it to other formats that fits your programming language.
 
@@ -37,7 +35,6 @@ true_matches =  [{"sourceId": 0,"targetId": 0}]
 
 ## Fit a supervised ML model and predict for the same data
 
-<!--Fit a supervised ml-model and predict for the same data  -->
 
 The supervised model calculates one or more similarity measures between match-to and match-from items. Then it uses these calculated similarity measures as features and fits a classification model using the labeled data.
 
@@ -45,7 +42,6 @@ Note that a set of candidate matches is selected before calculating the similari
 
 ### When to use a supervised ML model?
 
-<!--When to use a supervised ml-model?  -->
 
 A supervised ML model is applicable when you have a lot of labeled data items. The more labeled data you have, the better results you can achieve. Make sure not to apply a supervised model if you have fewer than 500 labeled data items.
 
