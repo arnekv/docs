@@ -1,9 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: "Request throttling"
+description: "Understand how Cognite Data Fusion (CDF) handles request throttling, including rate limiting, concurrency limiting, and strategies to avoid and handle HTTP 429 errors."
 ---
-
-# Request throttling
 
 Cognite Data Fusion (CDF) returns an HTTP `429 Too many requests` response status code in the following cases:
 
@@ -15,9 +13,9 @@ Cognite Data Fusion (CDF) returns an HTTP `429 Too many requests` response statu
 All requests contribute to throttling equally regardless of their source
 (extractors, functions, transformation, UI, SDK, etc).
 
-:::caution
+<Warning>
 When you [register applications](https://docs.cognite.com/cdf/access/guides/configure_apps_oidc/), do **NOT** share client IDs and secrets across multiple applications, even if the applications have common authentication requirements in CDF. It may cause the applications to be subject to [rate-limiting](#rate-limiting) and may also cause issues with audit logs, with events from multiple entities being identified under a common client ID.
-:::
+</Warning>
 
 The best practice is to avoid throttling, because throttled requests still consume some resources and therefore may be counted. For example, a request that was throttled due to concurrency may still consume rate capacity. However, if throttling happens, Cognite recommends using a retry strategy based on the [truncated exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff) to handle sessions with the HTTP response codes 429 (or 503). The strategy lets clients slow down the request frequency to maximize productivity without having to re-submit failing requests.
 

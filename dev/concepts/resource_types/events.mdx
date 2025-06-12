@@ -1,6 +1,6 @@
 ---
-title: Events
-description: Information about events and their management in Cognite Data Fusion.
+title: "Events"
+description: "Information about events and their management in Cognite Data Fusion."
 ---
 
 In Cognite Data Fusion, the event **resource type** stores complex information that happens over **a period**. Events have a **start time** and an **end time** and can be related to **multiple assets**. For example, Events API includes Alarms, Process Data, and Logs.
@@ -13,15 +13,17 @@ To describe and classify events, you can add arbitrary string values for `descri
 
 For more information about how to work with events, see [Events API](/api#tag/Events).
 </Note>
+
 <Note>
 **Events** and **Time Series** data are high-volume data types that can record data in microsecond resolutions. Avoid using Events as a Time Series store, especially when the data flow is from a single instance of sensors (temperature, pressure, voltage), simulators, or state machines (on, off, disconnected). The Time Series API provides very low latency read and write performance and specialized filters and aggregations designed to analyze time series data.
 </Note>
 
-## Rate and Concurrency Limits
+## Rate and concurrency limits
 
 There are limits on the rate of requests (RPS) and the number of parallel requests. A request exceeding the limits will result in a 429 error response: Too Many Requests.
 
 Define limits at both the API service and endpoint levels. Every request has a different budget due to the varying resource consumption.
+
 For example, there are two types of requests: CRUD (Create, Retrieve, Request ByIDs, Update, and Delete) and Analytical (List, Search, and Filter). CRUD requests are less resource-intensive than Analytical requests. Among all Analytical requests, Aggregates are the most resource-intensive, so they receive their request budget within the overall Analytical request budget.
 
 The limits for the API service and its endpoints are shown in the diagram below. These limits are subject to change based on consumption patterns and resource availability over time.  Changes to limits will be notified in the changelog.
@@ -53,6 +55,8 @@ Resulting in:
 
 Therefore, for complex 'analytical' queries that return data slower than the theoretical maximum, the query should retrieve fewer items per request and more in parallel until the theoretical maximum performance of 23,000 items per second is reached.
 
-> [!NOTE]
-> Use parallel retrieval only when a single request flow provides data retrieval speeds significantly less than the theoretical maximum.
+<Note>
+Use parallel retrieval only when a single request flow provides data retrieval speeds significantly less than the theoretical maximum.
+</Note>
+
 The overall requests per second limit still apply regardless of the number of concurrent requests issued. For example, If a request returns data at 18,000 items per second, adding a second parallel request provides little benefit as only 5,000 more items can be returned before the budget limit is reached.

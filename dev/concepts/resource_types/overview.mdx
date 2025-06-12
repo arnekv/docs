@@ -3,86 +3,44 @@ title: Resource types overview
 description: Overview of all resource types available in Cognite Data Fusion.
 ---
 
-This page provides an overview of the resource types available in Cognite Data Fusion (CDF). Each resource type is designed to store and manage specific types of data.
-
-## Assets
-
-The [assets](/api#tag/Assets) resource type stores **digital representations** of objects or groups of **objects from the physical world**. Assets are organized in **hierarchies**. For example, a **water pump** asset can be part of a **subsystem** asset on an **oil platform** asset.
-
-Assets **connect related data from different sources** and are core to identifying all the data relevant to an entity (**contextualization**) in Cognite Data Fusion. All other resource types, for example, time series, events, and files should be connected to **at least one** asset, and each asset can be connected to many resources and resource types.
-
-[Learn more](assets.md) about assets.
-
-## Time series
-
-The [time series](/api#tag/Time-series) resource type stores a series of **data points** in **time order**. Examples of a time series are the temperature of a water pump asset, the monthly precipitation in a location, and the daily average number of manufacturing defects.
-
-[Learn more](timeseries.md) about time series.
-
-## Events
-
-The [events](/api#tag/Events) resource type stores information that happens over **a period**. Events have a **start time** and an **end time** and can be related to **multiple assets**. For example, an event can describe two hours of maintenance on a water pump and associated pipes or a future period for when the pump is scheduled for inspection.
-
-[Learn more](events.md) about events.
-
-## Files
-
-The [files](/api#tag/Files) resource type stores documents that contain information related to **one or more assets**. For example, a file can contain a P&ID diagram that shows how many assets are connected.
-
-[Learn more](files.md) about files.
-
-## 3D models
-
-The [3D models](/api#tag/3D-Models/operation/create3DModels/) resource type stores files that offer **visual** and **geometrical data** and **context** to assets. For example, you can connect a pump asset with a 3D model of the plant floor where it's placed. Seeing asset data rendered in 3D helps you find the sensor data you are interested in faster.
-
-[Learn more](3dmodels.md) about 3D models.
-
-## Sequences
-
-The [Sequences](/api#tag/Sequences) resource type stores a series of rows indexed by row number. Each row has one or more columns with either string or numeric data. Examples of sequences are performance curves and various types of logs, for example, depth logs in drilling.
-
-[Learn more](sequences.md) about sequences.
-
-## Labels
-
-With [labels](/api#tag/Labels), you can create a predefined set of **managed terms** that you can use to annotate and group **assets**. You can organize the labels in a way that makes sense in your business and use them to make it easier to find what you want.
-
-For example, you can create a label called _pump_ and apply it to all asset resources that represent pumps and then filter assets to see only pumps.
-
-[Learn more](labels.md) about labels.
-
-## Relationships
-
-The [Relationships](/api#tag/Relationships) resource type represents connections between resource objects in Cognite Data Fusion (CDF). Each relationship is between a source and a target object and is defined by a **relationship type** and the **external IDs** and **resource types** of the source and target objects. Optionally, a relationship can be time-constrained with a start and end time.
-
-[Learn more](relationships.md) about relationships.
-
-## RAW
-
-The [RAW](/api#tag/Raw) resource type is the staging area in CDF. You can ingest data in its original form into RAW resource type to reduce source system queries for the same data for different use cases and minimize the data extractors' logic. This makes it easy to re-run transformations on data in the cloud.
-
-[Learn more](raw.md) about CDF RAW.
-
-## Entity matching
-
-Different sources of industrial data can use different naming standards when they refer to the same entity. With [Entity matching](/api#tag/Entity-matching), you can match entities like time series, files, and sequences from different source systems to assets. With the mapped information, you can build applications where users, for example, can click a component in a 3D model to see all the related time series data or ask for all the pressure readings along a flow line.
-
-[Learn more](entity_matching.md) about entity matching.
-
-## Templates
-
-The [Templates](templates.md) resource type represents solutions' data model and connects the data model with data in Cognite Data Fusion (CDF).
-
-[Learn more](templates.md) about templates.
-
-## Geospatial
-
-The [Geospatial](/api#tag/Geospatial) resource type represents data with a geospatial nature. This data, called _features_ in Geographic Information System (GIS) terminology, are grouped into _feature types_ that share several properties, such as name, type, and value, and have more than one spatial representation stored in configurable properties. Feature types are user-defined, and the CDF geospatial resource type doesn't come with pre-configured schemas to enable flexibility for modeling the client domain.
-
-[Learn more](geospatial.md) about geospatial data.
-
-## Seismic
-
-Use the [Seismic](/sdks/seismic/api/v1/v1.md) resource type to catalog and access seismic data volumes used by data managers, geologists, geophysicists, and other disciplines to explore, plan, and develop subsurface fields.
-
-[Learn more](seismic.md) about seismic data.
+<CardGroup cols={2}>
+  <Card title="Assets" href="/dev/concepts/resource_types/assets" icon="cube">
+    Store digital representations of physical objects or groups, organized in hierarchies. Assets connect related data from different sources and are core to contextualization in CDF.
+  </Card>
+  <Card title="Time series" href="/dev/concepts/resource_types/timeseries" icon="chart-line">
+    Store a series of data points in time order, such as sensor readings or measurements. Useful for tracking changes and trends over time.
+  </Card>
+  <Card title="Events" href="/dev/concepts/resource_types/events" icon="calendar">
+    Store information about things that happen over a period, with start and end times. Events can be related to multiple assets and describe activities like maintenance or inspections.
+  </Card>
+  <Card title="Files" href="/dev/concepts/resource_types/files" icon="file">
+    Store documents and files related to one or more assets, such as diagrams or reports. Files help centralize and contextualize documentation.
+  </Card>
+  <Card title="3D models" href="/dev/concepts/resource_types/3dmodels" icon="cube-3d">
+    Store files that provide visual and geometrical context to assets. 3D models help visualize asset data and their placement in a facility.
+  </Card>
+  <Card title="Sequences" href="/dev/concepts/resource_types/sequences" icon="table">
+    Store a series of rows indexed by row number, with one or more columns of data. Useful for logs, performance curves, and tabular data.
+  </Card>
+  <Card title="Labels" href="/dev/concepts/resource_types/labels" icon="tag">
+    Create managed terms to annotate and group assets. Labels make it easier to organize and find resources based on business logic.
+  </Card>
+  <Card title="Relationships" href="/dev/concepts/resource_types/relationships" icon="link">
+    Represent connections between resource objects in CDF, defined by type and source/target. Relationships help model how resources are linked.
+  </Card>
+  <Card title="RAW" href="/dev/concepts/resource_types/raw" icon="database">
+    Use as a staging area to ingest data in its original form. RAW reduces source system queries and simplifies data transformation workflows.
+  </Card>
+  <Card title="Entity matching" href="/dev/concepts/resource_types/entity_matching" icon="wand-magic-sparkles">
+    Match entities like time series, files, and sequences from different sources to assets. Enables unified views and cross-system applications.
+  </Card>
+  <Card title="Templates" href="/dev/concepts/resource_types/templates" icon="layer-group">
+    Represent solutions' data models and connect them with data in CDF. Templates help standardize and manage solution-specific schemas.
+  </Card>
+  <Card title="Geospatial" href="/dev/concepts/resource_types/geospatial" icon="map">
+    Represent and manage data with geospatial properties, grouped into feature types. Useful for modeling and analyzing spatial data in CDF.
+  </Card>
+  <Card title="Seismic" href="/dev/concepts/resource_types/seismic" icon="waveform-lines">
+    Catalog and access seismic data volumes for exploration and subsurface field development. Supports geologists and data managers in CDF.
+  </Card>
+</CardGroup>

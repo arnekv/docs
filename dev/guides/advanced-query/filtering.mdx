@@ -1,4 +1,7 @@
-# Filtering
+---
+title: "Filtering in advanced querying"
+description: "How to use filters in Cognite Data Fusion (CDF) Advanced Query Language (AQL), including boolean logic, leaf filters, and advanced query endpoints."
+---
 
 Cognite Data Fusion (CDF) supports boolean logic using _AND_, _OR_, and _NOT_ to build complex queries. You can also combine resource item attribute filters, such as _equals_, _prefix_, and _range_.
 
@@ -10,7 +13,7 @@ The default set of CDF filters lets you filter all CDF resources in these contex
 
 - **Aggregate results**. Use filters to reduce the number of returned aggregate buckets. For example, you can use a filter to return "metadata key names and their count for all keys with the prefix character '\_'.
 
-## Serialization/deserialization
+## Serialization and deserialization
 
 You can express filters as JSON. The root must always be an object.
 
@@ -53,15 +56,15 @@ To sort the `/list` result on _metadata.type_ and _type_ properties, send the fo
 }
 ```
 
-:::note
+<Note>
 You can sort by several properties in the same query.
-:::
+</Note>
 
 ### Example: filtering
 
 This example defines a filter using JSON:
 
-```json JSON
+```json
 {
   "or": [
     {
@@ -116,7 +119,7 @@ A simplified, less verbose version could look like this:
     ("metadata.priority"=highest AND subtype=critical)
     OR
     (
-        NOT (type=alert AND subtype IN (critical, warning) AND 5 `<= rating `< 10)
+        NOT (type=alert AND subtype IN (critical, warning) AND 5 <= rating < 10)
     )
 )
 ```
@@ -138,8 +141,8 @@ Below is another example of using JSON to express a simple intent: "_filter item
 
 | Filter      | Syntax                                                                                                    |
 | ----------- | --------------------------------------------------------------------------------------------------------- |
-| filter       | `<bool_filter>` | `<leaf_filter>`                                                                           |
-| bool_filter  | `<and>` | `<or>` | `<not>`                                                                                |
+| filter       | `<bool_filter>` \| `<leaf_filter>`                                                                           |
+| bool_filter  | `<and>` \| `<or>` \| `<not>`                                                                                |
 | and         | `{"and": [<filter>, …]}`                                                                                   |
 | or          | `{"or": [<filter>, …]}`                                                                                    |
 | not         | `{"not": <filter>}`                                                                                        |
@@ -147,15 +150,15 @@ Below is another example of using JSON to express a simple intent: "_filter item
 | leaf_filter  | `<equals>` \| `<in>` \| `<range>` \| `<prefix>` \| `<exists>` \| `<containsAny>` \| `<containsAll>`        |
 | equals      | `{"equals": {"property": <property>, "value": <string_value>}}`                                           |
 | in          | `{"in": {"property": <property>, "values": <list_value>}}`                                                |
-| range       | `{"range": {"property": <property>, "(gte\|gt\|lte\|lt)": <value1> [, "(gte\|gt\|lte\|lt)": <value\2>]}}` |
+| range       | `{"range": {"property": <property>, "(gte\|gt\|lte\|lt)": <value1> [, "(gte\|gt\|lte\|lt)": <value2>]}}` |
 | prefix       | `{"prefix": {"property": <property>, "value": <string_value>}}`                                            |
 | exists      | `{"exists": {"property": <property>}}`                                                                    |
 | containsAny | `{"containsAny": {"property": <property>, "values": <list_value>}}`                                       |
 | containsAll | `{"containsAll": {"property": <property>, "values": <list_value>}}`                                       |
 
-:::info
+<Info>
 Different CDF resources may support a different subset of the existing leaf filters. Refer to the documentation for the specific CDF resource for details.
-:::
+</Info>
 
 ## Boolean filters
 
@@ -179,9 +182,9 @@ To express the negated logic of a boolean value, use the `not` filter (expressed
 
 ## Leaf filters
 
-:::note
+<Note>
 The supported leaf filters may differ depending on the CDF resource.
-:::
+</Note>
 
 ### Equals
 
@@ -231,9 +234,9 @@ Range behavior depends on the type of the property you are comparing with. The f
 
 This filter works for properties not typed as arrays/lists.
 
-:::note
+<Note>
 Some CDF resources don't support open-range filters. To avoid errors, specify both upper and lower boundaries. See the API documentation for details.
-:::
+</Note>
 
 ### Prefix
 
@@ -293,7 +296,7 @@ This filter works for properties that are of type array/list.
 
 Advanced queries provide more robust data discovery and retrieval tools using `Search`, `Filter`, and `Aggregation` methods. Advanced search and filter API supports complex queries that combine simple operations, such as `equals`, `prefix`, `exists`, etc., using boolean operators `and`, `or`, and `not`. These methods apply to standard fields as well as metadata.
 
-In the following section, we will outline the concepts and applications of different types of query filters with their API specifications for each supported service.
+In the following section, we outline the concepts and applications of different types of query filters with their API specifications for each supported service.
 
 Since the filter operations leverage the CDF search architecture, they are consistent, expensive, and slower than CRUD operations. Consult with a professional on resource allocation and consumption.
 
@@ -311,11 +314,11 @@ For more information, see [List](https://developer.cognite.com/api/#tag/Assets/o
 
 `/search` returns results sorted by relevance score. Relevance score is automatically calculated by the CDF search architecture using a combination of text matching and scoring algorithms to determine the relevance of search results. The text-matching algorithm checks if the search query terms appear in the item's fields, such as title, description, or content.
 
->` _Note: Searches can return high numbers of results._
+>_Note: Searches can return high numbers of results._
 
-:::tip
-The `/filter` operation supersedes the`/search` functionality since it provides a fuzzy search operation within itself. Use the `/filter` operation for these types of queries.
-:::
+<Tip>
+The `/filter` operation supersedes the `/search` functionality since it provides a fuzzy search operation within itself. Use the `/filter` operation for these types of queries.
+</Tip>
 
 For more information on how search works for Docs API, see [Search for documents](https://developer.cognite.com/api/#tag/Documents/operation/documentsSearch/).
 
@@ -323,7 +326,7 @@ For more information on how search works for Docs API, see [Search for documents
 
 Advanced aggregation APIs provide more powerful tools for data discovery and enhance the creation of better user interfaces and experiences. The supported aggregation types include the following:
 
-| **Aggregation Type**   |      **Description**     |
+| **Aggregation type**   |      **Description**     |
 |----------|:-------------|
 | count |  Returns the count of items in the data set (i.e., number of Assets, Events, Time Series, etc.) |
 | count (with properties) |  Returns the number of items in the data set with associated properties. It is useful if items in the data set have no associated properties.  |

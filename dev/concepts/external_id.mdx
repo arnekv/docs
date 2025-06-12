@@ -1,9 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: "Define unique IDs with externalId"
+description: "Learn about the externalId field in Cognite Data Fusion (CDF), its properties, usage, and best practices for ensuring unique identification of data objects."
 ---
-
-# Define unique IDs with externalId
 
 The external ID field, (`externalId`), is available in API v1 for time series, assets, events, files, and sequences.
 It lets you define a unique ID for each data object in Cognite Data Fusion (CDF) as an optional extension to the existing `id` field.
@@ -20,11 +18,9 @@ Make sure to set an `externalId` on all CDF resources for better performance.
 
 ## Properties of external IDs
 
-<!-- vale off -->
 
 The external ID is unique per resource type. An **asset** with `externalId=123` will **not** interfere with a **time series** with `externalId=123`.
 
-<!-- vale on -->
 
 If you try to create a data object with an existing external ID for a resource type, you'll cause an error.
 
@@ -50,6 +46,5 @@ The existing `id` field, which is a pseudo-random integer between 1 and 2^53-1, 
 
 You can't specify both the `id` and the `externalId` in the same object when you do **lookups**. However, batch lookups in the same request, for example `/byids`, can mix `id` and `externalId` if each object has only one of the fields.
 
-<!-- vale off -->
 CDF does **not** support external IDs in GET requests to `/resource/:externalId`, as it does with the existing `id` field. You must use the `POST resource/byids` endpoint instead.
 

@@ -108,6 +108,42 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "group": "API guides",
+                    "pages": [
+                      "/dev/concepts/external_id",
+                      "/dev/concepts/pagination",
+                      "/dev/concepts/resource_throttling",
+                      "/dev/guides/upload-3d",
+                      {
+                        "group": "Advanced querying",
+                        "pages": [
+                          "/dev/guides/advanced-query/advanced_query_intro",
+                          "/dev/guides/advanced-query/filtering",
+                          "/dev/guides/advanced-query/aggregation_types",
+                          "/dev/guides/advanced-query/best_practices_and_limits"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "group": "Identity and access management",
+                    "pages": [
+                      "/dev/guides/iam/overview",
+                      "/dev/guides/iam/authentication",
+                      "/dev/guides/iam/authorization",
+                      "/dev/guides/iam/iam_limits",
+                      "/dev/guides/iam/external-application"
+                    ]
+                  },
+                  {
+                    "group": "AI features",
+                    "pages": [
+                      "/dev/guides/ai/document_qa",
+                      "/dev/guides/ai/document_summarization",
+                      "/dev/guides/ai/semantic_search"
+                    ]
                   }
                 ]
               }

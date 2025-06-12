@@ -1,9 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: "About identity and access management"
+description: "Learn about identity and access management (IAM) in Cognite Data Fusion (CDF), including authentication, authorization, identity providers, users, and groups."
 ---
-
-# About identity and access management
 
 Identity and access management is a framework that lets you control which users and applications have access to data in Cognite Data Fusion.
 
@@ -31,13 +29,13 @@ See also [authentication](authentication.md) and [authorization](authorization.m
 
 Identity management lets you manage which users and services are able to connect to your project in Cognite Data Fusion. In other words, which principals Cognite Data Fusion will be able to authenticate. Only authenticated principals will be able to interact with Cognite Data Fusion to retrieve or store data there.
 
-## Identity Provider
+## Identity provider
 
-Cognite Data Fusion authenticates users against the organization's Identity Provider, and the organization controls which users are authenticated. Any user they, for example, disable in Azure AD, won't be able to sign in to applications and see data from Cognite Data Fusion. They can also create guest users in the identity provider to let users from other organizations be authenticated.
+Cognite Data Fusion authenticates users against the organization's identity provider, and the organization controls which users are authenticated. Any user they, for example, disable in Azure AD, won't be able to sign in to applications and see data from Cognite Data Fusion. They can also create guest users in the identity provider to let users from other organizations be authenticated.
 
 ## Users
 
-Users are managed by the existing identity provider of the organization. Typically, this will be Microsoft’s Azure Active Directory (Azure AD). To start using Cognite Data Fusion, you need to configure the connection to the identity provider so that Cognite Data Fusion can authenticate all the users from that identity provider. The identity provider configuration consists of which service instance to talk to.
+Users are managed by the existing identity provider of the organization. Typically, this will be Microsoft's Azure Active Directory (Azure AD). To start using Cognite Data Fusion, you need to configure the connection to the identity provider so that Cognite Data Fusion can authenticate all the users from that identity provider. The identity provider configuration consists of which service instance to talk to.
 
 Cognite Data Fusion must successfully authenticate the user against the identity provider before the user is allowed to access Cognite Data Fusion. This requires that the application the user is leveraging has implemented the required authentication flow. The Asset Data Insight application is an application that implements the required authentication flow. This makes users of the Asset Data Insight application interact with Cognite Data Fusion, with their own principal, and therefore able to see all the data they have access to from Cognite Data Fusion in the application.
 

@@ -1,6 +1,9 @@
-# Aggregation types
+---
+title: "Aggregation types in advanced querying"
+description: "Overview and examples of aggregation types supported by Cognite Data Fusion (CDF) Advanced Query Language (AQL), including count, cardinality, and unique value aggregations."
+---
 
-Advanced aggregation APIs built on top of extended advanced filtering APIs support complex queries that combine simple operations, such as `equals`, `prefix`, `exists`, etc., using boolean operators `and`, `or`, and `not`. It also supports aggregate result filtering. The main goal is to contextualize user experience (for example, update available filters based on search queries) and provide the following capabilities to basic properties and metadata.
+Advanced aggregation APIs built on top of extended advanced filtering APIs support complex queries that combine simple operations, such as `equals`, `prefix`, `exists`, etc., using boolean operators `and`, `or`, and `not`. They also support aggregate result filtering. The main goal is to contextualize user experience (for example, update available filters based on search queries) and provide the following capabilities to basic properties and metadata.
 
 Below is an overview of aggregations and explicit examples of each type.
 
@@ -33,13 +36,15 @@ Unique values:          {
                         }
 ```
 
-_Note: Bucket aggregations (uniqueProperties, uniqueValues) return properties and values with frequency (how many times a property appears in the input set or how many properties with a value are in the input set)._
+<Note>
+Bucket aggregations (uniqueProperties, uniqueValues) return properties and values with frequency (how many times a property appears in the input set or how many properties with a value are in the input set).
+</Note>
 
 ## Types
 
 Let's look at the examples for each aggregation type.
 
-### count
+### Count
 Returns the count of items in the data set (i.e., number of Assets, Events, Time Series, etc.).
 For example, four items, A, B, C, and D, are present in the data set, so the count = 4.
 
@@ -61,9 +66,11 @@ For example, four items, A, B, C, and D, are present in the data set, so the cou
 }
 ```
 
-_Note: Count supports optional *properties* attribute as well._
+<Note>
+Count supports optional *properties* attribute as well.
+</Note>
 
-### cardinalityValues
+### Cardinality values
 Returns the number of instances that a property occurs in the data set.
 
 ```js
@@ -88,7 +95,7 @@ Returns the number of instances that a property occurs in the data set.
 }
 ```
 
-### cardinalityProperties
+### Cardinality properties
 Returns the number of unique properties per metadata key in the data set.
 
 ```js
@@ -110,7 +117,7 @@ Returns the number of unique properties per metadata key in the data set.
 }
 ```
 
-### uniqueValues
+### Unique values
 Returns an array of the unique instances of metadata values per metadata key and the associated count of their occurrence.
 
 ```js
@@ -145,9 +152,7 @@ Returns an array of the unique instances of metadata values per metadata key and
 }
 ```
 
-<!--_Note: Count is the number of properties (in all items) with the values. It's different than the number of items as soon as one item can have multiple properties (metadata keys) with the same value. The values are ordered by frequency, e.g., how many documents have a particular value._-->
-
-### uniqueProperties
+### Unique properties
 Returns the number of unique properties that occur in the data set.
 
 ```js

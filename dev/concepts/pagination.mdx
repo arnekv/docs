@@ -1,9 +1,7 @@
 ---
-pagination_next: null
-pagination_prev: null
+title: "Pagination"
+description: "Learn how pagination works in Cognite Data Fusion (CDF), including cursor-based pagination, parallel retrieval, and best practices for handling large datasets."
 ---
-
-# Pagination
 
 Most resource types in Cognite Data Fusion (CDF) can be paginated, as indicated by the `nextCursor` field in the response. Pass the value of `nextCursor` as the cursor to get the next page of limit results. Note that all parameters except `cursor` have to stay the same.
 
@@ -38,9 +36,9 @@ HTTP GET /assets?limit=1
 
 Getting the next page of assets.
 
-:::info note
+<Note>
 When you send more parameters to `/assets`, make sure that you also include them in all further requests in addition to the `cursor` parameter.
-:::
+</Note>
 
 ```http
 HTTP GET /assets?limit=1&cursor=8ZiApWzGe5RnTAE1N5SABLDNv7GKkUGiVUyUjzNsDvM
@@ -52,9 +50,9 @@ HTTP GET /assets?limit=1&cursor=8ZiApWzGe5RnTAE1N5SABLDNv7GKkUGiVUyUjzNsDvM
 
 The CDF APIs support parallel retrieval through the `partition` parameter, where the parameter is in the format `m/n` and `n` represents the number of partitions to split the entire data set into. CDF supports a maximum of 10 concurrent partitions. Attempts to retrieve a higher number of parallel partitions may be detrimental to client data retrieval performance due to throttling.
 
-:::info note
+<Note>
 Parallel retrieval doesn't act as a speed multiplier on optimally running queries. If adding more partitions doesn't improve data retrieval performance, don't add them.
-:::
+</Note>
 
 ### Example
 
@@ -95,11 +93,9 @@ Each of the results looks similar to this:
 
 Follow the `nextCursor` in each response until each partition is drained.
 
-:::info note
+<Note>
 Make sure that you send the filter parameters to each request that follows.
-:::
-
-<!--- How should we spell data point: datapoint or data point? --->
+</Note>
 
 ## Datapoint pagination
 
@@ -121,7 +117,9 @@ In general, distinct API calls aren't atomic with each other, also not when usin
 
 An API call that provides a cursor that was returned by a previous call will only see points with a timestamp after the last timestamp in the previous call. However, the second call **might see** some data points that didn't exist at the time of the first call and **might not see** some data points that did exist at the time of the first call. Also, the second call may let you see a partial result from an unrelated, concurrent request. If the unrelated request adds or deletes data points in a range that straddles the timestamp that the cursor points to, the second cursor-based request might see the result of the other request even though the first request that produced the cursor didn't.
 
-### Example
+<Accordion title="Full datapoint pagination example">
+
+## Example
 
 ```json
 {
@@ -184,16 +182,7 @@ HTTP POST /timeseries/data/list
 }
 ```
 
-<details>
-<summary>Click here to view the full example.</summary>
-
-All requests are sent to this endpoint:
-
-```http
-HTTP POST /timeseries/data/list
-```
-
-#### Regular query
+### Regular query
 
 Query for common datapoints without cursors:
 
@@ -252,7 +241,7 @@ Response from the first query:
 - **thermometerA** may have more datapoints in the range. Use the cursor to retrieve them.
 - **thermometerB** has reached the latest datapoint in the range. Increase `start`/`end` to retrieve more datapoints.
 
-#### Aggregate query
+### Aggregate query
 
 ```json
 {
@@ -313,7 +302,7 @@ Aggregate response:
 - **CO2-A** have more aggregate datapoints in the range. Use the cursor to retrieve them.
 - **CO2-B** has reached the latest interval in the range with at least one aggregate. Increase start/end to fetch more aggregates.
 
-#### Request with cursors
+### Request with cursors
 
 Each **externalId** is paired with the corresponding cursor. CDF requests time series from the first and second requests because the parameters are compatible. In this case, the start and end are equal.
 
@@ -377,4 +366,4 @@ Response from request with cursors:
 }
 ```
 
-</details>
+</Accordion>

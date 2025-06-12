@@ -41,7 +41,6 @@ Currently, **Feature** is the only type supported by Cognite Data Fusion.
 
 To describe a geographic feature, the Geometry object needs a `type` and a corresponding array of `coordinates`. Below are the supported Geometry types:
 
-<!-- vale off -->
 
 | Type            | Description                                                       | Example                                                                                         |                                                                                                                                            |
 | --------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -52,7 +51,6 @@ To describe a geographic feature, the Geometry object needs a `type` and a corre
 | Polygon         | A closed shape. Can have inner holes of arbitrary shapes.         | ![polygon ](/images/cdf/dev/concepts/resource_types/polygon.png)                | `{"type": "Polygon", "coordinates": [[[35, 10], [45, 45], [15, 40], [10, 20], [35, 10]], [[20, 30], [35, 35], [30, 20], [20, 30]]]}`       |
 | MultiPolygon    | Multiple closed shapes. Can have inner holes of arbitrary shapes. | ![multipolygon](/images/cdf/dev/concepts/resource_types/multipolygon.png)       | `{"type": "MultiPolygon", "coordinates": [[[[30, 20], [45, 40], [10, 40], [30, 20]]], [[[15, 5], [40, 10], [10, 20], [5, 10], [15, 5]]]]}` |
 
-<!-- vale on -->
 
 ### Adding geoLocation to a file
 
