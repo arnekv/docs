@@ -51,7 +51,15 @@
                 "pages": [
                   "/cdf/atlas_ai/intro",
                   "/cdf/atlas_ai/concepts/overview",
-                  "/cdf/atlas_ai/guides/atlas_ai_agent_building"
+                  "/cdf/atlas_ai/guides/atlas_ai_agent_building",
+                  {
+                    "group": "Reference information",
+                    "pages": [
+                      "/cdf/atlas_ai/references/atlas_ai_agent_language_models",
+                      "/cdf/atlas_ai/references/atlas_ai_agent_tools",
+                      "/cdf/atlas_ai/references/atlas_ai_agent_limits_restrictions"
+                    ]
+                  }
                 ]
               }
             ]

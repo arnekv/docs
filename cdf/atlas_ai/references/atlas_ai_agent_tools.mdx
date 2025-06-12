@@ -1,14 +1,11 @@
 ---
 title: "Atlas AI agent tools library"
+description: "Overview of the tools available in Atlas AI."
 ---
-
-<Warning>
-  The features described in this section are currently available to **early adopters** only and are subject to change.
-</Warning>
 
 Atlas AI agents can interact with tools and functions, allowing the agent to perform complex tasks or interact with your application. We provide built-in tools for Atlas AI agents, but you can also define your own tools to extend their capabilities.
 
-## Query tools[​](#query-tools "Direct link to heading")
+## Query tools
 
 The query tools use [**query features**](/cdf/dm/dm_concepts/dm_querying) to retrieve and explore information from the [Cognite knowledge graph](/cdf/dm/dm_concepts/dm_property_graph).
 
@@ -25,7 +22,7 @@ The query tools use [**query features**](/cdf/dm/dm_concepts/dm_querying) to ret
 | Find operations               | Retrieve data instances for [**operations**](/cdf/dm/dm_reference/dm_process_industry_data_model#cogniteoperation) using the generic ***Query knowledge graph*** tool. The data model is [***Cognite process industries data model***](/cdf/dm/dm_reference/dm_process_industry_data_model), and the view is set to ***Operations***.                                                  | Specify which **data model**, [**view**](/cdf/dm/dm_concepts/dm_containers_views_datamodels#views), and credentials to use. |
 | Find time series              | Retrieve data instances for [**time series**](/cdf/dm/dm_reference/dm_core_data_model#timeseries) using the generic ***Query knowledge graph*** tool. The data model is [***Cognite core data model***](/cdf/dm/dm_reference/dm_core_data_model), and the view is set to ***Time series***. See also: [Time series in data modeling](/cdf/dm/dm_guides/dm_integrate_with_time_series). | Specify which **data model**, [**view**](/cdf/dm/dm_concepts/dm_containers_views_datamodels#views), and credentials to use. |
 
-## Analysis tools[​](#analysis-tools "Direct link to heading")
+## Analysis tools
 
 | Tool                      | Use to                                                                                                                                                                                                                                                                                                                                         | Parameters                                             |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
@@ -33,4 +30,3 @@ The query tools use [**query features**](/cdf/dm/dm_concepts/dm_querying) to ret
 | Summarize documents       | Summarize the information in specific [**files**](/cdf/dm/dm_reference/dm_core_data_model#file). Use in combination with a query tool that retrieves files. See also: [Files in data modeling](/cdf/dm/dm_guides/dm_integrate_files).                                                                                                          | Optional: Specify the **file ID** of the files to use. |
 | Analyze time series       | Perform advanced calculations on time series **data points**. Use another tool to identify the relevant time series ID. See also: [Time series in data modeling](/cdf/dm/dm_guides/dm_integrate_with_time_series).                                                                                                                             |                                                        |
 
-Last updated: March 7, 2025
