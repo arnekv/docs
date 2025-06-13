@@ -157,7 +157,17 @@
               },
               {
                 "group": "SDKs and toolkits",
-                "pages": ["/sdks/sdk_overview"]
+                "pages": [
+                  "/sdks/sdk_overview",
+                  {
+                    "group": "Python SDK",
+                    "pages": [
+                      "/dev/sdks/python/overview",
+                      "/dev/sdks/python/register_app_jupyter_sdk",
+                      "/dev/sdks/python/python_auth_oidc"
+                    ]
+                  }
+                ]
               }
             ]
           },

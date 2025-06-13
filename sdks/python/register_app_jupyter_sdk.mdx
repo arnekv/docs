@@ -1,0 +1,65 @@
+---
+title: "Register an app in Azure AD"   
+description: "Step-by-step guide to registering an app in Azure AD for use with the Python SDK, Jupyter notebooks, or Postman."
+---
+
+## Steps to register an app
+
+<Steps>
+<Step title="Sign in to Azure portal">
+Sign in to the [Azure portal](https://portal.azure.com/) as an admin.
+</Step>
+<Step title="Select tenant">
+If you have access to multiple tenants, use the Directory + subscription filter:
+<Image src="/images/shared/azure-portal-directory-subscription-filter.png" alt="Directory + subscription filter" />
+in the top menu to select the tenant in which you want to register an application.
+</Step>
+<Step title="Open Azure Active Directory">
+Search for and select **Azure Active Directory**.
+</Step>
+<Step title="Register a new application">
+Under **Manage**, select **App registrations** > **New registrations**.
+</Step>
+<Step title="Enter app details">
+In the **Register an application** window, enter the app name, and then select **Register**.
+</Step>
+<Step title="Specify account types">
+Specify the **name** and select the supported **account types**.
+</Step>
+<Step title="Set redirect URI">
+Under **Redirect URI (optional)**, select **Public client/native (mobile & desktop)** and specify the **redirect URI**:
+
+- **Jupyter/Python SDK**: `http://localhost:53000`.
+- **Postman**: [https://oauth.pstmn.io/v1/callback](https://oauth.pstmn.io/v1/callback).
+
+<Image src="/images/cdf/access/azure_reg_app_jupyter_sdk.png" alt="Register an application" width="80%" />
+</Step>
+<Step title="Register the app">
+Select **Register**.
+</Step>
+<Step title="Configure authentication">
+Select **Authentication** to add more **redirect URIs**, and to select **device code flow** (optional). Then select **Save**.
+
+<Image src="/images/cdf/access/azure_redir_uris_jupyter_sdk.png" alt="Add redirect URIs" width="80%" />
+</Step>
+<Step title="Configure API permissions">
+Select **API permissions**. The Microsoft Graph `User.Read` permissions should already be selected.
+
+Select **Add a permission** and in the next screen, under **APIs my organization uses**, select the CDF API, for example `westeurope-1`.
+
+For **Delegated permissions**, select the required permissions for your application, for example, `user_impersonation`. The delegated permissions filter the permissions a user has based on group memberships but don't add any permissions.
+
+To use the [token inspection endpoint](/api#operation/inspectToken), select `IDENTITY`.
+
+Learn more about the available permissions [here](https://docs.cognite.com/cdf/access/concepts/access_token_scopes).
+
+Select **Add permissions**.
+
+The API permissions should look similar to this:
+<Image src="/images/cdf/access/azure_api_perms_user_impersionation.png" alt="API permissions" />
+
+Select **Grant admin consent for...** and confirm that you want to make the new list of permissions active.
+</Step>
+</Steps>
+
+

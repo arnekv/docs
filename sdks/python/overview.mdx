@@ -1,28 +1,25 @@
 ---
-pagination_next: null
-pagination_prev: null
-title: Get started
+title: "Get started with Python SDK"
+description: "Learn how to get started with the Python SDK, including installation and basic usage."
 ---
-
-# Get started with Python SDK
 
 ## Installation
 
 To install the Python SDK package:
 
-```sh
+```sh title="Install SDK"
 pip install cognite-sdk
 ```
 
 The SDK is tightly integrated with the pandas library. To install use:
 
-```sh
+```sh title="Install with pandas support"
 pip install "cognite-sdk[pandas]"
 ```
 
 To upgrade the version of the Python SDK package:
 
-```sh
+```sh title="Upgrade SDK"
 pip install --upgrade cognite-sdk
 ```
 
@@ -30,7 +27,7 @@ pip install --upgrade cognite-sdk
 
 The preferred way to authenticate against the Cognite API is using **OpenID Connect (OIDC)**. To enable this, use one of the credential providers, such as **OAuthClientCredentials**:
 
-```python title="python"
+```python title="Authenticate with OAuthClientCredentials"
 from cognite.client import CogniteClient, ClientConfig
 from cognite.client.credentials import OAuthClientCredentials
 
@@ -53,14 +50,13 @@ cnf = ClientConfig(
 )
 
 client = CogniteClient(cnf)
-
 ```
 
 You can find the examples for all OAuth credential providers in the [Credential Providers](https://cognite-sdk-python.readthedocs-hosted.com/en/latest/credential_providers.html) section.
 
 You can also make your own credential provider:
 
-```python title="python"
+```python title="Custom token provider"
 from cognite.client import CogniteClient, ClientConfig
 from cognite.client.credentials import Token
 def token_provider():
@@ -97,7 +93,7 @@ The `client_name` is a user-defined string intended to give the client a unique 
 
 You may set a default client configuration which will be used if no config is passed to `CogniteClient`. All examples in this documentation assume that a default configuration has been set.
 
-```python
+```python title="Instantiate client and check login status"
 from cognite.client import CogniteClient, ClientConfig, global_config
 from cognite.client.credentials import APIKey
 cnf = ClientConfig(client_name="my-special-client",base_url="https://<cluster>.cognitedata.com", project="my-project", credentials=APIKey("very-secret"))
@@ -113,25 +109,22 @@ Read more about the [`CogniteClient`](https://cognite-sdk-python.readthedocs-hos
 
 For the next examples, you will need to supply IDs for the time series that you want to retrieve. You can find some IDs by listing the available time series. Limits for listing resources default to 25, so the following code returns the first 25 time series resources.
 
-```python
+```python title="List time series"
 from cognite.client import CogniteClient
 
 client = CogniteClient()
 ts_list = client.time_series.list()
 ```
 
-
 ## Create an asset hierarchy
 
 CDF organizes digital information about the physical world. Assets are digital representations of physical objects or groups of objects and are organized into an asset hierarchy. For example, an asset can represent a water pump which is part of a subsystem on an oil rig.
 
-At the top of an asset hierarchy is a root asset (for example, the oil rig). Each project can have several root assets.
-All assets have a name and a parent asset. No assets with the same parent can have the same name.
+At the top of an asset hierarchy is a root asset (for example, the oil rig). Each project can have several root assets. All assets have a name and a parent asset. No assets with the same parent can have the same name.
 
-To create a root asset (an asset without a parent), omit the parent ID when you post the asset to the API.
-To make an asset a child of an existing asset, you must specify a parent ID.
+To create a root asset (an asset without a parent), omit the parent ID when you post the asset to the API. To make an asset a child of an existing asset, you must specify a parent ID.
 
-```python
+```python title="Create a root asset"
 from cognite.client import CogniteClient
 from cognite.client.data_classes import Asset
 
@@ -147,7 +140,7 @@ To make sure that the assets are posted in the correct order, you can use the `.
 
 This example shows how to post a three levels deep asset hierarchy consisting of three assets.
 
-```python
+```python title="Create asset hierarchy"
 from cognite.client import CogniteClient
 from cognite.client.data_classes import Asset
 
@@ -167,7 +160,7 @@ Wrap the `.create_hierarchy()` call in a try-except to get information if postin
 - Which assets may have been posted. (The request yielded 5xx.)
 - Which assets weren't posted. (The request yielded 4xx or was a descendant of another asset which may or may not have been posted.)
 
-```python
+```python title="Error handling for asset hierarchy creation"
 from cognite.client.exceptions import CogniteAPIError
 
 try:
@@ -184,7 +177,7 @@ Assets are used to connect related data, even if the data comes from different s
 
 To retrieve all events related to a given subtree of assets, we first fetch the subtree under an asset using the `.subtree()` method. This returns an `AssetList` object with the `.events()` method. This method returns events related to any asset in the `AssetList`.
 
-```python
+```python title="Retrieve events for asset subtree"
 from cognite.client import CogniteClient
 from cognite.client.data_classes import Asset
 
@@ -196,7 +189,7 @@ related_events = subtree.events()
 
 You can use the same pattern to retrieve all time series or files related to a set of assets.
 
-```python
+```python title="Retrieve files and time series for asset subtree"
 related_files = subtree.files()
 related_time_series = subtree.time_series()
 ```
