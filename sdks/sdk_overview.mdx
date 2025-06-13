@@ -1,0 +1,103 @@
+---
+title: "SDKs and toolkits overview"
+description: "Overview of Cognite Data Fusion (CDF) SDKs and toolkits, including general, specialized, and industry SDKs, as well as supported languages and tools."
+---
+
+Not all our SDKs have the same functionality, and they expose functionality differently. We have three types of SDKs:
+
+- [**General**](#general-sdks) SDKs for interacting with the Cognite Data Fusion (CDF) APIs.
+
+- [**Specialized**](#specialized-sdks) SDKs that offer a tailored experience for specific tasks or areas.
+
+- [**Industry**](#industry-sdks) SDKs that expose industry-specific functionality.
+
+The general Python and JavaScript SDKs for CDF are primarily for backend and frontend work, respectively. The Python SDK is also used from the Jupyter Notebook and Streamlit-powered web experiences, and the JavaScript SDK is used from Node.js.
+
+We also offer [**toolkits**](#toolkits) for setting up and handling CDF projects, as well as for creating extractors to import data into CDF.
+
+## Support and maintenance
+
+The general [**Python**](sdks/python/index.md) and [**JavaScript**](sdks/js/index.md) SDKs for CDF are **supported** by Cognite.
+
+Other SDKs and toolkits are actively developed and are **community-supported** with contributions from Cognite engineers. They are provided **as-is**, without any support or warranties from Cognite.
+
+## General SDKs
+
+<CardGroup>
+  <Card title="Python" icon="python" href="/sdks/python/">
+    Targeted towards general usage of CDF for Python developers. Supports high-throughput jobs and data scientist tasks.
+    **Supported by Cognite**
+  </Card>
+
+  <Card title="JavaScript" icon="js" href="/sdks/js">
+    For web developers building frontend applications. Supports React and Angular with GraphQL API integration.
+    **Supported by Cognite**
+  </Card>
+
+  <Card title="Java" icon="java" href="https://github.com/cognitedata/cdf-sdk-java#quickstart">
+    For backend developers and data engineers building high-throughput applications.
+    **Community-supported**
+  </Card>
+
+  <Card title="Scala" icon="code" href="https://github.com/cognitedata/cognite-sdk-scala">
+    Used in CDF's transformation engine, focused on moving large amounts of data.
+    **Community-supported**
+  </Card>
+
+  <Card title=".NET" icon="microsoft" href="https://github.com/cognitedata/cognite-sdk-dotnet">
+    Asynchronous SDK for .NET developers, used in CDF's OData service and Power BI integration.
+    **Community-supported**
+  </Card>
+
+  <Card title="Rust" icon="rust" href="https://github.com/cognitedata/cognite-sdk-rust">
+    Supports core CDF resource types and data modeling.
+    **Community-supported**
+  </Card>
+</CardGroup>
+
+## Specialized SDKs
+
+<CardGroup>
+  <Card title="Reveal 3D viewer" icon="box" href="https://cognitedata.github.io/reveal-docs/docs/">
+    Embeddable JavaScript library for visualizing large 3D models on the web.
+    **Community-supported**
+  </Card>
+
+  <Card title="Spark Data Source" icon="bolt" href="https://github.com/cognitedata/cdp-spark-datasource/blob/master/README.md">
+    Read and write data from/to CDF in parallel using Apache Spark.
+    **Community-supported**
+  </Card>
+
+  <Card title="Geospatial SDK" icon="map" href="https://cognite-sdk-python.readthedocs-hosted.com/en/latest/geospatial.html">
+    Operate on geospatial APIs in CDF using Python.
+    **Community-supported**
+  </Card>
+</CardGroup>
+
+## Industry SDKs
+
+<CardGroup>
+  <Card title="Seismic SDK" icon="audio-waveform" href="/sdks/seismic/">
+    Use seismic APIs to ingest SEG-Y files into CDF and structure/query the data.
+    **Community-supported**
+  </Card>
+</CardGroup>
+
+## Toolkits
+
+<CardGroup>
+  <Card title="Extractor utils" icon="cog" href="https://cognite-extractor-utils.readthedocs-hosted.com/en/latest/quickstart.html">
+    Build extractors for CDF with built-in support for caching, batch ingestion, monitoring, and logging.
+    **Community-supported**
+  </Card>
+
+  <Card title="Data Modeling SDK Generator" icon="package" href="/sdks/pygen">
+    Generate Python SDKs for your CDF data models with Pygen.
+    **Community-supported**
+  </Card>
+
+  <Card title="Simulator utils" icon="chart-line" href="https://cognitedata.github.io/dotnet-simulator-utils/">
+    Build simulator connectors for CDF with .NET, handling model reading and result processing.
+    **Community-supported**
+  </Card>
+</CardGroup>

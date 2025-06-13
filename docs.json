@@ -154,6 +154,10 @@
                     ]
                   }
                 ]
+              },
+              {
+                "group": "SDKs and toolkits",
+                "pages": ["/sdks/sdk_overview"]
               }
             ]
           },
