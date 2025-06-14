@@ -204,6 +204,23 @@
                         ]
                       }
                     ]
+                  },
+                  {
+                    "group": "Toolkits",
+                    "pages": [
+                      {
+                        "group": "Data modeling SDK generator",
+                        "icon": "package",
+                        "pages": [
+                          "/sdks/pygen/overview",
+                          "/sdks/pygen/usage",
+                          "/sdks/pygen/github",
+                          "/sdks/pygen/changelog"
+                        ]
+                      },
+                      "/sdks/extractor_utils",
+                      "/sdks/simulator_utils"
+                    ]
                   }
                 ]
               }
