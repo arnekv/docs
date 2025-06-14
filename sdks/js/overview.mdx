@@ -1,0 +1,247 @@
+---
+title: Get started
+description: Learn how to get started with the Cognite JavaScript SDK, including installation, usage, and authentication examples.
+---
+
+## Installation
+
+<Info>
+You can use the Cognite JavaScript SDK in both Node.js and browser environments. The SDK is distributed as an npm package.
+</Info>
+
+<Tabs>
+<Tab title="npm">
+
+```bash title="Install with npm"
+npm install @cognite/sdk --save
+```
+
+</Tab>
+<Tab title="yarn">
+
+```bash title="Install with yarn"
+yarn add @cognite/sdk
+```
+
+</Tab>
+</Tabs>
+
+## Usage
+
+<Tabs>
+<Tab title="CommonJS">
+
+```js title="CommonJS import"
+const { CogniteClient } = require('@cognite/sdk');
+```
+
+</Tab>
+<Tab title="ES Modules">
+
+```js title="ESM import"
+import { CogniteClient } from '@cognite/sdk';
+```
+
+</Tab>
+</Tabs>
+
+<Tip>
+The SDK is written in native TypeScript, so you get full type support out of the box.
+</Tip>
+
+## Quickstart
+
+### Web authentication
+
+```js title="Web quickstart"
+import { CogniteClient } from '@cognite/sdk';
+
+async function quickstart() {
+  const client = new CogniteClient({ appId: 'YOUR APPLICATION NAME' });
+  client.loginWithOAuth({
+    project: 'publicdata',
+  });
+
+  const assets = await client.assets.list().autoPagingToArray({ limit: 100 });
+}
+quickstart();
+```
+
+For more details, see the [authentication guide](https://github.com/cognitedata/cognite-sdk-js/blob/master/guides/authentication.md).
+
+### Backend authentication
+
+```js title="Backend quickstart"
+import { ConfidentialClientApplication } from "@azure/msal-node";
+import { CogniteClient } from "@cognite/sdk";
+
+async function quickstart() {
+  const pca = new ConfidentialClientApplication({
+    auth: {
+        clientId: 'YOUR CLIENT ID',
+        clientSecret: 'YOUR CLIENT SECRET',
+        authority: 'INSERT AUTHORITY HERE'
+    }
+  });
+
+  async function getToken() {
+    var response = await pca.acquireTokenByClientCredential({
+        scopes: ['INSERT SCOPE HERE'],
+        skipCache: true,
+      });
+      return response.accessToken;
+  }
+
+  const client = new CogniteClient({
+    appId: 'Cognite SDK samples',
+    baseUrl: 'YOUR BASE URL',
+    project: 'YOUR CDF PROJECT NAME',
+    getToken: getToken
+  });
+
+  const assets = await client.assets.list();
+  console.log(assets);
+}
+
+quickstart();
+```
+
+## Create a "Hello, world!" React App
+
+<Steps>
+<Step title="Set up your React app">
+Install [create-react-app](https://facebook.github.io/create-react-app/docs/getting-started) and create a new project:
+
+```bash title="Create React app"
+npx create-react-app hello-world
+cd hello-world
+```
+</Step>
+<Step title="Install the Cognite SDK">
+Install the Cognite JavaScript SDK:
+
+```bash title="Install SDK"
+npm install @cognite/sdk --save
+```
+</Step>
+<Step title="Authenticate and fetch data">
+Replace the code in `./src/App.js` to authenticate and fetch assets:
+
+```js title="Authenticate and fetch assets"
+import React, { Component } from 'react';
+import { CogniteClient } from '@cognite/sdk';
+
+const project = 'publicdata';
+
+class App extends Component {
+  state = { assets: null };
+
+  async componentDidMount() {
+    const client = new CogniteClient({ appId: 'Cognite SDK tutorial' });
+    client.loginWithOAuth({ project });
+    const assets = await client.assets.list().autoPagingToArray({ limit: 10 });
+    this.setState({ assets });
+  }
+
+  render() {
+    const { assets } = this.state;
+    return (
+      <div className="App">
+        {assets && assets.map((asset) => <p key={asset.id}>{asset.name}</p>)}
+      </div>
+    );
+  }
+}
+
+export default App;
+```
+</Step>
+<Step title="Run your app securely">
+<Warning>
+Cognite only allows authentication from trusted web pages. You must enable HTTPS for local development.
+</Warning>
+
+Run your app with HTTPS enabled:
+
+```bash title="Run with HTTPS"
+HTTPS=true npm run start
+```
+</Step>
+<Step title="Sign in and view data">
+Open your browser and sign in to the `publicdata` project. You should see asset names displayed in your app.
+</Step>
+</Steps>
+
+## Alternative: Authenticate with popup
+
+<Info>
+You can use a popup window for authentication to avoid losing application state. This is useful for single-page apps.
+</Info>
+
+Replace your `App.js` with the following:
+
+```js title="Authenticate with popup"
+import React, { Component } from 'react';
+import {
+  CogniteClient,
+  POPUP,
+  loginPopupHandler,
+  isLoginPopupWindow,
+} from '@cognite/sdk';
+
+const project = 'publicdata';
+
+class App extends Component {
+  state = {
+    assets: null,
+    client: null,
+  };
+
+  async componentDidMount() {
+    if (isLoginPopupWindow()) {
+      loginPopupHandler();
+      return;
+    }
+
+    const client = new CogniteClient({ appId: 'Cognite SDK tutorial' });
+    client.loginWithOAuth({
+      project,
+      onAuthenticate: POPUP,
+    });
+    this.setState({ client });
+  }
+
+  fetchAssets = async () => {
+    const { client } = this.state;
+    const assets = await client.assets.list().autoPagingToArray({ limit: 10 });
+    this.setState({ assets });
+  };
+
+  renderAssets = () => {
+    return (
+      <>
+        {this.state.assets.map((asset) => (
+          <p key={asset.id}>{asset.name}</p>
+        ))}
+      </>
+    );
+  };
+
+  render() {
+    const { assets } = this.state;
+    return (
+      <div className="App">
+        {assets ? (
+          this.renderAssets()
+        ) : (
+          <button onClick={this.fetchAssets}>
+            <h1>Click here to fetch assets from Cognite</h1>
+          </button>
+        )}
+      </div>
+    );
+  }
+}
+
+export default App;
+```

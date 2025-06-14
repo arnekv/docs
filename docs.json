@@ -161,10 +161,38 @@
                   "/sdks/sdk_overview",
                   {
                     "group": "Python SDK",
+                    "icon": "python",
                     "pages": [
-                      "/dev/sdks/python/overview",
-                      "/dev/sdks/python/register_app_jupyter_sdk",
-                      "/dev/sdks/python/python_auth_oidc"
+                      "/sdks/python/overview",
+                      "/sdks/python/register_app_jupyter_sdk",
+                      "/sdks/python/python_auth_oidc",
+                      "/sdks/python/usage",
+                      "/sdks/python/github",
+                      "/sdks/python/changelog"
+                    ]
+                  },
+                  {
+                    "group": "JavaScript SDK",
+                    "icon": "js",
+                    "pages": [
+                      "/sdks/js/overview",
+                      "/sdks/js/migration",
+                      "/sdks/js/authentication",
+                      "/sdks/js/usage",
+                      "/sdks/js/github",
+                      "/sdks/js/changelog"
+                    ]
+                  },
+                  "/sdks/java_sdk",
+                  "/sdks/scala_sdk",
+                  "/sdks/rust_sdk",
+                  "/sdks/dotnet_sdk",
+                  {
+                    "group": "Specialized SDKs",
+                    "pages": [
+                      "/sdks/reveal_3d_sdk",
+                      "/sdks/spark_data_source",
+                      "/sdks/geospatial_sdk"
                     ]
                   }
                 ]
