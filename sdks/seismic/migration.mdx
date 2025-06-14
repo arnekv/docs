@@ -1,0 +1,247 @@
+---
+title: "Migration guide: query service to seismic service"
+sidebarTitle: "Migration guide"
+description: "Step-by-step instructions and examples for migrating from the query v0 service to the seismic v1 service, including method translations and payload changes."
+---
+
+<Info>
+The Seismic v1 service is currently available to selected customers only.
+</Info>
+
+This guide helps you migrate from the **query v0 service** to the **seismic v1 service**. It provides method translations, payload examples, and solutions for deprecated or changed APIs.
+
+## Key changes in Seismic v1
+
+- **SeismicStore and Seismic objects**: [`SeismicStore`](/dev/guides/sdk/seismic/api/v1/#seismicstore) represents an ingested SEG-Y file (not directly available as part of the entitlement). [`Seismic`](/dev/guides/sdk/seismic/api/v1/#seismic) is a cutout of a `SeismicStore` and composes an entitlement. Queries now use these objects instead of referencing files directly.
+- **Unified Search, Get, and List**: The v1 API combines Search, Get, and List metadata queries into a single, flexible **Search** query. Searching by identifier or unique name returns results similar to Get; an empty search behaves like List.
+- **StreamTraces endpoint**: Multiple trace access endpoints are now unified under [`StreamTraces`](/dev/guides/sdk/seismic/api/v1/#streamtracesrequest), which supports a wide range of queries via parameters.
+
+<Note>
+To learn more about the Seismic API v1, see the <a href="/dev/guides/sdk/seismic/api/v1/" target="_blank" rel="noopener">API documentation</a>.
+</Note>
+
+## Method mappings and payload examples
+
+<AccordionGroup>
+<Accordion title="GetSurvey → SearchSurveys">
+Use [`SearchSurveys`](/dev/guides/sdk/seismic/api/v1/#seismicapi) instead of `GetSurvey`.
+
+<CodeGroup>
+```json v0
+com.cognite.seismic.Query/GetSurvey
+{
+  "survey": { "name": "some_name" }
+}
+```
+```json v1
+com.cognite.seismic.v1.SeismicAPI/SearchSurveys
+{
+  "surveys": { "name": "some_name" }
+}
+```
+</CodeGroup>
+</Accordion>
+
+<Accordion title="ListSurveys → SearchSurveys (empty search)">
+Use [`SearchSurveys`](/dev/guides/sdk/seismic/api/v1/#seismicapi) with no search specification.
+
+<CodeGroup>
+```json v0
+com.cognite.seismic.Query/ListSurveys
+{
+  "include_metadata": true
+}
+```
+```json v1
+com.cognite.seismic.v1.SeismicAPI/SearchSurveys
+{
+  "include_metadata": true
+}
+```
+</CodeGroup>
+</Accordion>
+
+<Accordion title="ListFiles → SearchFiles (empty spec)">
+Use [`SearchFiles`](/dev/guides/sdk/seismic/api/v1/#seismicapi) with no spec.
+</Accordion>
+
+<Accordion title="GetFile → SearchFiles (with spec)">
+Use [`SearchFiles`](/dev/guides/sdk/seismic/api/v1/#seismicapi) with a spec containing the file identifier.
+
+<CodeGroup>
+```json v0
+com.cognite.seismic.Query/GetFile
+{
+  "file": { "name": "some_name" }
+}
+```
+```json v1
+com.cognite.seismic.v1.SeismicAPI/SearchFiles
+{
+  "spec": { "name": "some_name" }
+}
+```
+</CodeGroup>
+</Accordion>
+
+<Accordion title="GetBinaryHeader → SearchSeismicStores (include_headers)">
+Fetch SEG-Y binary headers by setting `include_headers` to `true` in [`SearchSeismicStores`](/dev/guides/sdk/seismic/api/v1/#seismicapi).
+
+<CodeGroup>
+```json v0
+com.cognite.seismic.Query/GetBinaryHeader
+{
+  "file": { "name": "some_name" }
+}
+```
+```json v1
+com.cognite.seismic.v1.SeismicAPI/SearchSeismicStores
+{
+  "file": { "name": "some_name" },
+  "include_headers": true
+}
+```
+```
+com.cognite.seismic.v1.SeismicAPI/SearchSeismics
+{
+  "seismic_store": { "name": "some_name" },
+  "include_binary_header": true
+}
+```
+</CodeGroup>
+<Info>
+`Seismic` objects can also have binary headers, which may be inherited or overridden. Use [`SearchSeismics`](/dev/guides/sdk/seismic/api/v1/#seismicapi) to fetch them.
+</Info>
+</Accordion>
+
+<Accordion title="GetTextHeader → SearchSeismicStores (include_headers)">
+Fetch SEG-Y text headers by setting `include_headers` to `true` in [`SearchSeismicStores`](/dev/guides/sdk/seismic/api/v1/#seismicapi).
+
+<CodeGroup>
+```json v0
+com.cognite.seismic.Query/GetTextHeader
+{
+  "file": { "name": "some_name" }
+}
+```
+```json v1
+com.cognite.seismic.v1.SeismicAPI/SearchSeismicStores
+{
+  "seismic_store": { "name": "some_name" },
+  "include_headers": true
+}
+```
+```
+com.cognite.seismic.v1.SeismicAPI/SearchSeismics
+{
+  "seismic_store": { "name": "some_name" },
+  "include_text_header": true
+}
+```
+</CodeGroup>
+<Info>
+`Seismic` objects can also have text headers. Use [`SearchSeismics`](/dev/guides/sdk/seismic/api/v1/#seismicapi) to fetch them.
+</Info>
+</Accordion>
+
+<Accordion title="GetFileDataCoverage → SearchSeismicStores (coverage)">
+Use [`SearchSeismicStores`](/dev/guides/sdk/seismic/api/v1/#seismicapi) with a `coverage` field specifying the format (0 = wkt, 1 = geojson).
+
+<CodeGroup>
+```json v0
+com.cognite.seismic.Query/GetFileDataCoverage
+{
+  "file": { "name": "some_name" },
+  "in_wkt": true
+}
+```
+```json v1
+com.cognite.seismic.v1.SeismicAPI/SearchSeismicStores
+{
+  "file": { "name": "some_name" },
+  "coverage": { "format": 0 }
+}
+```
+```
+com.cognite.seismic.v1.SeismicAPI/SearchSeismics
+{
+  "seismic_store": { "name": "some_name" },
+  "coverage": { "format": 0 }
+}
+```
+</CodeGroup>
+<Info>
+`Seismic` objects can also have coverage. Use [`SearchSeismics`](/dev/guides/sdk/seismic/api/v1/#seismicapi) to fetch it.
+</Info>
+</Accordion>
+
+<Accordion title="GetFileLineRange → GetTraceBounds">
+Use [`GetTraceBounds`](/dev/guides/sdk/seismic/api/v1/#seismicapi) with the `seismic_store_id`.
+
+<CodeGroup>
+```json v0
+com.cognite.seismic.Query/GetFileLineRange
+{
+  "file": { "name": "some_name" }
+}
+```
+```json v1
+com.cognite.seismic.v1.SeismicAPI/GetTraceBounds
+{
+  "seismic_store_id": 1234
+}
+```
+</CodeGroup>
+<Note>
+In v1, queries use `Seismic` or `SeismicStore` objects. You need the `SeismicStore` ID for the file of interest.
+</Note>
+</Accordion>
+
+<Accordion title="GetCrosslinesByInline → SearchSeismicStores (include_extent)">
+Use [`SearchSeismicStores`](/dev/guides/sdk/seismic/api/v1/#seismicapi) with `include_extent: true` to return all lines containing the inline.
+
+<CodeGroup>
+```json v0
+com.cognite.seismic.Query/GetFileLineRange
+{
+  "file": { "name": "some_name" }
+}
+```
+```json v1
+com.cognite.seismic.v1.SeismicAPI/SearchSeismicStores
+{
+  "file": { "name": "some_name" },
+  "include_extent": true
+}
+```
+```
+com.cognite.seismic.v1.SeismicAPI/SearchSeismics
+{
+  "seismic": { "id": "1234" },
+  "include_line_range": true
+}
+```
+</CodeGroup>
+<Info>
+`Seismic` objects can also have line range information. Use [`SearchSeismics`](/dev/guides/sdk/seismic/api/v1/#seismicapi) to fetch it.
+</Info>
+</Accordion>
+
+<Accordion title="GetTraceByCoordinates, GetSliceByGeometry, GetCubeByGeometry, GetTimeSliceByGeometry, Query.GetVolume → StreamTraces">
+Use [`StreamTraces`](/dev/guides/sdk/seismic/api/v1/#seismicapi) with the appropriate geometry and parameters. See the API documentation for details and payload examples.
+</Accordion>
+
+<Accordion title="GetSegYFile → GetSegYFile">
+Use [`GetSegYFile`](/dev/guides/sdk/seismic/api/v1/#seismicapi) in v1.
+</Accordion>
+
+<Accordion title="Deprecated methods">
+- **GetSliceByLine**: Use `StreamTraces` instead.
+- **GetCubeByLines**: Use `StreamTraces` instead.
+- **GetSlabByLines**: See `GetTimeSliceByGeometry`.
+</Accordion>
+</AccordionGroup>
+
+## Next steps
+
+See the <a href="/dev/guides/sdk/seismic/api/v1/" target="_blank" rel="noopener">Seismic API v1 documentation</a> for more details and advanced usage.

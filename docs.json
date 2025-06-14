@@ -192,7 +192,17 @@
                     "pages": [
                       "/sdks/reveal_3d_sdk",
                       "/sdks/spark_data_source",
-                      "/sdks/geospatial_sdk"
+                      "/sdks/geospatial_sdk",
+                      {
+                        "group": "Seismic SDK",
+                        "icon": "audio-waveform",
+                        "pages": [
+                          "/sdks/seismic/overview",
+                          "/sdks/seismic/migration",
+                          "/sdks/seismic/usage",
+                          "/sdks/seismic/changelog"
+                        ]
+                      }
                     ]
                   }
                 ]

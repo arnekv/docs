@@ -1,0 +1,82 @@
+---
+title: "Get started with Seismic SDK"
+sidebarTitle: "Get started"
+description: "Learn how to install, authenticate, and use the Seismic SDK to access CDF data."
+---
+
+<Info>
+The Seismic SDK is currently available to selected customers only.
+</Info>
+
+## Installation
+
+<Steps>
+<Step title="Install the Seismic SDK">
+Run the following command to install the SDK:
+
+```bash
+pip install cognite-seismic-sdk
+```
+</Step>
+<Step title="Install Microsoft Authentication Library (MSAL)">
+To authenticate with Azure Active Directory, install MSAL:
+
+```bash
+pip install msal
+```
+</Step>
+</Steps>
+
+## Authenticate and Initialize the Client
+
+To access CDF data, you need to authenticate using an OpenID Connect (OIDC) token. The recommended approach is to use the Microsoft Authentication Library (MSAL) to obtain a token and pass it to the Seismic SDK client.
+
+```python
+from cognite.seismic import CogniteSeismicClient
+from msal import PublicClientApplication
+
+def get_token_supplier(base_url, tenant_id, client_id):
+    authority = f'https://login.microsoftonline.com/{tenant_id}'
+    app = PublicClientApplication(client_id=client_id, authority=authority)
+    scopes = [base_url + '.default']
+    try:
+        account = app.get_accounts()[0]
+    except IndexError:
+        app.acquire_token_interactive(scopes=scopes)
+        try:
+            account = app.get_accounts()[0]
+        except IndexError:
+            raise Exception('No accounts returned after Azure AD login. Check permissions?')
+    print(f"Logged in as {account['username']}")
+    def tokenmaker():
+        return app.acquire_token_silent(account=account, scopes=scopes)['access_token']
+    return tokenmaker
+
+base_url = '<base_url>'  # e.g. https://api.cognitedata.com
+tenant_id = '<tenant_id>'
+client_id = '<client_id>'
+project = '<project>'
+
+tokenmaker = get_token_supplier(base_url, tenant_id, client_id)
+client = CogniteSeismicClient(base_url=base_url, project=project, oidc_token=tokenmaker)
+```
+
+<Note>
+Replace the placeholder values (`<base_url>`, `<tenant_id>`, `<client_id>`, `<project>`) with your actual configuration.
+</Note>
+
+### Environment Variable Option
+
+You can also set the `COGNITE_PROJECT` environment variable to specify the CDF project:
+
+```bash
+export COGNITE_PROJECT="your_project_name"
+```
+
+<Warning>
+Never commit credentials or secrets to version control.
+</Warning>
+
+## Next steps
+
+See the SDK <a href="https://cognite-seismic-sdk.readthedocs-hosted.com/en/latest/cognite.html" target="_blank" rel="noopener">reference documentation</a> to learn more about the Seismic SDK.
